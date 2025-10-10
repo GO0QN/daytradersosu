@@ -119,30 +119,41 @@ body{
 }
 .form-note{font-size:.9rem;color:#666}
 
-/* ===== Leadership (About page) ===== */
-/* Container */
-.leaders{
-  display:flex;flex-direction:column;gap:1rem;margin-top:1rem;
+/* ===== Leadership Grid ===== */
+/* 12-column grid: featured span 6 (2-up), others span 4 (3-up) */
+.leaders-grid{
+  display:grid;
+  grid-template-columns:repeat(12, minmax(0,1fr));
+  gap:1rem;
+  margin-top:1rem;
 }
-/* Card row */
 .leader.card{
   display:flex;align-items:center;gap:1rem;padding:1rem;
   background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);
+  grid-column:span 4; /* default (3 per row) */
 }
-/* Primary headshot style */
+.leader--featured{
+  grid-column:span 6; /* 2 big boxes on first row */
+}
+
 .leader-photo{
   width:90px;height:90px;border-radius:50%;object-fit:cover;flex:0 0 auto;
   box-shadow:var(--shadow);
 }
-/* Fallback: if you forget the class, size the FIRST img in the card */
+.leader-body h3{margin:.25rem 0}
+.leader-body p{margin:0;color:#333}
+
+/* Fallback in case photo class is missed */
 .leader.card > img:first-child{
   width:90px;height:90px;border-radius:50%;object-fit:cover;flex:0 0 auto;
 }
-/* Keep any other images inside leader cards from blowing up */
-.leader.card img{max-width:100%;height:auto}
-.leader.card h3{margin:.25rem 0}
-.leader.card p{margin:0;color:#333}
 
-@media (max-width:600px){
-  .leader.card{flex-direction:column;text-align:center}
+/* Responsive behavior */
+@media (max-width: 900px){
+  .leader--featured{grid-column:span 12;}   /* stack featured */
+  .leader.card{grid-column:span 6;}         /* 2 per row */
+}
+@media (max-width: 600px){
+  .leader.card{grid-column:span 12;}        /* 1 per row on phones */
+  .leader-photo{width:80px;height:80px}
 }
