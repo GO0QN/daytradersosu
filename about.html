@@ -1,94 +1,135 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>About • OSU Day Traders</title>
-<link href="css/style.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About • OSU Day Traders</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-<header class="site-header">
-<a class="brand" href="index.html">
-<img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
-<span>OSU Day Traders</span>
-</a>
-<nav aria-label="Main navigation" class="site-nav">
-<button aria-controls="navMenu" aria-expanded="false" class="nav-toggle">☰</button>
-<ul id="navMenu">
-<li><a href="index.html">Home</a></li>
-<li><a class="active" href="about.html">About</a></li>
-<li><a href="events.html">Events</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="applications.html">Applications</a></li></ul>
-</nav>
-</header>
-<main class="content narrow">
-<h1>About OSU Day Traders</h1>
-<p>We’re a student-led community focused on building consistent, disciplined trading processes.
-       Our mission is to help Buckeyes learn markets the right way: risk-first, rules-based, and
-       data-driven.</p>
-<h2 id="pillars">Our Pillars</h2>
-<ul class="checklist">
-<li><strong>Risk Management:</strong> position sizing, stop placement, and journaling.</li>
-<li><strong>Edge Development:</strong> technicals, market structure, statistics.</li>
-<li><strong>Playbook &amp; Review:</strong> backtesting, screenshots, and iteration.</li>
-<li><strong>Community:</strong> accountability groups and mentorship.</li>
-</ul>
-<h2 id="leadership">Leadership</h2>
-<!-- FIRST ROW: President + Vice President (2-up, large) -->
-<section class="leaders-featured">
-<article class="leader card leader--wide">
-<img alt="President Photo" class="leader-photo" src="assets/images/president.jpg"/>
-<div class="leader-body">
-<h3>President (Steven Wang)</h3>
-<p>Leads strategy, partnerships, and weekly programming.</p>
-</div>
-</article>
-<article class="leader card leader--wide">
-<img alt="Vice President Photo" class="leader-photo" src="assets/images/vice-president.jpg"/>
-<div class="leader-body">
-<h3>Vice President</h3>
-<p>Coordinates events and supports the president in strategic decisions.</p>
-</div>
-</article>
-</section>
-<!-- BELOW: all other roles (3-up on desktop) -->
-<section class="leaders-others">
-<article class="leader card">
-<img alt="Public Relations Photo" class="leader-photo" src="assets/images/public-relations.jpg"/>
-<div class="leader-body">
-<h3>Public Relations</h3>
-<p>Builds the club’s presence on campus and online by managing social media, promoting events, and fostering connections with other student organizations.</p>
-</div>
-</article>
-<article class="leader card">
-<img alt="Secretary Photo" class="leader-photo" src="assets/images/secretary.jpg"/>
-<div class="leader-body">
-<h3>Secretary (Vivian)</h3>
-<p>Manages communications, notes, and organizational records.</p>
-</div>
-</article>
-<article class="leader card">
-<img alt="Treasurer Photo" class="leader-photo" src="assets/images/treasurer.jpg"/>
-<div class="leader-body">
-<h3>Treasurer</h3>
-<p>Handles budgeting, fundraising, and financial transparency for the club.</p>
-</div>
-</article>
-<article class="leader card">
-<img alt="Education Lead Photo" class="leader-photo" src="assets/images/education-lead.jpg"/>
-<div class="leader-body">
-<h3>Education Lead</h3>
-<p>Designs curriculum, workshops, and mentorship opportunities.</p>
-</div>
-</article>
-</section>
-</main>
-<footer class="site-footer">
-<p>© 2025 OSU Day Traders</p>
-</footer>
-<script src="js/main.js"></script>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
+      <span>OSU Day Traders</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <ul id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="about.html">About</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="content narrow">
+    <h1>About OSU Day Traders</h1>
+    <p>
+      We’re a student-led community focused on building consistent, disciplined trading processes.
+      Members get hands-on practice, structured playbooks, and accountability partners. Whether you’re
+      brand new or experienced, you’ll find people who take the craft seriously.
+    </p>
+
+    <h2>What We Do</h2>
+    <ul class="checklist">
+      <li>Daily watchlists, levels, and post-market reviews</li>
+      <li>Risk management and journaling systems</li>
+      <li>Guest speakers, workshops, and challenge weeks</li>
+      <li>Collaborative strategy research</li>
+    </ul>
+
+    <h2>Leadership</h2>
+
+    <!-- Featured row: President + Vice President (wide cards) -->
+    <div class="leaders-featured">
+      <div class="leader card leader--wide">
+        <img src="assets/images/president.jpg" alt="President" class="leader-photo" />
+        <div class="leader-body">
+          <h3>President</h3>
+          <p>Leads strategy, partnerships, and weekly programming.</p>
+        </div>
+      </div>
+
+      <div class="leader card leader--wide">
+        <img src="assets/images/blank.png" alt="Vice President" class="leader-photo" />
+        <div class="leader-body">
+          <h3>Vice President</h3>
+          <p>Coordinates events and supports the president in strategic decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Everyone else: 3 cards per row -->
+    <div class="leaders-others">
+      <!-- PR first, shortened and with name -->
+      <div class="leader card">
+        <img src="assets/images/public-relations.jpg" alt="PR — Jenny Zhu" class="leader-photo" />
+        <div class="leader-body">
+          <h3>PR — Jenny Zhu</h3>
+          <p>Builds the club’s presence on campus and online: social media, event promotion, and partnerships.</p>
+        </div>
+      </div>
+
+      <div class="leader card">
+        <img src="assets/images/secretary.jpg" alt="Secretary" class="leader-photo" />
+        <div class="leader-body">
+          <h3>Secretary</h3>
+          <p>Manages communications, notes, schedules, and organizational records.</p>
+        </div>
+      </div>
+
+      <div class="leader card">
+        <img src="assets/images/blank.png" alt="Treasurer" class="leader-photo" />
+        <div class="leader-body">
+          <h3>Treasurer</h3>
+          <p>Handles budgeting, reimbursements, fundraising, and financial transparency for the club.</p>
+        </div>
+      </div>
+
+      <div class="leader card">
+        <img src="assets/images/blank.png" alt="Education Lead" class="leader-photo" />
+        <div class="leader-body">
+          <h3>Education Lead</h3>
+          <p>Designs workshops and bootcamps on risk, journaling, setups, and platform basics.</p>
+        </div>
+      </div>
+
+      <div class="leader card">
+        <img src="assets/images/blank.png" alt="Events Coordinator" class="leader-photo" />
+        <div class="leader-body">
+          <h3>Events Coordinator</h3>
+          <p>Runs speakers, collaborations, and challenge weeks. Owns logistics and day-of execution.</p>
+        </div>
+      </div>
+
+      <div class="leader card">
+        <img src="assets/images/blank.png" alt="Risk & Analytics" class="leader-photo" />
+        <div class="leader-body">
+          <h3>Risk &amp; Analytics</h3>
+          <p>Builds dashboards and review templates to enforce process and sharpen edge.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="cta-banner" style="margin-top:2rem">
+      <h3>Want to get involved?</h3>
+      <p>Come to an event or reach out — we’re always welcoming serious, curious learners.</p>
+      <p><a class="btn btn--light" href="contact.html">Contact Us</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // fallback year if main.js doesn't set it
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
