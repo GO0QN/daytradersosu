@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applications • OSU Day Traders</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .page-lede{max-width:800px;margin:0 auto}
+    .page-lede p{margin:.5rem 0 0;color:#444}
+    .apps{max-width:1100px;margin:0 auto;padding:2rem 1rem}
+    .apps h2{margin-bottom:.5rem}
+    .apps p.apps-intro{color:#444;margin-top:0}
+    .app-grid{display:grid;gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:960px){.app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:640px){.app-grid{grid-template-columns:1fr}}
+    .app-card{cursor:pointer;text-decoration:none;color:inherit;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;transform:translateZ(0);transition:transform .18s ease,box-shadow .18s ease;outline:none}
+    .app-card:hover,.app-card:focus-visible{transform:scale(1.02);box-shadow:0 14px 28px rgba(0,0,0,.12)}
+    .app-card h3{margin:.25rem 0;font-size:1.05rem}
+    .app-card p{margin:0;color:#444;font-size:.95rem}
+    .pill{display:inline-block;padding:.45rem .8rem;border-radius:999px;background:#eee;font-weight:700;font-size:.85rem}
+    dialog.app-modal{border:0;border-radius:16px;padding:0;width:min(720px,92vw);box-shadow:0 24px 60px rgba(0,0,0,.25)}
+    dialog.app-modal::backdrop{background:rgba(0,0,0,.45)}
+    .modal-header{padding:1rem 1.25rem;background:var(--scarlet);color:#fff;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+    .modal-header h3{margin:0;font-size:1.15rem}
+    .modal-body{padding:1.25rem}
+    .modal-footer{padding:1rem 1.25rem;display:flex;gap:.75rem;justify-content:flex-end}
+    .app-form{display:grid;gap:.85rem}
+    .app-row{display:grid;gap:.75rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:640px){.app-row{grid-template-columns:1fr}}
+    .app-form label{font-weight:600;font-size:.92rem}
+    .app-form input[type=text],.app-form input[type=email],.app-form input[type=url],.app-form input[type=tel],.app-form input[type=file],.app-form textarea,.app-form select{width:100%;padding:.75rem;border-radius:10px;border:1px solid #ddd;background:#fff;font:inherit}
+    .app-form small{color:#666}
+    .btn{display:inline-block;padding:.7rem 1.1rem;border-radius:999px;font-weight:800;text-decoration:none}
+    .btn--light{background:var(--white);color:var(--scarlet)}
+    .btn--dark{background:var(--dark);color:#fff}
+    .btn--ghost{background:transparent;border:2px solid #ccc}
+    .success-note{display:none;font-size:.95rem;color:#155724;background:#d4edda;border:1px solid #c3e6cb;padding:.6rem .8rem;border-radius:10px}
+    .error-note{display:none;font-size:.95rem;color:#842029;background:#f8d7da;border:1px solid #f5c2c7;padding:.6rem .8rem;border-radius:10px}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
+      <span>OSU Day Traders</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <ul id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a class="active" href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="content">
+    <div class="page-lede">
+      <h1>Applications</h1>
+      <p>Choose an application below. Cards enlarge on hover. When you submit, we’ll save a local copy of your responses and open a pre-filled email so you can send it (and attach files).</p>
+    </div>
+    <section class="apps">
+      <div class="app-grid">
+        <button class="app-card" data-open="modal-treasurer"><span class="pill">Application</span><h3>Treasurer Application</h3><p>Budgeting, reimbursements, sponsorships, and transparent reporting.</p></button>
+        <button class="app-card" data-open="modal-speaker"><span class="pill">Application</span><h3>Guest Speaker Application</h3><p>Share your edge, process, or domain expertise with the club.</p></button>
+        <button class="app-card" data-open="modal-board"><span class="pill">Application</span><h3>Board of Traders Application</h3><p>Help set standards, lead reviews, and mentor members.</p></button>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  </footer>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
