@@ -105,7 +105,6 @@ function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeOnI
     const newIndex = (i + slides.length) % slides.length;
     if (newIndex === index) return;
 
-    // Fade: remove active from old, add to new
     slides[index].classList.remove("active");
     slides[index].setAttribute("aria-hidden", "true");
     slides[newIndex].classList.add("active");
