@@ -1,7 +1,5 @@
-// ========== JS: OSU Day Traders ==========
-
 document.addEventListener("DOMContentLoaded", () => {
-  // ---- Mobile nav toggle ----
+  // Mobile nav toggle
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.getElementById("navMenu");
   if (navToggle && navMenu) {
@@ -11,40 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Active link highlight ----
-  const current = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll(".site-nav a").forEach(a => {
-    if (a.getAttribute("href") === current) a.classList.add("active");
-  });
-
-  // ---- Slideshow (smooth fade) ----
-  initSlideshow({
-    rootSelector: ".slideshow",
-    intervalMs: 5000,     // auto-rotate interval
-    fadeOnInit: true
-  });
-});
-
-/**
- * Initialize a fading slideshow.
- * Expects markup:
- * <section class="slideshow">
- *   <div class="slideshow__viewport">
- *     <img src="..." alt="...">
- *     ...
- *   </div>
- *   <div class="slideshow__controls">
- *     <button class="prev">‹</button>
- *     <button class="next">›</button>
- *   </div>
- *   <div class="slideshow__dots"></div>
- * </section>
- */
-function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeOnInit = true } = {}) {
-  const root = document.querySelector(rootSelector);
-  if (!root) return;
-
-  const viewport = root.querySelector(".slideshow__viewport");
+  // Slideshow fade
+  const root = document.querySelector(".slideshow");
+  const viewport = root?.querySelector(".slideshow__viewport");
   if (!viewport) return;
 
   const slides = Array.from(viewport.querySelectorAll("img"));
@@ -54,78 +21,59 @@ function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeOnI
   const nextBtn = root.querySelector(".next");
   const dotsWrap = root.querySelector(".slideshow__dots");
 
-  let index = 0;
-  let timer = null;
+  let index = slides.findIndex(s => s.classList.contains("active"));
+  if (index < 0) index = 0;
+  slides.forEach((img, i) => {
+    img.classList.toggle("active", i === index);
+    img.setAttribute("aria-hidden", i === index ? "false" : "true");
+  });
 
-  // Build dots
+  // dots
   if (dotsWrap) {
     dotsWrap.innerHTML = "";
     slides.forEach((_, i) => {
       const dot = document.createElement("button");
       dot.setAttribute("role", "tab");
-      dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+      dot.setAttribute("aria-label", `Go to slide ${i+1}`);
       dot.addEventListener("click", () => goTo(i, true));
       dotsWrap.appendChild(dot);
     });
   }
-
-  // Initialize slide visibility
-  slides.forEach((img, i) => {
-    img.classList.toggle("active", i === 0);
-    img.setAttribute("aria-hidden", i === 0 ? "false" : "true");
-    if (fadeOnInit && i !== 0) img.style.opacity = "0";
-  });
   updateDots();
 
-  // Navigation
-  prevBtn?.addEventListener("click", () => goTo(index - 1, true));
-  nextBtn?.addEventListener("click", () => goTo(index + 1, true));
+  function updateDots() {
+    if (!dotsWrap) return;
+    [...dotsWrap.children].forEach((d, i) =>
+      d.setAttribute("aria-selected", i === index ? "true" : "false")
+    );
+  }
+  function goTo(i, user=false) {
+    const next = (i + slides.length) % slides.length;
+    if (next === index) return;
+    slides[index].classList.remove("active");
+    slides[index].setAttribute("aria-hidden", "true");
+    slides[next].classList.add("active");
+    slides[next].setAttribute("aria-hidden", "false");
+    index = next;
+    updateDots();
+    if (user) restartAuto();
+  }
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
 
-  // Pause on hover
+  prevBtn?.addEventListener("click", prev);
+  nextBtn?.addEventListener("click", next);
+
+  let timer = null;
+  function startAuto() { stopAuto(); timer = setInterval(next, 5000); }
+  function stopAuto() { if (timer) clearInterval(timer); timer = null; }
+  function restartAuto() { startAuto(); }
+
   root.addEventListener("mouseenter", stopAuto);
   root.addEventListener("mouseleave", startAuto);
-
-  // Pause when tab hidden
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) stopAuto(); else startAuto();
   });
 
-  // Start
   startAuto();
-
-  // ---- helpers ----
-  function updateDots() {
-    if (!dotsWrap) return;
-    Array.from(dotsWrap.children).forEach((d, i) => {
-      d.setAttribute("aria-selected", i === index ? "true" : "false");
-    });
-  }
-
-  function goTo(i, fromUser = false) {
-    const newIndex = (i + slides.length) % slides.length;
-    if (newIndex === index) return;
-
-    slides[index].classList.remove("active");
-    slides[index].setAttribute("aria-hidden", "true");
-    slides[newIndex].classList.add("active");
-    slides[newIndex].setAttribute("aria-hidden", "false");
-
-    index = newIndex;
-    updateDots();
-    if (fromUser) restartAuto();
-  }
-
-  function startAuto() {
-    stopAuto();
-    timer = setInterval(() => goTo(index + 1), intervalMs);
-  }
-
-  function stopAuto() {
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
-
-  function restartAuto() {
-    startAuto();
-  }
-}
+});
