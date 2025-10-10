@@ -102,13 +102,13 @@ body{
 .leader.card p{margin:0}
 
 /* Photo styling */
-.leader-photo{
-  width:100px;
-  height:100px;
-  border-radius:50%;        /* circle portrait */
-  object-fit:cover;
-  box-shadow:var(--shadow);
-  flex:0 0 auto;
+.leader-photo {
+  width: 70px;         /* reduced size */
+  height: 70px;        /* keep it square */
+  border-radius: 50%;  /* circle portrait */
+  object-fit: cover;   /* crop/center image nicely */
+  box-shadow: var(--shadow);
+  flex: 0 0 auto;
 }
 
 /* If you want a bigger portrait on a specific card, add class="leader-photo lg" */
