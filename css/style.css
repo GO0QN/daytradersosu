@@ -42,77 +42,57 @@ body{
 .btn--outline{border:2px solid var(--white);color:var(--white);margin-left:.5rem}
 .btn--dark{background:var(--dark);color:var(--white)}
 
-/* Slideshow */
-.slideshow {
-  position: relative;
-  max-width: 1100px;
-  margin: -2rem auto 2rem;
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
+/* ===== Slideshow (true contain, no cropping) ===== */
+.slideshow{
+  position:relative;max-width:1100px;margin:-2rem auto 2rem;
+  background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
 }
 
-.slideshow__viewport {
-  position: relative;
-  width: 100%;
-  height: 500px;        /* fixed height for all slides */
-  background: #000;     /* black background behind images */
-  overflow: hidden;
-}
-
-.slideshow__viewport img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  max-width: 100%;
-  max-height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: contain;   /* no cropping */
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.slideshow__viewport img.active {
-  opacity: 1;
-}
-
-.slideshow__controls {
-  position:absolute;
-  inset:0;
-  display:flex;
-  justify-content:space-between;
+/* Fixed, responsive-friendly height; black frame for letterboxing */
+.slideshow__viewport{
+  position:relative;
+  width:100%;
+  height:500px;            /* tweak if you want taller/shorter */
+  background:#000;
+  display:flex;            /* center children for contain layout */
   align-items:center;
-  padding:0 .5rem;
-  pointer-events:none;
-}
-.slideshow__controls button {
-  pointer-events:auto;
-  border:0;
-  background:rgba(0,0,0,.4);
-  color:#fff;
-  font-size:2rem;
-  width:44px;
-  height:44px;
-  border-radius:50%;
+  justify-content:center;
+  overflow:hidden;
 }
 
-.slideshow__dots {
-  display:flex;
-  gap:.75rem;
-  justify-content:center;
-  padding:.75rem;
+/* Key: don't force width/height to 100%.
+   Clamp by BOTH max-width and max-height so neither dimension overflows. */
+.slideshow__viewport img{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:auto;              /* natural width */
+  height:auto;             /* natural height */
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;      /* belt-and-suspenders */
+  opacity:0;
+  transition:opacity 800ms ease-in-out;
 }
-.slideshow__dots button {
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  border:0;
-  background:#ddd;
-  cursor:pointer;
+.slideshow__viewport img.active{ opacity:1; }
+
+/* Controls & dots */
+.slideshow__controls{
+  position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center;
+  padding:0 .5rem; pointer-events:none;
 }
-.slideshow__dots button[aria-selected="true"] {
-  background:var(--scarlet);
+.slideshow__controls button{
+  pointer-events:auto; border:0; background:rgba(0,0,0,.45); color:#fff;
+  font-size:2rem; width:44px; height:44px; border-radius:50%;
+}
+.slideshow__dots{display:flex; gap:.75rem; justify-content:center; padding:.75rem}
+.slideshow__dots button{
+  width:14px; height:14px; border-radius:50%; border:0; background:#ddd; padding:0; line-height:0; cursor:pointer;
+}
+.slideshow__dots button[aria-selected="true"]{background:var(--scarlet)}
+
+@media (max-width: 640px){
+  .slideshow__viewport{height:300px}
 }
 
 /* Cards & grids */
@@ -127,7 +107,7 @@ body{
 .content.narrow{max-width:800px}
 
 /* Lists */
-.checklist{list-style: none;padding-left:0}
+.checklist{list-style:none;padding-left:0}
 .checklist li{position:relative;padding-left:1.4rem;margin:.35rem 0}
 .checklist li::before{content:'✔';position:absolute;left:0;top:0;color:var(--scarlet)}
 
