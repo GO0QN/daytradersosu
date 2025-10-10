@@ -2,47 +2,118 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Applications • OSU Day Traders</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- Page-local polish (doesn't touch your global CSS) -->
   <style>
-    .page-lede{max-width:800px;margin:0 auto}
-    .page-lede p{margin:.5rem 0 0;color:#444}
-    .apps{max-width:1100px;margin:0 auto;padding:2rem 1rem}
-    .apps h2{margin-bottom:.5rem}
-    .apps p.apps-intro{color:#444;margin-top:0}
-    .app-grid{display:grid;gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr))}
-    @media (max-width:960px){.app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:640px){.app-grid{grid-template-columns:1fr}}
-    .app-card{cursor:pointer;text-decoration:none;color:inherit;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;transform:translateZ(0);transition:transform .18s ease,box-shadow .18s ease;outline:none}
-    .app-card:hover,.app-card:focus-visible{transform:scale(1.02);box-shadow:0 14px 28px rgba(0,0,0,.12)}
-    .app-card h3{margin:.25rem 0;font-size:1.05rem}
-    .app-card p{margin:0;color:#444;font-size:.95rem}
-    .pill{display:inline-block;padding:.45rem .8rem;border-radius:999px;background:#eee;font-weight:700;font-size:.85rem}
-    dialog.app-modal{border:0;border-radius:16px;padding:0;width:min(720px,92vw);box-shadow:0 24px 60px rgba(0,0,0,.25)}
-    dialog.app-modal::backdrop{background:rgba(0,0,0,.45)}
-    .modal-header{padding:1rem 1.25rem;background:var(--scarlet);color:#fff;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-    .modal-header h3{margin:0;font-size:1.15rem}
-    .modal-body{padding:1.25rem}
-    .modal-footer{padding:1rem 1.25rem;display:flex;gap:.75rem;justify-content:flex-end}
-    .app-form{display:grid;gap:.85rem}
-    .app-row{display:grid;gap:.75rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-    @media (max-width:640px){.app-row{grid-template-columns:1fr}}
-    .app-form label{font-weight:600;font-size:.92rem}
-    .app-form input[type=text],.app-form input[type=email],.app-form input[type=url],.app-form input[type=tel],.app-form input[type=file],.app-form textarea,.app-form select{width:100%;padding:.75rem;border-radius:10px;border:1px solid #ddd;background:#fff;font:inherit}
-    .app-form small{color:#666}
-    .btn{display:inline-block;padding:.7rem 1.1rem;border-radius:999px;font-weight:800;text-decoration:none}
-    .btn--light{background:var(--white);color:var(--scarlet)}
-    .btn--dark{background:var(--dark);color:#fff}
-    .btn--ghost{background:transparent;border:2px solid #ccc}
-    .success-note{display:none;font-size:.95rem;color:#155724;background:#d4edda;border:1px solid #c3e6cb;padding:.6rem .8rem;border-radius:10px}
-    .error-note{display:none;font-size:.95rem;color:#842029;background:#f8d7da;border:1px solid #f5c2c7;padding:.6rem .8rem;border-radius:10px}
+    :root{
+      --scarlet: #c4122f;
+      --ink: #121212;
+      --muted: #5b5b5b;
+      --panel: #ffffff;
+      --surface: #f6f6f6;
+    }
+
+    body { background: var(--surface); }
+
+    .page-wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .lede{max-width: 860px; margin: .25rem auto 1.25rem;}
+    .lede p{color:#444; margin:.5rem 0 0}
+
+    /* Big aesthetic panels */
+    .app-panel{
+      background: var(--panel);
+      border: none;                /* no black outline */
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.12);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      margin: 1.25rem 0 1.75rem;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .app-panel:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 26px 56px rgba(0,0,0,.16);
+    }
+
+    /* Panel header */
+    .panel-head{
+      display:flex; align-items:baseline; gap: .75rem; flex-wrap: wrap;
+      border-bottom: 1px solid #eee; padding-bottom: .75rem; margin-bottom: 1rem;
+    }
+    .panel-eyebrow{
+      display:inline-block; font-weight:800; letter-spacing:.02em;
+      font-size:.88rem; color:#fff; background:var(--scarlet);
+      padding:.35rem .7rem; border-radius:999px;
+    }
+    .panel-title{
+      margin:0; font-weight:900; line-height:1.15;
+      font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+      color: var(--ink);
+    }
+
+    /* Body content columns */
+    .panel-body{
+      display:grid; gap: 1.25rem;
+      grid-template-columns: 1.2fr .9fr;
+    }
+    @media (max-width: 900px){
+      .panel-body{ grid-template-columns: 1fr; }
+    }
+
+    .panel-body p{
+      margin:.5rem 0 0; color:var(--muted);
+      font-size: 1rem; line-height: 1.55;
+    }
+
+    .desc{
+      display:grid; gap:.5rem;
+    }
+    .desc h3{
+      margin:0 0 .25rem 0; font-size:1.05rem;
+    }
+    .checklist{
+      margin:.25rem 0 0 0; padding:0 0 0 1.15rem; color:#444;
+      display:grid; gap:.25rem;
+      font-size:.98rem; line-height:1.45;
+    }
+
+    /* CTA column */
+    .cta{
+      background: linear-gradient(180deg, #fff, #fafafa);
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 1rem;
+      display: grid; gap: .6rem; align-content: start;
+    }
+    .cta p{ margin:0; color:#555; font-size:.95rem; }
+    .btn{
+      display:inline-block; text-decoration:none; font-weight:900;
+      padding:.85rem 1.05rem; border-radius:999px; border:none; cursor:pointer;
+    }
+    .btn-primary{
+      background:var(--scarlet); color:#fff;
+      box-shadow: 0 8px 18px rgba(196,18,47,.25);
+    }
+    .btn-primary:hover{ filter:brightness(.96); }
+
+    /* Small meta rows */
+    .meta{
+      display:grid; gap:.25rem; font-size:.9rem; color:#666;
+    }
+    .meta strong{color:#333}
   </style>
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
       <span>OSU Day Traders</span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
@@ -57,22 +128,132 @@
       </ul>
     </nav>
   </header>
-  <main class="content">
-    <div class="page-lede">
+
+  <main class="page-wrap">
+    <div class="lede">
       <h1>Applications</h1>
-      <p>Choose an application below. Cards enlarge on hover. When you submit, we’ll save a local copy of your responses and open a pre-filled email so you can send it (and attach files).</p>
+      <p>Pick a role and hit <strong>Apply</strong>. Each panel explains the scope, expectations, and what to include. You’ll get a pre-filled email draft — attach any files before sending.</p>
     </div>
-    <section class="apps">
-      <div class="app-grid">
-        <button class="app-card" data-open="modal-treasurer"><span class="pill">Application</span><h3>Treasurer Application</h3><p>Budgeting, reimbursements, sponsorships, and transparent reporting.</p></button>
-        <button class="app-card" data-open="modal-speaker"><span class="pill">Application</span><h3>Guest Speaker Application</h3><p>Share your edge, process, or domain expertise with the club.</p></button>
-        <button class="app-card" data-open="modal-board"><span class="pill">Application</span><h3>Board of Traders Application</h3><p>Help set standards, lead reviews, and mentor members.</p></button>
+
+    <!-- Treasurer -->
+    <section id="treasurer" class="app-panel">
+      <div class="panel-head">
+        <span class="panel-eyebrow">Leadership</span>
+        <h2 class="panel-title">Treasurer Application</h2>
+      </div>
+
+      <div class="panel-body">
+        <div class="desc">
+          <h3>What you’ll own</h3>
+          <ul class="checklist">
+            <li>Budgeting for programs and events.</li>
+            <li>Reimbursements and vendor payments.</li>
+            <li>Tracking dues, fundraising, and sponsorships.</li>
+            <li>Clear, periodic financial reporting.</li>
+          </ul>
+
+          <h3>What to include</h3>
+          <ul class="checklist">
+            <li>Relevant experience (treasurer roles, budgets, audits).</li>
+            <li>Tools you’re comfortable with (Sheets/Excel, QuickBooks, etc.).</li>
+            <li>Availability (weekly hours) and any links (resume, portfolio).</li>
+          </ul>
+        </div>
+
+        <aside class="cta">
+          <div class="meta">
+            <div><strong>Commitment:</strong> ~3–6 hrs/week</div>
+            <div><strong>Works with:</strong> President, Events, Sponsors</div>
+          </div>
+          <p>We’re looking for someone organized, detail-oriented, and friendly with spreadsheets.</p>
+          <a class="btn btn-primary"
+             href="mailto:apply@daytradersosu.com?subject=Treasurer%20Application&body=Name:%0AEmail:%0AMajor/Year:%0AExperience:%0ATools:%0ALinks:%0AAvailability:%0A"
+             >Apply</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Guest Speaker -->
+    <section id="guest-speaker" class="app-panel">
+      <div class="panel-head">
+        <span class="panel-eyebrow">Programming</span>
+        <h2 class="panel-title">Guest Speaker Application</h2>
+      </div>
+
+      <div class="panel-body">
+        <div class="desc">
+          <h3>Ideal speakers</h3>
+          <ul class="checklist">
+            <li>Traders with a teachable edge or repeatable process.</li>
+            <li>Professionals with market, risk, or analytics insights.</li>
+            <li>Builders (tools, data, platforms) relevant to intraday trading.</li>
+          </ul>
+
+          <h3>What to include</h3>
+          <ul class="checklist">
+            <li>Talk topic and 3–5 bullet outline.</li>
+            <li>Short bio and links (site, LinkedIn, slides, examples).</li>
+            <li>Preferred dates/times and AV needs.</li>
+          </ul>
+        </div>
+
+        <aside class="cta">
+          <div class="meta">
+            <div><strong>Format:</strong> 30–45 min + Q&amp;A</div>
+            <div><strong>Audience:</strong> OSU students, all levels</div>
+          </div>
+          <p>Help members level up by sharing your experience and mistakes — not just highlights.</p>
+          <a class="btn btn-primary"
+             href="mailto:apply@daytradersosu.com?subject=Guest%20Speaker%20Application&body=Name:%0AEmail:%0AOrganization/Title:%0ATalk%20Topic:%0AOutline:%0ALinks:%0APreferred%20Dates:%0A"
+             >Apply</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Board of Traders -->
+    <section id="board" class="app-panel">
+      <div class="panel-head">
+        <span class="panel-eyebrow">Standards</span>
+        <h2 class="panel-title">Board of Traders Application</h2>
+      </div>
+
+      <div class="panel-body">
+        <div class="desc">
+          <h3>What you’ll do</h3>
+          <ul class="checklist">
+            <li>Set and uphold process standards for members.</li>
+            <li>Lead post-trade reviews and journal audits.</li>
+            <li>Mentor members on risk, sizing, and execution.</li>
+            <li>Contribute dashboards, templates, or research.</li>
+          </ul>
+
+          <h3>What to include</h3>
+          <ul class="checklist">
+            <li>Experience (years, markets, styles) and risk framework.</li>
+            <li>Primary strategies and examples of process.</li>
+            <li>Links (journals, dashboards, repos) if available.</li>
+            <li>Weekly availability.</li>
+          </ul>
+        </div>
+
+        <aside class="cta">
+          <div class="meta">
+            <div><strong>Commitment:</strong> ~3–5 hrs/week</div>
+            <div><strong>Focus:</strong> Risk, review, accountability</div>
+          </div>
+          <p>We’re after thoughtful, process-first traders who enjoy teaching and holding a standard.</p>
+          <a class="btn btn-primary"
+             href="mailto:apply@daytradersosu.com?subject=Board%20of%20Traders%20Application&body=Name:%0AEmail:%0AExperience:%0ARisk%20Framework:%0AStrategies:%0ALinks:%0AAvailability:%0A"
+             >Apply</a>
+        </aside>
       </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
+
   <script src="js/main.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
