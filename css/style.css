@@ -85,6 +85,40 @@ body{
 }
 .form-note{font-size:.9rem;color:#666}
 
+/* ---------- Leadership cards (NO GRID) ---------- */
+.leaders{
+  display:flex;
+  flex-direction:column;   /* keep vertical stack */
+  gap:1rem;
+  margin-top:1rem;
+}
+.leader.card{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  padding:1rem;
+}
+.leader.card h3{margin:.25rem 0 .25rem}
+.leader.card p{margin:0}
+
+/* Photo styling */
+.leader-photo{
+  width:100px;
+  height:100px;
+  border-radius:50%;        /* circle portrait */
+  object-fit:cover;
+  box-shadow:var(--shadow);
+  flex:0 0 auto;
+}
+
+/* If you want a bigger portrait on a specific card, add class="leader-photo lg" */
+.leader-photo.lg{width:140px;height:140px}
+
+/* Stack photo above text on small screens */
+@media (max-width: 600px){
+  .leader.card{flex-direction:column;text-align:center}
+}
+
 /* Responsive nav */
 @media (max-width: 840px){
   .site-nav ul{display:none;flex-direction:column;background:var(--scarlet);position:absolute;right:1rem;top:64px;padding:1rem;border-radius:12px}
