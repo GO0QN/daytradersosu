@@ -94,7 +94,9 @@ body{
 .grid{display:grid;gap:1.25rem;padding:2rem 1rem;max-width:1100px;margin:0 auto}
 .grid--3{grid-template-columns:repeat(3,1fr)}
 @media (max-width:840px){.grid--3{grid-template-columns:1fr}}
-.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.25rem}
+.card{
+  background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.25rem
+}
 .link{font-weight:800;color:var(--scarlet);text-decoration:none}
 .link:hover{text-decoration:underline}
 
@@ -119,21 +121,31 @@ body{
 }
 .form-note{font-size:.9rem;color:#666}
 
-/* ===== Leadership Grid ===== */
-/* 12-column grid: featured span 6 (2-up), others span 4 (3-up) */
-.leaders-grid{
+/* ===== Leadership layout ===== */
+
+/* First row: 2 wide cards only */
+.leaders-featured{
   display:grid;
-  grid-template-columns:repeat(12, minmax(0,1fr));
+  grid-template-columns:repeat(2, minmax(0,1fr));
   gap:1rem;
   margin-top:1rem;
 }
+
+/* Other rows: 3-up grid */
+.leaders-others{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:1rem;
+  margin-top:1rem;
+}
+
+/* Shared card styles */
 .leader.card{
   display:flex;align-items:center;gap:1rem;padding:1rem;
   background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);
-  grid-column:span 4; /* default (3 per row) */
 }
-.leader--featured{
-  grid-column:span 6; /* 2 big boxes on first row */
+.leader--wide{ /* visual tweak for the featured two */
+  padding:1.25rem;
 }
 
 .leader-photo{
@@ -149,11 +161,11 @@ body{
 }
 
 /* Responsive behavior */
-@media (max-width: 900px){
-  .leader--featured{grid-column:span 12;}   /* stack featured */
-  .leader.card{grid-column:span 6;}         /* 2 per row */
+@media (max-width: 1000px){
+  .leaders-others{grid-template-columns:repeat(2, minmax(0,1fr))}
 }
-@media (max-width: 600px){
-  .leader.card{grid-column:span 12;}        /* 1 per row on phones */
+@media (max-width: 700px){
+  .leaders-featured{grid-template-columns:1fr}
+  .leaders-others{grid-template-columns:1fr}
   .leader-photo{width:80px;height:80px}
 }
