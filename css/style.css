@@ -76,7 +76,7 @@ body{
   object-position:center;
   background:#000;          /* letterbox background */
   padding:12px;             /* breathing room */
-  opacity:0; transition:opacity 600ms ease-in-out; will-change:opacity;
+  opacity:0; transition:opacity 1500ms ease-in-out; will-change:opacity;
 }
 .slideshow__viewport img.active{ opacity:1; }
 
