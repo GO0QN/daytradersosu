@@ -29,7 +29,7 @@ body{
 .site-nav a.active,.site-nav a:hover{opacity:1;text-decoration:underline}
 .nav-toggle{display:none}
 
-/* Responsive nav (mobile) */
+/* Responsive nav */
 @media (max-width: 840px){
   .site-nav ul{
     display:none;flex-direction:column;background:var(--scarlet);
@@ -58,34 +58,42 @@ body{
 .btn--outline{border:2px solid var(--white);color:var(--white);margin-left:.5rem}
 .btn--dark{background:var(--dark);color:var(--white)}
 
-/* ========== Slideshow (smooth fade) ========== */
+/* ========== Slideshow (fit screenshots, no crop) ========== */
 .slideshow{
   position:relative;max-width:1100px;margin:-2rem auto 2rem;
-  background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden
+  background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
 }
 .slideshow__viewport{
-  position:relative;height:420px; /* consistent height for smooth fades */
+  position:relative;
+  aspect-ratio:16 / 9;   /* responsive ratio */
+  max-height:520px;
+  background:#fff;
 }
 .slideshow__viewport img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;transition:opacity 600ms ease-in-out;will-change:opacity
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain;       /* ensures full screenshot visible */
+  object-position:center;
+  background:#000;          /* letterbox background */
+  padding:12px;             /* breathing room */
+  opacity:0; transition:opacity 600ms ease-in-out; will-change:opacity;
 }
-.slideshow__viewport img.active{opacity:1}
+.slideshow__viewport img.active{ opacity:1; }
 
 .slideshow__controls{
-  position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;
-  padding:0 .5rem;pointer-events:none
+  position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center;
+  padding:0 .5rem; pointer-events:none;
 }
 .slideshow__controls button{
-  pointer-events:auto;border:0;background:rgba(0,0,0,.4);color:#fff;
-  font-size:2rem;width:44px;height:44px;border-radius:50%
+  pointer-events:auto; border:0; background:rgba(0,0,0,.4); color:#fff;
+  font-size:2rem; width:44px; height:44px; border-radius:50%;
 }
-.slideshow__dots{display:flex;gap:.5rem;justify-content:center;padding:.75rem}
-.slideshow__dots button{width:10px;height:10px;border-radius:50%;border:0;background:#ddd}
+.slideshow__dots{display:flex; gap:.5rem; justify-content:center; padding:.75rem}
+.slideshow__dots button{width:10px; height:10px; border-radius:50%; border:0; background:#ddd}
 .slideshow__dots button[aria-selected="true"]{background:var(--scarlet)}
 
 @media (max-width:640px){
-  .slideshow__viewport{height:300px}
+  .slideshow__viewport{max-height:none; padding:0}
 }
 
 /* ========== Content / Cards / Grids ========== */
@@ -105,7 +113,7 @@ body{
 .link{font-weight:800;color:var(--scarlet);text-decoration:none}
 .link:hover{text-decoration:underline}
 
-/* ========== Lists & Utilities ========== */
+/* ========== Lists ========== */
 .checklist{list-style:none;padding-left:0}
 .checklist li{position:relative;padding-left:1.4rem;margin:.35rem 0}
 .checklist li::before{content:'✔';position:absolute;left:0;top:0;color:var(--scarlet)}
@@ -131,24 +139,16 @@ body{
 }
 .form-note{font-size:.9rem;color:#666}
 
-/* ========== Leadership Cards (no grid) ========== */
-.leaders{
-  display:flex;flex-direction:column;gap:1rem;margin-top:1rem
-}
-.leader.card{
-  display:flex;align-items:center;gap:1rem;padding:1rem
-}
+/* ========== Leadership Cards ========== */
+.leaders{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}
+.leader.card{display:flex;align-items:center;gap:1rem;padding:1rem}
 .leader.card h3{margin:.25rem 0}
 .leader.card p{margin:0}
-
-/* Leader photo (circular) */
 .leader-photo{
   width:70px;height:70px;border-radius:50%;object-fit:cover;
   box-shadow:var(--shadow);flex:0 0 auto
 }
-/* Optional larger avatar: add class="leader-photo lg" */
 .leader-photo.lg{width:100px;height:100px}
-
 @media (max-width:600px){
   .leader.card{flex-direction:column;text-align:center}
 }
