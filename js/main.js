@@ -20,15 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---- Slideshow ----
   initSlideshow({
     rootSelector: ".slideshow",
-    intervalMs: 5000,   // how long each slide shows (5s)
-    fadeSpeed: 600      // fade transition speed (ms)
+    intervalMs: 5000,   // how long each slide shows
+    fadeMs: 800         // fade speed (also set in CSS)
   });
 });
 
 /**
- * Initialize a fading slideshow
+ * Fading slideshow with autoplay, wrap-around, dots, buttons,
+ * pause on hover, and visibility-aware timers (Safari-friendly).
  */
-function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeSpeed = 600 } = {}) {
+function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeMs = 800 } = {}) {
   const root = document.querySelector(rootSelector);
   if (!root) return;
 
@@ -42,21 +43,23 @@ function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeSpe
   const nextBtn = root.querySelector(".next");
   const dotsWrap = root.querySelector(".slideshow__dots");
 
+  // Ensure one slide is active at start
   let index = slides.findIndex(s => s.classList.contains("active"));
   if (index < 0) index = 0;
 
-  // Setup initial state
+  // Apply fade speed inline so it always matches CSS
   slides.forEach((img, i) => {
-    img.style.transition = `opacity ${fadeSpeed}ms ease-in-out`;
+    img.style.transition = `opacity ${fadeMs}ms ease-in-out`;
     img.classList.toggle("active", i === index);
     img.setAttribute("aria-hidden", i === index ? "false" : "true");
   });
 
-  // Create dots
+  // Build dots
   if (dotsWrap) {
     dotsWrap.innerHTML = "";
     slides.forEach((_, i) => {
       const dot = document.createElement("button");
+      dot.type = "button";
       dot.setAttribute("role", "tab");
       dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
       dot.addEventListener("click", () => goTo(i, true));
@@ -65,9 +68,39 @@ function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeSpe
   }
   updateDots();
 
-  // Button handlers
+  // Controls
   prevBtn?.addEventListener("click", () => goTo(index - 1, true));
   nextBtn?.addEventListener("click", () => goTo(index + 1, true));
+
+  // Autoplay
+  let timer = null;
+  function startAuto() { stopAuto(); timer = setInterval(next, intervalMs); }
+  function stopAuto()  { if (timer) clearInterval(timer); timer = null; }
+  function restartAuto(){ startAuto(); }
+
+  function next() { goTo(index + 1); }
+  function goTo(i, fromUser = false) {
+    const nextIndex = (i + slides.length) % slides.length; // wrap around
+    if (nextIndex === index) return;
+
+    slides[index].classList.remove("active");
+    slides[index].setAttribute("aria-hidden", "true");
+
+    slides[nextIndex].classList.add("active");
+    slides[nextIndex].setAttribute("aria-hidden", "false");
+
+    index = nextIndex;
+    updateDots();
+
+    if (fromUser) restartAuto();
+  }
+
+  function updateDots() {
+    if (!dotsWrap) return;
+    Array.from(dotsWrap.children).forEach((d, i) =>
+      d.setAttribute("aria-selected", i === index ? "true" : "false")
+    );
+  }
 
   // Pause on hover
   root.addEventListener("mouseenter", stopAuto);
@@ -78,42 +111,16 @@ function initSlideshow({ rootSelector = ".slideshow", intervalMs = 5000, fadeSpe
     if (document.hidden) stopAuto(); else startAuto();
   });
 
-  // Start autoplay
+  // Start immediately
   startAuto();
 
-  // ---- Helpers ----
-  function updateDots() {
-    if (!dotsWrap) return;
-    [...dotsWrap.children].forEach((d, i) =>
-      d.setAttribute("aria-selected", i === index ? "true" : "false")
-    );
-  }
-
-  function goTo(i, fromUser = false) {
-    const next = (i + slides.length) % slides.length; // wrap around
-    if (next === index) return;
-
-    slides[index].classList.remove("active");
-    slides[index].setAttribute("aria-hidden", "true");
-
-    slides[next].classList.add("active");
-    slides[next].setAttribute("aria-hidden", "false");
-
-    index = next;
-    updateDots();
-    if (fromUser) restartAuto();
-  }
-
-  let timer = null;
-  function startAuto() {
-    stopAuto();
-    timer = setInterval(() => goTo(index + 1), intervalMs);
-  }
-  function stopAuto() {
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
-  function restartAuto() {
-    startAuto();
+  // Also start when the slideshow becomes visible (helps Safari/throttling)
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) startAuto(); else stopAuto();
+      }
+    }, { threshold: 0.1 });
+    io.observe(root);
   }
 }
