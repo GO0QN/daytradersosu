@@ -82,35 +82,34 @@
       <p>Pick a role and hit <strong>Apply</strong>. Each panel explains the scope, expectations, and what to include. Your submission is logged in Google Sheets and emailed to us.</p>
     </div>
 
-    <!-- Treasurer -->
-    <section id="treasurer" class="app-panel">
+    <!-- Club Member (replaces Treasurer) -->
+    <section id="member" class="app-panel">
       <div class="panel-head">
-        <span class="panel-eyebrow">Leadership</span>
-        <h2 class="panel-title">Treasurer Application</h2>
+        <span class="panel-eyebrow">Membership</span>
+        <h2 class="panel-title">Club Member Application</h2>
       </div>
       <div class="panel-body">
         <div class="desc">
-          <h3>What you’ll own</h3>
+          <h3>What you’ll get</h3>
           <ul class="checklist">
-            <li>Budgeting for programs and events.</li>
-            <li>Reimbursements and vendor payments.</li>
-            <li>Tracking dues, fundraising, and sponsorships.</li>
-            <li>Clear, periodic financial reporting.</li>
+            <li>Access to meetings, workshops, and live trading labs.</li>
+            <li>Community support and accountability partners.</li>
+            <li>Priority registration for club events and speakers.</li>
           </ul>
           <h3>What to include</h3>
           <ul class="checklist">
-            <li>Relevant experience (treasurer roles, budgets, audits).</li>
-            <li>Tools you’re comfortable with (Sheets/Excel, QuickBooks, etc.).</li>
-            <li>Availability and any links (resume, portfolio).</li>
+            <li>Your name, OSU email, and major.</li>
+            <li>Your trading or investing experience (if any).</li>
+            <li>What you hope to learn by joining the club.</li>
           </ul>
         </div>
         <aside class="cta">
           <div class="meta">
-            <div><strong>Commitment:</strong> ~3–6 hrs/week</div>
-            <div><strong>Works with:</strong> President, Events, Sponsors</div>
+            <div><strong>Commitment:</strong> ~1–2 hrs/week</div>
+            <div><strong>Meets with:</strong> Full OSU Day Traders team</div>
           </div>
-          <p>We’re looking for someone organized, detail-oriented, and friendly with spreadsheets.</p>
-          <button class="btn btn-primary" data-open-form="treasurer">Apply</button>
+          <p>We’re looking for curious students ready to learn markets and connect with like-minded peers.</p>
+          <button class="btn btn-primary" data-open-form="member">Apply</button>
         </aside>
       </div>
     </section>
@@ -200,16 +199,14 @@
   <script src="js/main.js"></script>
   <script>
     // === Replace these with your real Google Form "embed" URLs ===
-    // In Google Forms: Send (paper airplane) → <> Embed → copy the src URL.
     const FORM_URLS = {
-      treasurer: 'https://docs.google.com/forms/d/e/REPLACE_TREASURER_FORM_ID/viewform?embedded=true',
-      speaker:   'https://docs.google.com/forms/d/e/REPLACE_SPEAKER_FORM_ID/viewform?embedded=true',
-      board:     'https://docs.google.com/forms/d/e/REPLACE_BOARD_FORM_ID/viewform?embedded=true',
+      member:  'https://docs.google.com/forms/d/e/REPLACE_MEMBER_FORM_ID/viewform?embedded=true',
+      speaker: 'https://docs.google.com/forms/d/e/REPLACE_SPEAKER_FORM_ID/viewform?embedded=true',
+      board:   'https://docs.google.com/forms/d/e/REPLACE_BOARD_FORM_ID/viewform?embedded=true',
     };
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Open overlay with the appropriate Google Form
     const overlay = document.getElementById('formOverlay');
     const frame   = document.getElementById('formFrame');
     const titleEl = document.getElementById('formTitle');
