@@ -13,14 +13,11 @@
   <meta property="og:image" content="assets/images/osu-daytraders-logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Page-scoped polish, matching site style -->
   <style>
     :root{
       --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
-      --pill:#f6f7fb;
     }
     body{background:var(--surface)}
-    /* normalize this page's h1 to match the rest */
     .calendar-wrap h1{color:var(--ink)}
 
     .calendar-wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
@@ -32,7 +29,8 @@
     .cal-btn:active{transform:translateY(1px)}
 
     .calendar{--gap:.65rem;display:grid;gap:var(--gap);grid-template-columns:repeat(7,1fr);max-width:980px;margin:0 auto}
-    /* weekday row in scarlet */
+
+    /* weekday header in scarlet */
     .cal-dow{
       font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;
       color:#fff;background:var(--scarlet);border-radius:12px;text-align:center;padding:.5rem .4rem;
@@ -49,25 +47,27 @@
     .cal-cell.muted{opacity:.45}
     .cal-date{font-weight:900;font-size:.95rem;color:#333}
 
-    /* event bar, red-themed like your example */
+    /* red event bar; left padding prevents dot overlap */
     .event-bar{
-      display:block;width:100%;
-      background:var(--scarlet); color:#fff; border:0; border-radius:12px;
-      padding:.5rem .6rem; line-height:1.25; font-size:.88rem; font-weight:800;
-      box-shadow:0 10px 26px rgba(196,18,47,.25);
       position:relative;
+      display:block;width:100%;
+      background:var(--scarlet); color:#fff;
+      border-radius:14px; padding:.55rem .7rem .6rem 1.6rem;
+      line-height:1.25; font-size:.88rem; font-weight:800;
+      box-shadow:0 10px 26px rgba(196,18,47,.25);
     }
     .event-bar + .event-bar{margin-top:.35rem}
     .event-bar small{
       display:block; margin-top:.15rem; font-weight:700; opacity:.95; letter-spacing:.01em;
     }
     .event-dot{
-      position:absolute; left:.48rem; top:.6rem; width:.5rem; height:.5rem; border-radius:999px;
-      background:#fff; opacity:.9;
+      position:absolute; left:.6rem; top:.72rem; width:.5rem; height:.5rem; border-radius:999px;
+      background:#fff; opacity:.95;
     }
+
     .legend{max-width:980px;margin:1.1rem auto 0;color:#666;font-size:.92rem}
 
-    /* Drawer (bottom sheet) */
+    /* Drawer */
     .drawer{position:fixed;inset:auto 0 0 0;max-height:66vh;background:#fff;border-top:1px solid #eee;box-shadow:0 -28px 80px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .18s ease;z-index:40}
     .drawer.show{transform:translateY(0)}
     .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1rem;border-bottom:1px solid #eee}
@@ -90,7 +90,6 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
@@ -109,7 +108,6 @@
     </nav>
   </header>
 
-  <!-- Calendar -->
   <main class="calendar-wrap">
     <div class="cal-header">
       <h1 class="cal-title" id="calTitle">Events Calendar</h1>
@@ -120,16 +118,13 @@
       </div>
     </div>
 
-    <div class="calendar" id="calendar">
-      <!-- JS renders headers and days -->
-    </div>
+    <div class="calendar" id="calendar"></div>
 
     <p class="legend">
-      All times Eastern. Click a date to view details, Zoom, and location.
+      All times Eastern. Click a date to view details and Zoom registration.
     </p>
   </main>
 
-  <!-- Drawer -->
   <aside class="drawer" id="drawer" aria-hidden="true">
     <div class="drawer-head">
       <h3 class="drawer-title" id="drawerTitle">Events</h3>
@@ -147,20 +142,18 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ====== EVENT DATA ======
-    // Meeting on the 17th of the current month at 6:00 PM ET
+    // ====== Event data (virtual-only) ======
     const today = new Date();
     const ONE_OFF_EVENTS = [{
       name: "Weekly Meeting",
       type: "Club Meeting",
-      start: new Date(today.getFullYear(), today.getMonth(), 17, 18, 0),
+      start: new Date(today.getFullYear(), today.getMonth(), 17, 18, 0), // 17th @ 6:00 PM ET
       duration: 75,
-      location: "Hitchcock Hall, Room 131",
+      location: null,                 // no physical location
+      virtual: true,                  // mark virtual
       zoom: "https://osu.zoom.us/meeting/register/OBKK4x6ARW-nLENvzqbGAg",
       description: "Market rundown, risk review, and a breakout scalp workflow."
     }];
-
-    // Optionally add recurring rules later
     const RECUR_RULES = [];
 
     // ====== Utilities ======
@@ -174,11 +167,12 @@
     function gcal(ev){
       const end = new Date(ev.start.getTime() + (ev.duration||60)*60000);
       const fmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+      const details = `${ev.type?ev.type+" — ":""}${ev.description||""}\n${ev.zoom?"Zoom: "+ev.zoom:""}`;
       const qs = new URLSearchParams({
         action:"TEMPLATE",
         text: ev.name,
-        details: `${ev.type?ev.type+" — ":""}${ev.description||""}\n${ev.zoom?"Zoom: "+ev.zoom:""}`,
-        location: ev.location || "TBD",
+        details,
+        location: ev.location ? ev.location : "Virtual",
         dates: `${fmt(ev.start)}/${fmt(end)}`
       });
       return `https://calendar.google.com/calendar/render?${qs.toString()}`;
@@ -226,10 +220,12 @@
     const drawerTitle = document.getElementById("drawerTitle");
     document.getElementById("closeDrawer").onclick = () => drawer.classList.remove("show");
 
-    let view = new Date(today.getFullYear(), today.getMonth(), 1); // current month
+    const now = new Date();
+    let view = new Date(now.getFullYear(), now.getMonth(), 1);
+
     document.getElementById("prevBtn").onclick = ()=>{ view = new Date(view.getFullYear(), view.getMonth()-1, 1); render(); };
     document.getElementById("nextBtn").onclick = ()=>{ view = new Date(view.getFullYear(), view.getMonth()+1, 1); render(); };
-    document.getElementById("todayBtn").onclick = ()=>{ view = new Date(today.getFullYear(), today.getMonth(), 1); render(); };
+    document.getElementById("todayBtn").onclick = ()=>{ view = new Date(now.getFullYear(), now.getMonth(), 1); render(); };
 
     function render(){
       cal.innerHTML = "";
@@ -279,10 +275,11 @@
           const bar = document.createElement("a");
           bar.href = "#";
           bar.className = "event-bar";
+          const locationText = ev.location ? ` • ${ev.location}` : " • Virtual";
           bar.innerHTML = `
             <span class="event-dot" aria-hidden="true"></span>
             ${ev.name}
-            <small>${formatTime(ev.start)} ET • ${ev.location || "TBD"}</small>
+            <small>${formatTime(ev.start)} ET${locationText}</small>
           `;
           bar.addEventListener("click", (e)=>{ e.preventDefault(); openDrawer(d, dayEvents); });
           cell.appendChild(bar);
@@ -298,8 +295,7 @@
     }
 
     function openDrawer(date, events){
-      drawerTitle.textContent = date
-        .toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric", year:"numeric"});
+      drawerTitle.textContent = date.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric", year:"numeric"});
       drawerBody.innerHTML = "";
       if (!events.length){
         const empty = document.createElement("div");
@@ -310,11 +306,12 @@
         for (const ev of events){
           const card = document.createElement("div");
           card.className = "card";
+          const where = ev.location ? ev.location : "Virtual (Zoom)";
           card.innerHTML = `
             <h4>${ev.name}</h4>
-            <div class="meta">${ev.type || "Event"} • ${formatTime(ev.start)} ET • ${ev.location || "TBD"}</div>
+            <div class="meta">${ev.type || "Event"} • ${formatTime(ev.start)} ET • ${where}</div>
             ${ev.description ? `<p class="desc">${ev.description}</p>` : ""}
-            ${ev.zoom ? `<p class="desc">Zoom: <a class="btn btn--light" href="${ev.zoom}" target="_blank" rel="noopener">Registration link</a></p>` : ""}
+            ${ev.zoom ? `<p class="desc"><a class="btn btn--light" href="${ev.zoom}" target="_blank" rel="noopener">Zoom registration</a></p>` : ""}
             <div class="actions">
               <a class="btn btn--scarlet" href="${gcal(ev)}" target="_blank" rel="noopener">Add to Google Calendar</a>
               <a class="btn btn--light" href="applications.html#member">Join the club</a>
