@@ -1,52 +1,117 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Contact • OSU Day Traders</title>
-<link href="css/style.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact • OSU Day Traders</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/icons/favicon.ico" />
+
+  <meta property="og:title" content="OSU Day Traders – Contact" />
+  <meta property="og:description" content="Get in touch with OSU Day Traders for membership, events, or sponsorships." />
+  <meta property="og:image" content="assets/images/osu-daytraders-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
 </head>
+
 <body>
-<header class="site-header">
-<a class="brand" href="index.html">
-<img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
-<span>OSU Day Traders</span>
-</a>
-<nav aria-label="Main navigation" class="site-nav">
-<button aria-controls="navMenu" aria-expanded="false" class="nav-toggle">☰</button>
-<ul id="navMenu">
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="events.html">Events</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a class="active" href="contact.html">Contact</a></li>
-<li><a href="applications.html">Applications</a></li></ul>
-</nav>
-</header>
-<main class="content narrow">
-<h1>Contact</h1>
-<p id="join">Interested in joining? Have a question or want to sponsor an event?</p>
-<form action="#" class="contact-form" method="post" onsubmit="return false">
-<label>
+  <!-- Header -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
+      <span>OSU Day Traders</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <ul id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a class="active" href="contact.html">Contact</a></li>
+        <li><a href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Content -->
+  <main class="content narrow">
+    <h1>Contact</h1>
+    <p>If you have questions about joining, speaking, partnering, or sponsoring OSU Day Traders, reach out below.</p>
+
+    <!-- ✅ Working Contact Form (Formspree) -->
+    <form id="contact-form"
+          action="https://formspree.io/f/manayagg"
+          method="POST"
+          class="contact-form"
+          autocomplete="on">
+
+      <label>
         Name
-        <input name="name" required="" type="text"/>
-</label>
-<label>
+        <input type="text" name="name" required />
+      </label>
+
+      <label>
         Email
-        <input name="email" required="" type="email"/>
-</label>
-<label>
+        <input type="email" name="email" required />
+      </label>
+
+      <label>
         Message
-        <textarea name="message" required="" rows="6"></textarea>
-</label>
-<button class="btn btn--dark" type="submit">Send</button>
-<p class="form-note">* Demo form only. Hook this up to your backend or a service (e.g., Formspree) to receive messages.</p>
-</form>
-</main>
-<footer class="site-footer">
-<p>© 2025 OSU Day Traders</p>
-</footer>
-<script src="js/main.js"></script>
+        <textarea name="message" rows="6" required></textarea>
+      </label>
+
+      <!-- Invisible honeypot for spam bots -->
+      <input type="text" name="_gotcha" style="display:none">
+
+      <!-- Subject line of the email YOU receive -->
+      <input type="hidden" name="_subject" value="New OSU Day Traders Contact Message" />
+
+      <button class="btn btn--dark" type="submit">Send</button>
+      <p class="form-note" id="form-status"></p>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- Simple inline JS for UX -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+
+    // Optional: AJAX-based submission for better UX
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.textContent = "Sending…";
+
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(form)
+        });
+
+        if (res.ok) {
+          form.reset();
+          status.innerHTML = "<strong>Thanks!</strong> Your message was sent successfully.";
+        } else {
+          status.textContent = "Error sending message. Try again later.";
+        }
+      } catch {
+        status.textContent = "Network error. Check your connection.";
+      }
+    });
+  </script>
+
 </body>
 </html>
