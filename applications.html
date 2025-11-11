@@ -57,6 +57,7 @@
     @media (max-width:640px){.form-sheet{inset:2% 2%}}
   </style>
 </head>
+
 <body>
   <header class="site-header">
     <a class="brand" href="index.html">
@@ -82,7 +83,7 @@
       <p>Pick a role and hit <strong>Apply</strong>. Each panel explains the scope, expectations, and what to include. Your submission is logged in Google Sheets and emailed to us.</p>
     </div>
 
-    <!-- Club Member (replaces Treasurer) -->
+    <!-- ✅ Club Member -->
     <section id="member" class="app-panel">
       <div class="panel-head">
         <span class="panel-eyebrow">Membership</span>
@@ -103,6 +104,7 @@
             <li>What you hope to learn by joining the club.</li>
           </ul>
         </div>
+
         <aside class="cta">
           <div class="meta">
             <div><strong>Commitment:</strong> ~1–2 hrs/week</div>
@@ -114,7 +116,7 @@
       </div>
     </section>
 
-    <!-- Guest Speaker -->
+    <!-- ✅ Guest Speaker -->
     <section id="guest-speaker" class="app-panel">
       <div class="panel-head">
         <span class="panel-eyebrow">Programming</span>
@@ -135,18 +137,19 @@
             <li>Preferred dates/times and AV needs.</li>
           </ul>
         </div>
+
         <aside class="cta">
           <div class="meta">
             <div><strong>Format:</strong> 30–45 min + Q&amp;A</div>
-            <div><strong>Audience:</strong> OSU students, all levels</div>
+            <div><strong>Audience:</strong> OSU students</div>
           </div>
-          <p>Help members level up by sharing your experience and mistakes — not just highlights.</p>
+          <p>Share your insights with members and help level up the community.</p>
           <button class="btn btn-primary" data-open-form="speaker">Apply</button>
         </aside>
       </div>
     </section>
 
-    <!-- Board of Traders -->
+    <!-- ✅ Board Application -->
     <section id="board" class="app-panel">
       <div class="panel-head">
         <span class="panel-eyebrow">Standards</span>
@@ -161,27 +164,29 @@
             <li>Mentor members on risk, sizing, and execution.</li>
             <li>Contribute dashboards, templates, or research.</li>
           </ul>
+
           <h3>What to include</h3>
           <ul class="checklist">
-            <li>Experience (years, markets, styles) and risk framework.</li>
-            <li>Primary strategies and examples of process.</li>
-            <li>Links (journals, dashboards, repos) if available.</li>
+            <li>Experience and risk framework.</li>
+            <li>Primary strategies used.</li>
+            <li>Any trading records or examples.</li>
             <li>Weekly availability.</li>
           </ul>
         </div>
+
         <aside class="cta">
           <div class="meta">
-            <div><strong>Commitment:</strong> ~3–5 hrs/week</div>
+            <div><strong>Commitment:</strong> 3–5 hrs/week</div>
             <div><strong>Focus:</strong> Risk, review, accountability</div>
           </div>
-          <p>We’re after thoughtful, process-first traders who enjoy teaching and holding a standard.</p>
+          <p>We’re looking for disciplined, process-first traders who can guide others.</p>
           <button class="btn btn-primary" data-open-form="board">Apply</button>
         </aside>
       </div>
     </section>
   </main>
 
-  <!-- Fullscreen Google Form overlay -->
+  <!-- ✅ Application Overlay -->
   <div id="formOverlay" class="form-overlay" role="dialog" aria-modal="true" aria-labelledby="formTitle">
     <div class="form-sheet">
       <div class="form-bar">
@@ -197,40 +202,44 @@
   </footer>
 
   <script src="js/main.js"></script>
+
   <script>
-    // === Replace these with your real Google Form "embed" URLs ===
+    // ✅ USE REAL FORM LINKS HERE
     const FORM_URLS = {
-      member:  'https://docs.google.com/forms/d/e/REPLACE_MEMBER_FORM_ID/viewform?embedded=true',
-      speaker: 'https://docs.google.com/forms/d/e/REPLACE_SPEAKER_FORM_ID/viewform?embedded=true',
-      board:   'https://docs.google.com/forms/d/e/REPLACE_BOARD_FORM_ID/viewform?embedded=true',
+      member:  "https://docs.google.com/forms/d/e/1FAIpQLSdmhA_UOB8ACMmOdvADNBa1b5rHB_uMXiEpk4_ejP-F8LBlkw/viewform?embedded=true",
+      speaker: "https://docs.google.com/forms/d/e/REPLACE_SPEAKER_FORM_ID/viewform?embedded=true",
+      board:   "https://docs.google.com/forms/d/e/REPLACE_BOARD_FORM_ID/viewform?embedded=true"
     };
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    const overlay = document.getElementById('formOverlay');
-    const frame   = document.getElementById('formFrame');
-    const titleEl = document.getElementById('formTitle');
+    const overlay = document.getElementById("formOverlay");
+    const frame = document.getElementById("formFrame");
+    const titleEl = document.getElementById("formTitle");
 
-    document.querySelectorAll('[data-open-form]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const key = btn.getAttribute('data-open-form');
+    document.querySelectorAll("[data-open-form]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-open-form");
         const src = FORM_URLS[key];
-        if (!src) { window.open('https://forms.google.com', '_blank'); return; }
-        titleEl.textContent = btn.closest('.app-panel').querySelector('.panel-title').textContent.trim();
+        if (!src) { alert("Form unavailable."); return; }
+
+        titleEl.textContent = btn.closest(".app-panel").querySelector(".panel-title").textContent.trim();
         frame.src = src;
-        overlay.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        overlay.style.display = "block";
+        document.body.style.overflow = "hidden";
       });
     });
 
-    function closeOverlay(){
-      overlay.style.display = 'none';
-      frame.src = '';
-      document.body.style.overflow = '';
+    function closeOverlay() {
+      overlay.style.display = "none";
+      frame.src = "";
+      document.body.style.overflow = "";
     }
-    document.getElementById('formClose').addEventListener('click', closeOverlay);
-    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeOverlay(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && overlay.style.display==='block') closeOverlay(); });
+
+    document.getElementById("formClose").addEventListener("click", closeOverlay);
+    overlay.addEventListener("click", e => { if (e.target === overlay) closeOverlay(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && overlay.style.display === "block") closeOverlay(); });
   </script>
+
 </body>
 </html>
