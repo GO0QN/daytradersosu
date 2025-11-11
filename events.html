@@ -13,49 +13,67 @@
   <meta property="og:image" content="assets/images/osu-daytraders-logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Page-scoped polish -->
+  <!-- Page-scoped polish, aligned with site -->
   <style>
+    :root{
+      --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
+    }
+    body{background:var(--surface)}
+
     .calendar-wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
-    .cal-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:.25rem auto 1.25rem;max-width:980px}
-    .cal-title{font-size:1.75rem;font-weight:900;margin:0}
+    .cal-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:.25rem auto 1.2rem;max-width:980px}
+    .cal-title{font-size:1.75rem;font-weight:900;margin:0;color:var(--ink)}
     .cal-controls{display:flex;gap:.5rem}
-    .cal-btn{border:1px solid #ddd;background:#fff;border-radius:12px;padding:.55rem .8rem;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.06)}
+    .cal-btn{border:1px solid #e8e8e8;background:#fff;border-radius:999px;padding:.55rem .85rem;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.06)}
     .cal-btn:hover{filter:brightness(.97)}
+    .cal-btn:active{transform:translateY(1px)}
 
     .calendar{--gap:.65rem;display:grid;gap:var(--gap);grid-template-columns:repeat(7,1fr);max-width:980px;margin:0 auto}
-    .cal-dow{font-size:.8rem;color:#666;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.35rem 0}
+    .cal-dow{font-size:.8rem;color:#777;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.35rem 0}
 
-    .cal-cell{background:linear-gradient(180deg,#ffffff,#fbfbfb);border:1px solid #eee;border-radius:16px;min-height:120px;padding:.75rem;display:flex;flex-direction:column;gap:.4rem;box-shadow:0 14px 36px rgba(0,0,0,.07)}
+    .cal-cell{
+      background:linear-gradient(180deg,#ffffff,#fbfbfb);
+      border:1px solid #eee;border-radius:18px;min-height:120px;padding:.75rem;
+      display:flex;flex-direction:column;gap:.45rem;box-shadow:0 16px 38px rgba(0,0,0,.06);
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .cal-cell:hover{ transform:translateY(-2px); box-shadow:0 24px 50px rgba(0,0,0,.1) }
     .cal-cell.muted{opacity:.45}
     .cal-date{font-weight:900;font-size:.95rem;color:#333}
 
-    .event-pill{display:block;border-radius:12px;padding:.45rem .55rem;border:1px solid #eee;background:#f6f7fb;font-size:.86rem;line-height:1.25;box-shadow:inset 0 0 0 1px rgba(0,0,0,.02)}
-    .event-pill strong{display:block;font-weight:900}
-    .event-pill small{color:#666}
-    .event-pill + .event-pill{margin-top:.35rem}
+    .pill{
+      display:block;border-radius:12px;padding:.5rem .6rem;border:1px solid #eee;background:#fafbff;
+      font-size:.86rem;line-height:1.25;position:relative;
+    }
+    .pill:before{
+      content:""; position:absolute; left:6px; top:10px; width:8px; height:8px; border-radius:999px; background:var(--scarlet);
+    }
+    .pill strong{display:block;font-weight:900;padding-left:14px}
+    .pill small{color:#666;padding-left:14px}
+    .pill + .pill{margin-top:.4rem}
 
     .legend{max-width:980px;margin:1.1rem auto 0;color:#666;font-size:.92rem}
 
-    /* Drawer */
+    /* Drawer (bottom sheet) */
     .drawer{position:fixed;inset:auto 0 0 0;max-height:66vh;background:#fff;border-top:1px solid #eee;box-shadow:0 -28px 80px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .18s ease;z-index:40}
     .drawer.show{transform:translateY(0)}
     .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1rem;border-bottom:1px solid #eee;background:#fff}
     .drawer-title{margin:0;font-size:1.05rem;font-weight:900}
     .drawer-body{padding:1rem;display:grid;gap:.85rem;max-height:52vh;overflow:auto;background:linear-gradient(180deg,#fff,#fafafa)}
-    .drawer-card{border:1px solid #eee;border-radius:16px;padding:.9rem;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.06)}
-    .drawer-card h4{margin:.1rem 0 .35rem 0}
-    .drawer-meta{font-size:.92rem;color:#666}
-    .drawer-actions{margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap}
-    .btn{display:inline-block;text-decoration:none;font-weight:900;padding:.7rem .95rem;border-radius:999px;border:1px solid #111;background:#111;color:#fff}
-    .btn.btn--light{background:#fff;color:#111;border:1px solid #ddd}
-    .btn--scarlet{background:#c4122f;border-color:#c4122f;color:#fff}
-    .description{margin:.35rem 0 0 0;color:#444}
+    .card{border:1px solid #eee;border-radius:16px;padding:.95rem;background:#fff;box-shadow:0 12px 26px rgba(0,0,0,.07)}
+    .card h4{margin:.1rem 0 .35rem 0}
+    .meta{font-size:.92rem;color:#666}
+    .desc{margin:.45rem 0 0 0;color:#3f3f3f}
+    .actions{margin-top:.7rem;display:flex;gap:.5rem;flex-wrap:wrap}
+    .btn{display:inline-block;text-decoration:none;font-weight:900;padding:.72rem 1rem;border-radius:999px;border:1px solid #111;background:#111;color:#fff}
+    .btn--light{background:#fff;color:#111;border:1px solid #ddd}
+    .btn--scarlet{background:var(--scarlet);border-color:var(--scarlet);color:#fff}
     .link{color:#0a66c2;font-weight:800;text-decoration:none}
     .link:hover{text-decoration:underline}
 
     @media (max-width:760px){
       .cal-cell{min-height:92px}
-      .event-pill strong{font-size:.88rem}
+      .pill strong{font-size:.88rem}
     }
   </style>
 </head>
@@ -96,7 +114,7 @@
     </div>
 
     <p class="legend">
-      Times are listed in Eastern Time. Click a date to view details, Zoom links, and locations.
+      All times Eastern. Click a date to view details, Zoom, and location.
     </p>
   </main>
 
@@ -119,35 +137,22 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // ====== EVENT DATA ======
-    // One-off events (exact dates). Use local ET; month is 0-indexed in JS.
-    // Today is assumed 2025-11-11, so "this Thursday" = 2025-11-13.
-    const ONE_OFF_EVENTS = [
-      {
-        name: "Weekly Meeting",
-        type: "Club Meeting",
-        start: new Date(2025, 10, 13, 18, 0), // Thu Nov 13, 2025 6:00 PM ET
-        duration: 75, // minutes
-        location: "Hitchcock Hall, Room 131",
-        zoom: "https://osu.zoom.us/j/1234567890", // TODO: replace with your real Zoom link
-        description: "Agenda: quick market rundown, risk review, and a breakout scalp workflow."
-      }
-    ];
+    // Meeting on the 17th of the CURRENT month at 6:00 PM ET.
+    // Change the hour/min if you need to; it auto-picks the right month/year.
+    const today = new Date();
+    const MEETING = {
+      name: "Weekly Meeting",
+      type: "Club Meeting",
+      start: new Date(today.getFullYear(), today.getMonth(), 17, 18, 0), // 17th @ 6:00 PM
+      duration: 75,
+      location: "Hitchcock Hall, Room 131",
+      zoom: "https://osu.zoom.us/meeting/register/OBKK4x6ARW-nLENvzqbGAg",
+      description: "Market rundown, risk review, and a breakout scalp workflow."
+    };
+    const ONE_OFF_EVENTS = [MEETING];
 
-    // Recurring events (optional; keep for ongoing schedule)
-    // weekday: 0=Sun … 6=Sat | time is 24h "HH:MM" ET
-    const RECUR_RULES = [
-      /*
-      {
-        name: "Strategy Lab",
-        type: "Workshop",
-        recur: { freq: "WEEKLY", weekday: 4 }, // Thursday
-        time: "19:00",
-        duration: 60,
-        location: "TBD",
-        description: "Backtests, review, and open Q&A."
-      }
-      */
-    ];
+    // If you want recurring items later, add to RECUR_RULES (kept off for now).
+    const RECUR_RULES = [ /* see earlier example if needed */ ];
 
     // ====== Utilities ======
     const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -165,7 +170,7 @@
       const qs = new URLSearchParams({
         action: "TEMPLATE",
         text: ev.name,
-        details: `${ev.type || ""}${ev.type ? " — " : ""}${ev.description || ""}\n${ev.zoom ? "Zoom: "+ev.zoom : ""}`,
+        details: `${ev.type ? ev.type+" — " : ""}${ev.description||""}\n${ev.zoom ? "Zoom: "+ev.zoom : ""}`,
         location: ev.location || "TBD",
         dates: `${fmt(start)}/${fmt(end)}`
       });
@@ -215,8 +220,7 @@
     const drawerTitle = document.getElementById("drawerTitle");
     document.getElementById("closeDrawer").onclick = () => drawer.classList.remove("show");
 
-    const today = new Date();
-    let view = new Date(today.getFullYear(), today.getMonth(), 1); // start on current month
+    let view = new Date(today.getFullYear(), today.getMonth(), 1); // current month
 
     document.getElementById("prevBtn").onclick = ()=>{ view = new Date(view.getFullYear(), view.getMonth()-1, 1); render(); };
     document.getElementById("nextBtn").onclick = ()=>{ view = new Date(view.getFullYear(), view.getMonth()+1, 1); render(); };
@@ -267,14 +271,14 @@
         for (const ev of dayEvents){
           const pill = document.createElement("a");
           pill.href = "#";
-          pill.className = "event-pill";
+          pill.className = "pill";
           pill.innerHTML = `<strong>${ev.name}</strong><small>${formatTime(ev.start)} ET • ${ev.location || "TBD"}</small>`;
           pill.addEventListener("click", (e)=>{ e.preventDefault(); openDrawer(d, dayEvents); });
           cell.appendChild(pill);
         }
 
         cell.addEventListener("click", (e)=>{
-          if (e.target.closest(".event-pill")) return;
+          if (e.target.closest(".pill")) return;
           openDrawer(d, dayEvents);
         });
 
@@ -287,19 +291,19 @@
       drawerBody.innerHTML = "";
       if (!events.length){
         const empty = document.createElement("div");
-        empty.className = "drawer-card";
+        empty.className = "card";
         empty.innerHTML = "<p>No scheduled events on this date.</p>";
         drawerBody.appendChild(empty);
       } else {
         for (const ev of events){
           const card = document.createElement("div");
-          card.className = "drawer-card";
+          card.className = "card";
           card.innerHTML = `
             <h4>${ev.name}</h4>
-            <div class="drawer-meta">${ev.type || "Event"} • ${formatTime(ev.start)} ET • ${ev.location || "TBD"}</div>
-            ${ev.description ? `<p class="description">${ev.description}</p>` : ""}
-            ${ev.zoom ? `<p class="description">Zoom: <a class="link" href="${ev.zoom}" target="_blank" rel="noopener">${ev.zoom}</a></p>` : ""}
-            <div class="drawer-actions">
+            <div class="meta">${ev.type || "Event"} • ${formatTime(ev.start)} ET • ${ev.location || "TBD"}</div>
+            ${ev.description ? `<p class="desc">${ev.description}</p>` : ""}
+            ${ev.zoom ? `<p class="desc">Zoom: <a class="link" href="${ev.zoom}" target="_blank" rel="noopener">Registration link</a></p>` : ""}
+            <div class="actions">
               <a class="btn btn--scarlet" href="${googleCalLink(ev)}" target="_blank" rel="noopener">Add to Google Calendar</a>
               <a class="btn btn--light" href="applications.html#member">Join the club</a>
             </div>
