@@ -1,53 +1,316 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Events • OSU Day Traders</title>
-<link href="css/style.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events • OSU Day Traders</title>
+
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="assets/icons/favicon.ico" />
+
+  <meta property="og:title" content="OSU Day Traders – Events & Workshops" />
+  <meta property="og:description" content="Interactive calendar of OSU Day Traders meetings, workshops, and speakers." />
+  <meta property="og:image" content="assets/images/osu-daytraders-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Page-scoped polish -->
+  <style>
+    .calendar-wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
+    .cal-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:.25rem auto 1.25rem;max-width:980px}
+    .cal-title{font-size:1.75rem;font-weight:900;margin:0}
+    .cal-controls{display:flex;gap:.5rem}
+    .cal-btn{border:1px solid #ddd;background:#fff;border-radius:12px;padding:.55rem .8rem;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.06)}
+    .cal-btn:hover{filter:brightness(.97)}
+
+    .calendar{--gap:.65rem;display:grid;gap:var(--gap);grid-template-columns:repeat(7,1fr);max-width:980px;margin:0 auto}
+    .cal-dow{font-size:.8rem;color:#666;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.35rem 0}
+
+    .cal-cell{background:linear-gradient(180deg,#ffffff,#fbfbfb);border:1px solid #eee;border-radius:16px;min-height:120px;padding:.75rem;display:flex;flex-direction:column;gap:.4rem;box-shadow:0 14px 36px rgba(0,0,0,.07)}
+    .cal-cell.muted{opacity:.45}
+    .cal-date{font-weight:900;font-size:.95rem;color:#333}
+
+    .event-pill{display:block;border-radius:12px;padding:.45rem .55rem;border:1px solid #eee;background:#f6f7fb;font-size:.86rem;line-height:1.25;box-shadow:inset 0 0 0 1px rgba(0,0,0,.02)}
+    .event-pill strong{display:block;font-weight:900}
+    .event-pill small{color:#666}
+    .event-pill + .event-pill{margin-top:.35rem}
+
+    .legend{max-width:980px;margin:1.1rem auto 0;color:#666;font-size:.92rem}
+
+    /* Drawer */
+    .drawer{position:fixed;inset:auto 0 0 0;max-height:66vh;background:#fff;border-top:1px solid #eee;box-shadow:0 -28px 80px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .18s ease;z-index:40}
+    .drawer.show{transform:translateY(0)}
+    .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1rem;border-bottom:1px solid #eee;background:#fff}
+    .drawer-title{margin:0;font-size:1.05rem;font-weight:900}
+    .drawer-body{padding:1rem;display:grid;gap:.85rem;max-height:52vh;overflow:auto;background:linear-gradient(180deg,#fff,#fafafa)}
+    .drawer-card{border:1px solid #eee;border-radius:16px;padding:.9rem;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+    .drawer-card h4{margin:.1rem 0 .35rem 0}
+    .drawer-meta{font-size:.92rem;color:#666}
+    .drawer-actions{margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap}
+    .btn{display:inline-block;text-decoration:none;font-weight:900;padding:.7rem .95rem;border-radius:999px;border:1px solid #111;background:#111;color:#fff}
+    .btn.btn--light{background:#fff;color:#111;border:1px solid #ddd}
+    .btn--scarlet{background:#c4122f;border-color:#c4122f;color:#fff}
+    .description{margin:.35rem 0 0 0;color:#444}
+    .link{color:#0a66c2;font-weight:800;text-decoration:none}
+    .link:hover{text-decoration:underline}
+
+    @media (max-width:760px){
+      .cal-cell{min-height:92px}
+      .event-pill strong{font-size:.88rem}
+    }
+  </style>
 </head>
 <body>
-<header class="site-header">
-<a class="brand" href="index.html">
-<img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
-<span>OSU Day Traders</span>
-</a>
-<nav aria-label="Main navigation" class="site-nav">
-<button aria-controls="navMenu" aria-expanded="false" class="nav-toggle">☰</button>
-<ul id="navMenu">
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a class="active" href="events.html">Events</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="applications.html">Applications</a></li></ul>
-</nav>
-</header>
-<main class="content">
-<h1>Events &amp; Workshops</h1>
-<p>All times ET, locations posted in Discord and on GroupMe.</p>
-<div class="events-list">
-<article class="event card">
-<h2>Intro to Day Trading &amp; Risk</h2>
-<p><strong>When:</strong> Thursdays, 7–8pm • <strong>Where:</strong> TBD</p>
-<p>Position sizing, stop-loss logic, and how to avoid blowing up.</p>
-</article>
-<article class="event card">
-<h2>Strategy Lab</h2>
-<p><strong>When:</strong> Thursdays, 7–8pm • <strong>Where:</strong> TBD</p>
-<p> Backtest, review, and ask questions together.</p>
-</article>
-<article class="event card">
-<h2>Guest Speaker Series</h2>
-<p><strong>When:</strong> Monthly • <strong>Where:</strong> TBD</p>
-<p>Traders, quants, and alumni share experience and Q&amp;A.</p>
-</article>
-</div>
-</main>
-<footer class="site-footer">
-<p>© 2025 OSU Day Traders</p>
-</footer>
-<script src="js/main.js"></script>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
+      <span>OSU Day Traders</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <ul id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a class="active" href="events.html">Events</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Calendar -->
+  <main class="calendar-wrap">
+    <div class="cal-header">
+      <h1 class="cal-title" id="calTitle">Events Calendar</h1>
+      <div class="cal-controls">
+        <button class="cal-btn" id="prevBtn" type="button" aria-label="Previous month">‹</button>
+        <button class="cal-btn" id="todayBtn" type="button">This month</button>
+        <button class="cal-btn" id="nextBtn" type="button" aria-label="Next month">›</button>
+      </div>
+    </div>
+
+    <div class="calendar" id="calendar">
+      <!-- JS renders headers and days -->
+    </div>
+
+    <p class="legend">
+      Times are listed in Eastern Time. Click a date to view details, Zoom links, and locations.
+    </p>
+  </main>
+
+  <!-- Drawer -->
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3 class="drawer-title" id="drawerTitle">Events</h3>
+      <button class="cal-btn" id="closeDrawer" type="button">Close</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </aside>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ====== EVENT DATA ======
+    // One-off events (exact dates). Use local ET; month is 0-indexed in JS.
+    // Today is assumed 2025-11-11, so "this Thursday" = 2025-11-13.
+    const ONE_OFF_EVENTS = [
+      {
+        name: "Weekly Meeting",
+        type: "Club Meeting",
+        start: new Date(2025, 10, 13, 18, 0), // Thu Nov 13, 2025 6:00 PM ET
+        duration: 75, // minutes
+        location: "Hitchcock Hall, Room 131",
+        zoom: "https://osu.zoom.us/j/1234567890", // TODO: replace with your real Zoom link
+        description: "Agenda: quick market rundown, risk review, and a breakout scalp workflow."
+      }
+    ];
+
+    // Recurring events (optional; keep for ongoing schedule)
+    // weekday: 0=Sun … 6=Sat | time is 24h "HH:MM" ET
+    const RECUR_RULES = [
+      /*
+      {
+        name: "Strategy Lab",
+        type: "Workshop",
+        recur: { freq: "WEEKLY", weekday: 4 }, // Thursday
+        time: "19:00",
+        duration: 60,
+        location: "TBD",
+        description: "Backtests, review, and open Q&A."
+      }
+      */
+    ];
+
+    // ====== Utilities ======
+    const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    function pad(n){ return String(n).padStart(2,"0"); }
+    function toKey(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+    function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
+    function endOfMonth(d){ return new Date(d.getFullYear(), d.getMonth()+1, 0); }
+    function addDays(d, n){ const x = new Date(d); x.setDate(x.getDate()+n); return x; }
+    function formatTime(d){ return d.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}); }
+
+    function googleCalLink(ev){
+      const start = ev.start;
+      const end = new Date(start.getTime() + (ev.duration||60)*60000);
+      const fmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+      const qs = new URLSearchParams({
+        action: "TEMPLATE",
+        text: ev.name,
+        details: `${ev.type || ""}${ev.type ? " — " : ""}${ev.description || ""}\n${ev.zoom ? "Zoom: "+ev.zoom : ""}`,
+        location: ev.location || "TBD",
+        dates: `${fmt(start)}/${fmt(end)}`
+      });
+      return `https://calendar.google.com/calendar/render?${qs.toString()}`;
+    }
+
+    function nthWeekdayOfMonth(year, monthIndex, weekday, nth){
+      const first = new Date(year, monthIndex, 1);
+      let delta = weekday - first.getDay(); if (delta < 0) delta += 7;
+      const date = 1 + delta + (nth-1)*7;
+      return new Date(year, monthIndex, date);
+    }
+
+    function expandRecurring(rules, from, to){
+      const out = [];
+      for (const r of rules){
+        if (r.recur?.freq === "WEEKLY"){
+          let d = new Date(from);
+          while (d.getDay() !== r.recur.weekday) d = addDays(d,1);
+          while (d <= to){
+            const [h,m] = (r.time||"19:00").split(":").map(Number);
+            const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, m);
+            out.push({...r, start});
+            d = addDays(d,7);
+          }
+        } else if (r.recur?.freq === "MONTHLY"){
+          let cursor = new Date(from.getFullYear(), from.getMonth(), 1);
+          while (cursor <= to){
+            const target = nthWeekdayOfMonth(cursor.getFullYear(), cursor.getMonth(), r.recur.weekday, r.recur.nth || 1);
+            if (target >= from && target <= to){
+              const [h,m] = (r.time||"19:00").split(":").map(Number);
+              const start = new Date(target.getFullYear(), target.getMonth(), target.getDate(), h, m);
+              out.push({...r, start});
+            }
+            cursor = new Date(cursor.getFullYear(), cursor.getMonth()+1, 1);
+          }
+        }
+      }
+      return out.sort((a,b)=>a.start-b.start);
+    }
+
+    // ====== Rendering ======
+    const cal = document.getElementById("calendar");
+    const titleEl = document.getElementById("calTitle");
+    const drawer = document.getElementById("drawer");
+    const drawerBody = document.getElementById("drawerBody");
+    const drawerTitle = document.getElementById("drawerTitle");
+    document.getElementById("closeDrawer").onclick = () => drawer.classList.remove("show");
+
+    const today = new Date();
+    let view = new Date(today.getFullYear(), today.getMonth(), 1); // start on current month
+
+    document.getElementById("prevBtn").onclick = ()=>{ view = new Date(view.getFullYear(), view.getMonth()-1, 1); render(); };
+    document.getElementById("nextBtn").onclick = ()=>{ view = new Date(view.getFullYear(), view.getMonth()+1, 1); render(); };
+    document.getElementById("todayBtn").onclick = ()=>{ view = new Date(today.getFullYear(), today.getMonth(), 1); render(); };
+
+    function render(){
+      cal.innerHTML = "";
+      for (const d of DOW){
+        const h = document.createElement("div");
+        h.className = "cal-dow";
+        h.textContent = d;
+        cal.appendChild(h);
+      }
+
+      const start = startOfMonth(view);
+      const end = endOfMonth(view);
+      const lead = (start.getDay()+7)%7;
+      const firstCell = addDays(start, -lead);
+      const totalDays = lead + end.getDate();
+      const tail = (7 - (totalDays % 7)) % 7;
+      const lastCell = addDays(end, tail);
+
+      const recurred = expandRecurring(RECUR_RULES, firstCell, lastCell);
+      const events = [...recurred, ...ONE_OFF_EVENTS.filter(e => e.start >= firstCell && e.start <= lastCell)]
+        .sort((a,b)=>a.start-b.start);
+
+      const index = {};
+      for (const e of events){
+        const k = toKey(e.start);
+        (index[k] ||= []).push(e);
+      }
+
+      const monthName = view.toLocaleString(undefined,{month:"long", year:"numeric"});
+      titleEl.textContent = `Events Calendar — ${monthName}`;
+
+      for (let d = new Date(firstCell); d <= lastCell; d = addDays(d,1)){
+        const cell = document.createElement("div");
+        cell.className = "cal-cell";
+        if (d.getMonth() !== view.getMonth()) cell.classList.add("muted");
+
+        const dateEl = document.createElement("div");
+        dateEl.className = "cal-date";
+        dateEl.textContent = d.getDate();
+        cell.appendChild(dateEl);
+
+        const k = toKey(d);
+        const dayEvents = index[k] || [];
+        for (const ev of dayEvents){
+          const pill = document.createElement("a");
+          pill.href = "#";
+          pill.className = "event-pill";
+          pill.innerHTML = `<strong>${ev.name}</strong><small>${formatTime(ev.start)} ET • ${ev.location || "TBD"}</small>`;
+          pill.addEventListener("click", (e)=>{ e.preventDefault(); openDrawer(d, dayEvents); });
+          cell.appendChild(pill);
+        }
+
+        cell.addEventListener("click", (e)=>{
+          if (e.target.closest(".event-pill")) return;
+          openDrawer(d, dayEvents);
+        });
+
+        cal.appendChild(cell);
+      }
+    }
+
+    function openDrawer(date, events){
+      drawerTitle.textContent = date.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric", year:"numeric"});
+      drawerBody.innerHTML = "";
+      if (!events.length){
+        const empty = document.createElement("div");
+        empty.className = "drawer-card";
+        empty.innerHTML = "<p>No scheduled events on this date.</p>";
+        drawerBody.appendChild(empty);
+      } else {
+        for (const ev of events){
+          const card = document.createElement("div");
+          card.className = "drawer-card";
+          card.innerHTML = `
+            <h4>${ev.name}</h4>
+            <div class="drawer-meta">${ev.type || "Event"} • ${formatTime(ev.start)} ET • ${ev.location || "TBD"}</div>
+            ${ev.description ? `<p class="description">${ev.description}</p>` : ""}
+            ${ev.zoom ? `<p class="description">Zoom: <a class="link" href="${ev.zoom}" target="_blank" rel="noopener">${ev.zoom}</a></p>` : ""}
+            <div class="drawer-actions">
+              <a class="btn btn--scarlet" href="${googleCalLink(ev)}" target="_blank" rel="noopener">Add to Google Calendar</a>
+              <a class="btn btn--light" href="applications.html#member">Join the club</a>
+            </div>
+          `;
+          drawerBody.appendChild(card);
+        }
+      }
+      drawer.classList.add("show");
+    }
+
+    render();
+  </script>
 </body>
 </html>
