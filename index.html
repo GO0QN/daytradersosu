@@ -1,84 +1,223 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>OSU Day Traders • Home</title>
-<link href="css/style.css" rel="stylesheet"/>
-<link href="assets/icons/favicon.ico" rel="icon"/>
-<meta content="OSU Day Traders — Learn. Trade. Grow. The day trading community at The Ohio State University." name="description"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OSU Day Traders • Learn. Trade. Grow.</title>
+
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="assets/icons/favicon.ico"/>
+
+  <meta property="og:title" content="OSU Day Traders — Learn. Trade. Grow."/>
+  <meta property="og:description" content="The official day trading community at The Ohio State University."/>
+  <meta property="og:image" content="assets/images/osu-daytraders-logo.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <!-- Page polish to match Applications/Events -->
+  <style>
+    :root{
+      --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
+    }
+    body{background:var(--surface)}
+
+    /* Hero */
+    .hero{
+      background:radial-gradient(1200px 420px at 70% -10%, #dc2a47 0%, var(--scarlet) 40%, #a50f27 100%);
+      color:#fff; padding:clamp(3.5rem,6vw,5.75rem) 1rem 2.25rem;
+      text-align:center; position:relative; overflow:hidden;
+      box-shadow:0 24px 80px rgba(0,0,0,.25) inset;
+    }
+    .hero .wrap{max-width:1100px;margin:0 auto}
+    .hero h1{margin:0 0 .6rem 0;font-weight:1000;letter-spacing:.01em;
+      font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.06}
+    .hero p{margin:.25rem auto 1.2rem;max-width:780px;color:#ffeef0;letter-spacing:.01em;font-size:clamp(1rem,1.25vw,1.15rem)}
+    .cta-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+    .btn{display:inline-block;border-radius:999px;padding:.9rem 1.15rem;font-weight:900;text-decoration:none}
+    .btn-primary{background:#fff;color:#111;box-shadow:0 10px 24px rgba(255,255,255,.25)}
+    .btn-outline{background:transparent;color:#fff;border:2px solid #fff}
+    .btn:hover{filter:brightness(.95)}
+
+    /* Sections */
+    .page{max-width:1100px;margin:0 auto;padding:2rem 1rem 3rem}
+    .grid{display:grid;gap:1rem}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:900px){.grid-3{grid-template-columns:1fr}}
+    .card{
+      background:var(--panel); border:1px solid #eee; border-radius:20px;
+      padding:clamp(1rem,2vw,1.35rem); box-shadow:0 16px 40px rgba(0,0,0,.08);
+      transition:transform .14s ease, box-shadow .14s ease;
+    }
+    .card:hover{transform:translateY(-2px); box-shadow:0 24px 56px rgba(0,0,0,.12)}
+    .card h3{margin:.1rem 0 .35rem 0; font-size:1.15rem; color:var(--ink)}
+    .card p{margin:.25rem 0 0 0; color:#434343}
+    .label{display:inline-block;background:var(--scarlet);color:#fff;font-weight:900;font-size:.76rem;padding:.3rem .6rem;border-radius:999px}
+
+    /* Next event preview */
+    .next-event{display:grid;gap:.8rem;grid-template-columns:1.2fr .9fr}
+    @media (max-width:900px){.next-event{grid-template-columns:1fr}}
+    .event-meta{display:grid;gap:.35rem;color:#555}
+    .event-title{margin:0;font-weight:1000;color:var(--ink);font-size:1.35rem}
+    .meta-line{font-size:.98rem}
+    .event-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+    .btn-scarlet{background:var(--scarlet);color:#fff}
+    .btn-light{background:#fff;border:1px solid #ddd;color:#111}
+
+    /* Section headers */
+    .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.25rem 0 .75rem}
+    .section-head h2{margin:0;font-weight:1000;color:var(--ink);font-size:clamp(1.4rem,2.4vw,1.8rem)}
+
+    /* Footer spacing comes from global */
+  </style>
 </head>
 <body>
-<header class="site-header">
-<a class="brand" href="index.html">
-<img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
-<span>OSU Day Traders</span>
-</a>
-<nav aria-label="Main navigation" class="site-nav">
-<button aria-controls="navMenu" aria-expanded="false" class="nav-toggle">☰</button>
-<ul id="navMenu">
-<li><a class="active" href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="events.html">Events</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="applications.html">Applications</a></li></ul>
-</nav>
-</header>
-<main>
-<!-- Hero -->
-<section class="hero">
-<div class="hero__content">
-<h1>Learn. Trade. Grow.</h1>
-<p>The official day trading community at The Ohio State University.</p>
-<div class="hero__ctas">
-<a class="btn btn--light" href="about.html">What we do</a>
-<a class="btn btn--outline" href="events.html">See upcoming events</a>
-</div>
-</div>
-</section>
-<!-- Slideshow -->
-<section aria-label="Club Highlights Slideshow" class="slideshow">
-<div class="slideshow__viewport">
-<img alt="Portfolio screenshot" class="active" src="assets/images/slide-1.png"/>
-<img alt="S&amp;P 500 chart" src="assets/images/slide-2.png"/>
-<img alt="TradingView candlestick chart" src="assets/images/slide-3.png"/>
-</div>
-<div aria-hidden="true" class="slideshow__controls">
-<button aria-label="Previous slide" class="prev">‹</button>
-<button aria-label="Next slide" class="next">›</button>
-</div>
-<div aria-label="Slide indicators" class="slideshow__dots" role="tablist"></div>
-</section>
-<!-- Highlights -->
-<section class="grid grid--3">
-<article class="card">
-<h2>Weekly Workshops</h2>
-<p>Hands-on sessions covering technical analysis, risk, psychology, and execution on real platforms.</p>
-<a class="link" href="events.html">View schedule →</a>
-</article>
-<article class="card">
-<h2>Strategy Labs</h2>
-<p>Backtest, paper trade, and iterate. Bring your edge, get feedback, and improve together.</p>
-<a class="link" href="resources.html#playbooks">Open playbooks →</a>
-</article>
-<article class="card">
-<h2>Buckeye Network</h2>
-<p>Meet students, alumni, and mentors across finance, CS, stats, and entrepreneurship.</p>
-<a class="link" href="about.html#leadership">Meet the team →</a>
-</article>
-</section>
-<!-- CTA banner -->
-<section class="cta-banner">
-<h2>Ready to level up your trading?</h2>
-<p>Join our Discord, attend a workshop, and start building your process.</p>
-<a class="btn btn--dark" href="contact.html#join">Join us</a>
-</section>
-</main>
-<footer class="site-footer">
-<p>© 2025 OSU Day Traders • Unofficial student organization at The Ohio State University</p>
-</footer>
-<script src="js/main.js"></script>
+  <!-- Header -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
+      <span>OSU Day Traders</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <ul id="navMenu">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Learn. Trade. Grow.</h1>
+      <p>The official day trading community at The Ohio State University. Workshops, strategy labs, and a process-first culture built around risk, review, and accountability.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="applications.html#member">Join the club</a>
+        <a class="btn btn-outline" href="events.html">See upcoming events</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <main class="page">
+    <div class="section-head">
+      <h2>What we do</h2>
+      <a class="btn btn-light" href="resources.html">View resources</a>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <span class="label">Foundations</span>
+        <h3>Intro to Day Trading & Risk</h3>
+        <p>Position sizing, stop-loss logic, trade journaling, and how to not blow up. For newer members or anyone resetting their process.</p>
+      </article>
+      <article class="card">
+        <span class="label">Practice</span>
+        <h3>Strategy Lab</h3>
+        <p>Backtest together, share playbooks, and do post-trade review with peers. Good notes beat good memory.</p>
+      </article>
+      <article class="card">
+        <span class="label">Community</span>
+        <h3>Guest Speakers</h3>
+        <p>Traders, quants, and builders who share both the wins and the scars. Real edge, not guru fluff.</p>
+      </article>
+    </div>
+
+    <!-- Next Event Preview -->
+    <div class="section-head" style="margin-top:1.6rem">
+      <h2>Next event</h2>
+      <a class="btn btn-light" href="events.html">Open calendar</a>
+    </div>
+
+    <section class="card next-event" id="nextEvent">
+      <div>
+        <h3 class="event-title" id="evName">Weekly Meeting</h3>
+        <div class="event-meta">
+          <div class="meta-line" id="evWhen">Mon, Jan 1 • 6:00 PM ET</div>
+          <div class="meta-line" id="evWhere">Virtual (Zoom)</div>
+          <p class="meta-line" id="evDesc">Market rundown, risk review, and a breakout scalp workflow.</p>
+        </div>
+        <div class="event-actions">
+          <a class="btn btn-scarlet" id="evZoom" target="_blank" rel="noopener">Register on Zoom</a>
+          <a class="btn btn-light" id="evAdd" target="_blank" rel="noopener">Add to Google Calendar</a>
+        </div>
+      </div>
+      <aside class="card" style="background:#fafafa;border:1px dashed #e7e7e7;">
+        <h3 style="margin:.1rem 0 .4rem 0;font-size:1.05rem;">How we meet</h3>
+        <p style="margin:.25rem 0 0 0;color:#494949">Sessions are virtual unless noted. We record core workshops and share notes in Resources. Bring your questions and your journals.</p>
+      </aside>
+    </section>
+
+    <!-- Quick links -->
+    <div class="section-head" style="margin-top:1.6rem">
+      <h2>Get involved</h2>
+    </div>
+    <div class="grid grid-3">
+      <a class="card" href="applications.html#member" style="text-decoration:none;color:inherit">
+        <span class="label">Membership</span>
+        <h3>Join the club</h3>
+        <p>Access meetings, labs, and speakers. Find accountability partners and level up together.</p>
+      </a>
+      <a class="card" href="applications.html#speaker" style="text-decoration:none;color:inherit">
+        <span class="label">Programming</span>
+        <h3>Apply to speak</h3>
+        <p>Have a teachable edge or useful scars? We want to hear from you.</p>
+      </a>
+      <a class="card" href="contact.html" style="text-decoration:none;color:inherit">
+        <span class="label">Partner</span>
+        <h3>Contact us</h3>
+        <p>Questions about sponsoring, collaborating, or joining leadership.</p>
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ----- Next-event data (kept in sync with Events page) -----
+    const now = new Date();
+    // 17th of current month, 6:00 PM ET, Virtual
+    const next = {
+      name: "Weekly Meeting",
+      start: new Date(now.getFullYear(), now.getMonth(), 17, 18, 0),
+      duration: 75,
+      virtual: true,
+      zoom: "https://osu.zoom.us/meeting/register/OBKK4x6ARW-nLENvzqbGAg",
+      description: "Market rundown, risk review, and a breakout scalp workflow."
+    };
+
+    // Render preview
+    const fmtDate = d => d.toLocaleDateString([], {weekday:"short", month:"short", day:"numeric"});
+    const fmtTime = d => d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+
+    document.getElementById("evName").textContent = next.name;
+    document.getElementById("evWhen").textContent = `${fmtDate(next.start)} • ${fmtTime(next.start)} ET`;
+    document.getElementById("evWhere").textContent = "Virtual (Zoom)";
+    document.getElementById("evDesc").textContent = next.description;
+    document.getElementById("evZoom").href = next.zoom;
+
+    // Google Calendar link
+    function pad(n){return String(n).padStart(2,"0")}
+    const end = new Date(next.start.getTime() + (next.duration||60)*60000);
+    const fmtICS = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    const gcal = new URLSearchParams({
+      action:"TEMPLATE",
+      text: next.name,
+      details: `${next.description}\nZoom: ${next.zoom}`,
+      location: "Virtual",
+      dates: `${fmtICS(next.start)}/${fmtICS(end)}`
+    });
+    document.getElementById("evAdd").href = `https://calendar.google.com/calendar/render?${gcal.toString()}`;
+  </script>
 </body>
 </html>
