@@ -1,70 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OSU Day Traders Login</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login • OSU Day Traders</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .auth-wrap{min-height:70vh;display:grid;place-items:center;padding:2rem 1rem}
+    .card{max-width:520px;width:100%;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:1.5rem}
+    .card h1{margin:.25rem 0 0;font-size:1.6rem}
+    .muted{color:#555;margin:.25rem 0 1rem}
+    .btn{display:inline-block;font-weight:800;padding:.8rem 1rem;border-radius:999px;border:0;cursor:pointer;background:#c4122f;color:#fff}
+    .hint{font-size:.9rem;color:#666;margin-top:.75rem}
+  </style>
 </head>
 <body>
-  <div class="auth-container">
-    <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" class="logo" />
-    <h2>Member Login</h2>
-    <p>Sign in with your OSU or Google account.</p>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
+      <span>OSU Day Traders</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a class="active" href="auth.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="login-buttons">
-      <button id="outlook-login" class="btn">Sign in with Outlook</button>
+  <main class="auth-wrap">
+    <section class="card">
+      <h1>Sign in</h1>
+      <p class="muted">Use Google to continue. Non-OSU users can have accounts, but only <strong>@osu.edu</strong> can buy the paid course.</p>
+
       <button id="google-login" class="btn">Sign in with Google</button>
-    </div>
+      <div id="err" class="hint"></div>
+    </section>
+  </main>
 
-    <p id="info-message" style="color: orange; margin-top: 10px;">
-      Only users with <strong>@osu.edu</strong> emails are eligible to purchase premium courses.
-    </p>
-    <p id="error-message" style="color:red; margin-top:10px;"></p>
-  </div>
+  <footer class="site-footer">
+    <p>© <span id="year"></span> OSU Day Traders</p>
+  </footer>
 
+  <script>document.getElementById("year").textContent = new Date().getFullYear()</script>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, signInWithPopup, OAuthProvider, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    import { firebaseConfig } from "./js/auth.js";
+    import { auth, db, googleProvider } from "./js/firebase-init.js";
+    import { signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    const btn = document.getElementById("google-login");
+    const err = document.getElementById("err");
 
-    const outlookProvider = new OAuthProvider('microsoft.com');
-    const googleProvider = new GoogleAuthProvider();
-
-    const outlookLogin = document.getElementById('outlook-login');
-    const googleLogin = document.getElementById('google-login');
-    const errorMessage = document.getElementById('error-message');
-
-    async function handleLogin(provider) {
+    btn.addEventListener("click", async () => {
       try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const isOSU = user.email.endsWith("@osu.edu");
+        const res = await signInWithPopup(auth, googleProvider);
+        const user = res.user;
+        const osu = (user.email || "").toLowerCase().endsWith("@osu.edu");
 
-        // Store basic user info in Firestore
         await setDoc(doc(db, "users", user.uid), {
-          name: user.displayName,
-          email: user.email,
-          osuStudent: isOSU,
-          timestamp: new Date()
-        });
+          name: user.displayName || "",
+          email: user.email || "",
+          osuStudent: osu,
+          membershipStatus: "none", // will flip to "active" after Stripe later
+          updatedAt: serverTimestamp()
+        }, { merge: true });
 
-        // Redirect everyone to resources page after login
         window.location.href = "resources.html";
-      } catch (error) {
-        console.error(error);
-        errorMessage.textContent = "Login failed. Try again.";
+      } catch (e) {
+        console.error(e);
+        err.textContent = "Login failed. Check your popup blocker and try again.";
       }
-    }
-
-    outlookLogin.addEventListener('click', () => handleLogin(outlookProvider));
-    googleLogin.addEventListener('click', () => handleLogin(googleProvider));
+    });
   </script>
 </body>
 </html>
