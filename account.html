@@ -10,11 +10,12 @@
   <link rel="icon" href="assets/icons/favicon.ico"/>
 
   <style>
-    /* force the correct scarlet header in case anything overrides */
+    /* make sure this page uses the normal scarlet header, not the deep red variant */
     .site-header{ background: var(--scarlet) !important; }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
@@ -34,60 +35,81 @@
     </nav>
   </header>
 
+  <!-- Main -->
   <main class="wrap section">
     <h1>Account</h1>
-    <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
+    <p class="muted">
+      Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.
+    </p>
 
     <div class="grid grid-2">
       <!-- Create account -->
-      <section class="card">
+      <section class="card auth-card">
         <h3>Create account</h3>
-        <button id="signUpGoogle" class="google-signin">
-          <img src="assets/icons/google.svg" alt=""/> Continue with Google
+
+        <button id="googleSignUp" class="google-signin" type="button">
+          <img src="assets/icons/google.svg" alt="" />
+          Continue with Google
         </button>
-        <p class="or">or</p>
 
-        <form id="createAccountForm" class="auth-form">
-          <label for="email">Email</label>
-          <input id="email" type="email" placeholder="you@email.com" required/>
+        <p class="muted">or</p>
 
-          <label for="password">Password</label>
-          <input id="password" type="password" placeholder="********" minlength="6" required/>
+        <form id="createForm" class="auth-form" autocomplete="on">
+          <label>
+            Email
+            <input id="createEmail" type="email" placeholder="you@email.com" required />
+          </label>
 
-          <div class="upload">
-            <label>Upload profile picture</label>
-            <div class="upload-row">
-              <img id="previewImg" class="avatar-preview" src="images/defaultprofile.png" alt="Preview"/>
-              <input id="avatarInput" type="file" accept="image/*"/>
+          <label>
+            Password
+            <input id="createPassword" type="password" placeholder="********" required />
+          </label>
+
+          <div class="upload-field">
+            <div class="upload-label">
+              <h4>Upload profile picture</h4>
+              <small class="muted">Optional. Preview only on the free plan.</small>
             </div>
-            <p class="form-note">Optional. Preview only. Uploads are disabled until Storage is enabled.</p>
+
+            <!-- DEFAULT PREVIEW: defaultprofile.png -->
+            <div class="upload-row">
+              <img id="preview" class="avatar-preview"
+                   src="assets/images/defaultprofile.png"
+                   alt="Preview"/>
+              <input id="profileFile" type="file" accept="image/*"/>
+            </div>
           </div>
 
-          <button id="createAccountBtn" class="btn btn--primary" type="submit">Create account</button>
-          <p id="signupMsg" class="form-note"></p>
+          <button id="createBtn" class="btn btn--primary" type="submit">Create account</button>
         </form>
       </section>
 
       <!-- Log in -->
-      <section class="card">
+      <section class="card auth-card">
         <h3>Log into existing account</h3>
-        <button id="loginGoogle" class="google-signin">
-          <img src="assets/icons/google.svg" alt=""/> Continue with Google
+
+        <button id="googleSignIn" class="google-signin" type="button">
+          <img src="assets/icons/google.svg" alt="" />
+          Continue with Google
         </button>
-        <p class="or">or</p>
 
-        <form id="loginForm" class="auth-form">
-          <label for="loginEmail">Email</label>
-          <input id="loginEmail" type="email" placeholder="you@email.com" required/>
+        <p class="muted">or</p>
 
-          <label for="loginPassword">Password</label>
-          <input id="loginPassword" type="password" placeholder="********" required/>
+        <form id="loginForm" class="auth-form" autocomplete="on">
+          <label>
+            Email
+            <input id="loginEmail" type="email" placeholder="you@email.com" required />
+          </label>
+
+          <label>
+            Password
+            <input id="loginPassword" type="password" placeholder="********" required />
+          </label>
 
           <div class="form-actions">
             <button id="loginBtn" class="btn btn--dark" type="submit">Log in</button>
-            <button id="resetBtn" class="btn btn--outline" type="button">Forgot password</button>
+            <button id="forgotBtn" class="btn btn--secondary" type="button">Forgot password</button>
           </div>
-          <p id="loginMsg" class="form-note"></p>
         </form>
       </section>
     </div>
@@ -95,26 +117,29 @@
     <!-- Profile card -->
     <section class="card profile-card">
       <h3>Your profile</h3>
+
       <div class="profile">
-        <div id="profileAvatar" class="avatar" style="background-image:url('images/defaultprofile.png')"></div>
-        <div class="profile-body">
+        <!-- DEFAULT AVATAR also defaultprofile.png -->
+        <img id="profileAvatar" class="avatar-lg"
+             src="assets/images/defaultprofile.png"
+             alt="Profile picture"/>
+
+        <div class="profile-main">
           <div class="profile-row">
             <strong id="profileName">Not signed in</strong>
-            <span id="profileTier"><span class="member-badge">Member: free</span></span>
+            <span id="memberBadge" class="member-badge member-badge--free">free</span>
           </div>
+          <div class="profile-row muted" id="profileEmail">—</div>
 
-          <div class="profile-edit">
-            <label for="displayName">Change display name</label>
-            <input id="displayName" type="text" placeholder="Your name"/>
-            <button id="saveNameBtn" class="btn btn--light" type="button">Save name</button>
-          </div>
-
-          <a class="link" href="resources.html">Go to Resources</a>
           <div class="profile-actions">
-            <button id="resendVerifyBtn" class="btn btn--outline" type="button">Resend verification email</button>
-            <button id="signOutBtn" class="btn btn--light" type="button">Sign out</button>
+            <a class="btn btn--link scarlet" href="resources.html">Go to Resources</a>
+            <button id="signOutBtn" class="btn btn--outline" type="button">Sign out</button>
           </div>
-          <p id="profileMsg" class="form-note"></p>
+
+          <div id="verifyWrap" class="verify-wrap hidden">
+            <p class="muted">Email not verified.</p>
+            <button id="sendVerifyBtn" class="btn btn--primary" type="button">Send verification email</button>
+          </div>
         </div>
       </div>
     </section>
@@ -124,9 +149,8 @@
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <!-- Firebase init (loads SDK + config) then auth wiring -->
-  <script type="module" src="js/firebase-init.js"></script>
-  <script src="js/auth.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
