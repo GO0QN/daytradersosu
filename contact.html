@@ -6,120 +6,145 @@
   <title>Contact • OSU Day Traders</title>
   <link rel="stylesheet" href="css/style.css"/>
 
-  <!-- Page-local tweaks: compact, brand-consistent -->
   <style>
-    :root{
+    :root {
       --scarlet:#c4122f;
-      --ink:#121212;
-      --muted:#6b6b6b;
-      --panel:#ffffff;
-      --surface:#f6f6f6;
-      --ring:#e7e7e7;
-    }
-    body{ background:var(--surface); }
-
-    /* Tighter wrapper than other pages so the form doesn’t sprawl */
-    .wrap{
-      max-width:860px;             /* was 1100 — compact */
-      margin:0 auto;
-      padding:18px 14px 36px;      /* smaller paddings */
+      --ink:#111;
+      --muted:#555;
+      --surface:#f7f7f7;
+      --panel:#fff;
     }
 
-    .lede{
-      margin:14px 0 12px;
-    }
-    .lede h1{
-      margin:0 0 6px 0;
-      font-weight:900;
-      letter-spacing:-.01em;
-      color:#111;
-      font-size:clamp(1.4rem,2.6vw,1.8rem); /* smaller title */
-      line-height:1.15;
-    }
-    .lede p{
-      margin:0;
-      color:#454545;
-      font-size:.98rem;
-      line-height:1.45;
-      max-width:60ch;
+    body {
+      background: var(--surface);
     }
 
-    .card{
-      background:var(--panel);
-      border:1px solid #eee;
-      border-radius:16px;                  /* smaller radius */
-      box-shadow:0 10px 28px rgba(0,0,0,.07);
-      padding:16px;                        /* tighter padding */
-    }
-    .card h2{
-      margin:0 0 10px;
-      font-size:1.05rem;
-      font-weight:900;
-      color:#1a1a1a;
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 30px 16px 60px;
     }
 
-    .grid{
-      display:grid;
-      gap:12px;                            /* tighter gap */
+    .contact-header {
+      text-align: center;
+      margin-bottom: 26px;
     }
 
-    .label{
-      display:block;
-      font-size:.92rem;
-      font-weight:800;
-      color:#222;
-      margin:2px 0 6px;
+    .contact-header h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.8vw, 2rem);
+      font-weight: 900;
+      color: var(--ink);
     }
 
-    .input,.textarea{
-      width:100%;
-      border:1px solid var(--ring);
-      background:#fff;
-      border-radius:12px;
-      padding:11px 12px;                   /* compact control height */
-      font-size:.98rem;
-      line-height:1.3;
-      outline:none;
-      transition:border-color .15s ease, box-shadow .15s ease, transform .02s;
+    .contact-header p {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: 8px;
+      line-height: 1.5;
     }
-    .input:focus,.textarea:focus{
-      border-color:#edc7cd;
-      box-shadow:0 0 0 5px rgba(196,18,47,.08);
-    }
-    .textarea{ min-height:130px; resize:vertical; }
 
-    .row{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      margin-top:6px;
+    .contact-card {
+      background: var(--panel);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.06);
+      padding: 22px 24px 26px;
     }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      border:none; cursor:pointer;
-      font-weight:900; color:#fff;
-      background:var(--scarlet);
-      padding:10px 16px;                   /* compact button */
-      border-radius:999px;
-      box-shadow:0 6px 16px rgba(196,18,47,.25);
-    }
-    .btn:hover{ filter:brightness(.97); }
-    .hint{ color:var(--muted); font-size:.9rem; }
 
-    /* Success/error toast */
-    .toast{ display:none; margin-top:8px; padding:10px 12px; border-radius:10px; font-weight:700; font-size:.95rem; }
-    .toast.ok{ display:block; background:#e9f7ee; color:#0a6a2a; }
-    .toast.err{ display:block; background:#fde9eb; color:#7b0f1a; }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    input, textarea {
+      border: 1px solid #e6e6e6;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: .95rem;
+      background: #fff;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #e0a1a8;
+      box-shadow: 0 0 0 3px rgba(196,18,47,.12);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: var(--scarlet);
+      color: #fff;
+      border: none;
+      font-weight: 800;
+      font-size: .95rem;
+      border-radius: 999px;
+      padding: 10px 18px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(196,18,47,.25);
+      transition: transform .15s, filter .15s;
+    }
+
+    button:hover {
+      filter: brightness(.96);
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .toast {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .toast.ok { display:block; background:#e9f7ee; color:#0b672b; }
+    .toast.err { display:block; background:#fde9eb; color:#82111f; }
+
+    footer {
+      text-align: center;
+      background: #111;
+      color: #fff;
+      padding: 1rem 0;
+      font-size: .9rem;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
-  <!-- Header (unchanged) -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
       <span>OSU Day Traders</span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
-      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
-      <ul id="navMenu">
+      <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="events.html">Events</a></li>
@@ -130,70 +155,67 @@
     </nav>
   </header>
 
-  <main class="wrap">
-    <div class="lede">
+  <main>
+    <div class="contact-header">
       <h1>Contact</h1>
       <p>Questions about joining, speaking, partnering, or sponsoring OSU Day Traders? Drop a note below.</p>
     </div>
 
-    <section class="card" aria-labelledby="sendMsg">
-      <h2 id="sendMsg">Send a message</h2>
-      <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST" class="grid">
+    <section class="contact-card">
+      <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST">
         <input type="hidden" name="_subject" value="New message from daytradersosu.com"/>
 
         <div>
-          <label class="label" for="name">Name</label>
-          <input class="input" id="name" name="name" type="text" placeholder="Your name" required>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
         </div>
 
         <div>
-          <label class="label" for="email">Email</label>
-          <input class="input" id="email" name="email" type="email" placeholder="you@email.com" required>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@email.com" required>
         </div>
 
         <div>
-          <label class="label" for="message">Message</label>
-          <textarea class="textarea" id="message" name="message" placeholder="Tell us how we can help" required></textarea>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea>
         </div>
 
-        <div class="row">
-          <button class="btn" type="submit">Send</button>
+        <div class="form-footer">
+          <button type="submit">Send</button>
           <span class="hint">We’ll reply to your email.</span>
         </div>
 
-        <div id="formToast" class="toast" role="status" aria-live="polite"></div>
+        <div id="formToast" class="toast"></div>
       </form>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  <footer>
+    &copy; <span id="year"></span> OSU Day Traders • Student Organization
   </footer>
 
-  <script src="js/main.js"></script>
   <script>
-    // year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // AJAX send (Formspree)
     const form  = document.getElementById('contactForm');
     const toast = document.getElementById('formToast');
-    form.addEventListener('submit', async (e)=>{
+
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const data = new FormData(form);
-      try{
-        const res = await fetch(form.action, { method:'POST', headers:{'Accept':'application/json'}, body:data });
-        if(res.ok){
+      try {
+        const res = await fetch(form.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data });
+        if (res.ok) {
           toast.className = 'toast ok';
           toast.textContent = 'Thanks — your message was sent.';
           form.reset();
-        }else{
+        } else {
           toast.className = 'toast err';
-          toast.textContent = 'Something broke. Try again in a minute.';
+          toast.textContent = 'Something went wrong. Try again soon.';
         }
-      }catch(_){
+      } catch {
         toast.className = 'toast err';
-        toast.textContent = 'Network error. Please try again.';
+        toast.textContent = 'Network issue. Try again.';
       }
     });
   </script>
