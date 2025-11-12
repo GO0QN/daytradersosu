@@ -1,23 +1,21 @@
-<script type="module">
-// Firebase core (CDN modules)
+// /js/firebase-init.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-// PASTE YOUR CONFIG FROM FIREBASE HERE:
+// Your Firebase configuration
 export const firebaseConfig = {
-  apiKey: "REPLACE_ME",
-  authDomain: "REPLACE_ME.firebaseapp.com",
-  projectId: "REPLACE_ME",
-  storageBucket: "REPLACE_ME.appspot.com",
-  messagingSenderId: "REPLACE_ME",
-  appId: "REPLACE_ME",
+  apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
+  authDomain: "osu-daytraders.firebaseapp.com",
+  projectId: "osu-daytraders",
+  storageBucket: "osu-daytraders.firebasestorage.app",
+  messagingSenderId: "63619855631",
+  appId: "1:63619855631:web:3416fee03d357715f0fa7a",
+  measurementId: "G-RXTL84LM0T"
 };
 
+// Initialize Firebase
 export const app  = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db   = getFirestore(app);
-
-// Providers
 export const googleProvider = new GoogleAuthProvider();
-</script>
