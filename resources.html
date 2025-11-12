@@ -2,303 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Resources • OSU Day Traders</title>
-  <link rel="stylesheet" href="css/style.css"/>
-
-  <!-- Page-scoped styles so we don’t touch the rest of your site -->
-  <style>
-    /* Hero */
-    .res-hero {
-      position: relative;
-      background: radial-gradient(1200px 600px at 75% 30%, rgba(255,255,255,0.07), rgba(0,0,0,0) 60%),
-                  linear-gradient(180deg, #b70f14 0%, #8d0c10 100%);
-      color: #fff;
-      padding: 72px 0 56px;
-    }
-    .res-wrap { width: min(1100px, 92vw); margin: 0 auto; }
-
-    .res-title { font-size: clamp(30px, 4vw, 44px); line-height: 1.1; font-weight: 800; letter-spacing: .3px; }
-    .res-sub { margin-top: 10px; max-width: 680px; opacity: .92; }
-
-    .res-cta { display:flex; gap:14px; margin-top:22px; flex-wrap:wrap; }
-    .btn-pill {
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 18px; border-radius:999px; font-weight:700; cursor:pointer;
-      text-decoration:none; transition:transform .08s ease, box-shadow .18s ease, background .2s ease, color .2s ease;
-    }
-    .btn-white { background:#fff; color:#8d0c10; box-shadow:0 10px 24px rgba(0,0,0,.15); }
-    .btn-ghost { border:2px solid rgba(255,255,255,.65); color:#fff; }
-    .btn-pill:active { transform:translateY(1px); }
-
-    /* Candlestick animation cluster (right side) */
-    .candles {
-      position:absolute; inset:0; pointer-events:none;
-      display:grid; align-items:center; justify-items:end;
-      padding-right: clamp(16px, 6vw, 56px);
-    }
-    .c-stack {
-      position:relative; width:min(360px, 36vw); height:180px; opacity:.9;
-      filter: drop-shadow(0 10px 24px rgba(0,0,0,.25));
-    }
-    .c-row { position:absolute; bottom:0; left:0; right:0; height:100%; display:flex; gap:10px; align-items:flex-end; }
-    .candle { width:18px; background:#f3d9d9; border-radius:4px; position:relative; overflow:visible; }
-    .candle.up { background:#ffecec; }
-    .wick { position:absolute; left:50%; transform:translateX(-50%); width:3px; background:#fff; border-radius:2px; }
-
-    /* Bar heights animate like a tiny market tape */
-    @keyframes flick {
-      0%   { height: 38%; }
-      20%  { height: 72%; }
-      40%  { height: 46%; }
-      60%  { height: 88%; }
-      80%  { height: 33%; }
-      100% { height: 60%; }
-    }
-    @keyframes wickf {
-      0%   { height: 95%; }
-      50%  { height: 70%; }
-      100% { height: 95%; }
-    }
-    .candle { animation: flick 2.6s ease-in-out infinite alternate; }
-    .candle .wick { animation: wickf 2.6s ease-in-out infinite alternate; }
-
-    /* Stagger so it looks organic */
-    .candle:nth-child(1){ animation-delay:.0s }  .candle:nth-child(1) .wick{ animation-delay:.0s }
-    .candle:nth-child(2){ animation-delay:.2s }  .candle:nth-child(2) .wick{ animation-delay:.2s }
-    .candle:nth-child(3){ animation-delay:.4s }  .candle:nth-child(3) .wick{ animation-delay:.4s }
-    .candle:nth-child(4){ animation-delay:.6s }  .candle:nth-child(4) .wick{ animation-delay:.6s }
-    .candle:nth-child(5){ animation-delay:.8s }  .candle:nth-child(5) .wick{ animation-delay:.8s }
-    .candle:nth-child(6){ animation-delay:1.0s } .candle:nth-child(6) .wick{ animation-delay:1.0s }
-    .candle:nth-child(7){ animation-delay:1.2s } .candle:nth-child(7) .wick{ animation-delay:1.2s }
-
-    /* Sections */
-    .section { background:#f5f5f5; padding:56px 0; }
-    .h2 { font-size: clamp(22px, 2.8vw, 28px); font-weight:800; margin-bottom:18px; }
-
-    /* Card grid */
-    .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
-    @media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } }
-    @media (max-width: 640px){ .grid{ grid-template-columns:1fr } .candles{ display:none } }
-
-    .card {
-      background:#fff; border-radius:18px; padding:20px;
-      box-shadow:0 10px 26px rgba(0,0,0,.08);
-    }
-    .tag { display:inline-block; font-size:12px; font-weight:800; padding:6px 10px; border-radius:999px; background:#f4d2d2; color:#8d0c10; margin-bottom:10px; }
-    .card h3{ margin:6px 0 8px; font-size:18px; }
-    .muted{ color:#444; opacity:.8 }
-
-    /* Locked box */
-    .locked {
-      background:#fff; border-radius:28px; padding:26px;
-      box-shadow:0 20px 40px rgba(0,0,0,.08);
-      display:grid; grid-template-columns:1fr auto; align-items:center; gap:18px;
-    }
-    .lockline { display:flex; align-items:center; gap:12px; }
-    .lockicon{ width:22px; height:22px; }
-    .ul { margin:0; padding-left:18px; }
-  </style>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-  <!-- Header -->
   <header class="site-header">
-    <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders logo" style="height:34px; vertical-align:middle"/>
-        <span style="margin-left:8px; font-weight:800;">OSU Day Traders</span>
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders" />
+        <span>OSU Day Traders</span>
       </a>
-      <nav class="nav">
+      <nav class="site-nav">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="events.html">Events</a>
         <a class="active" href="resources.html">Resources</a>
-        <a href="auth.html">Account</a>
+        <a href="account.html">Account</a>
         <a href="contact.html">Contact</a>
         <a href="applications.html">Applications</a>
       </nav>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="res-hero">
-    <div class="res-wrap">
-      <h1 class="res-title">Resources</h1>
-      <p class="res-sub">
-        Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an
-        <strong>@osu.edu</strong> email.
-      </p>
-      <div class="res-cta">
-        <a class="btn-pill btn-white" href="auth.html">Sign in</a>
-        <a class="btn-pill btn-ghost" href="#previews">Preview the course</a>
-      </div>
-    </div>
-
-    <!-- animated “market tape” candles -->
-    <div class="candles" aria-hidden="true">
-      <div class="c-stack">
-        <div class="c-row">
-          <!-- each candle animates height; wick animates independently -->
-          <div class="candle up"><span class="wick" style="bottom:0;"></span></div>
-          <div class="candle"><span class="wick" style="bottom:-8px;"></span></div>
-          <div class="candle up"><span class="wick" style="bottom:-4px;"></span></div>
-          <div class="candle"><span class="wick" style="bottom:-10px;"></span></div>
-          <div class="candle up"><span class="wick" style="bottom:-6px;"></span></div>
-          <div class="candle"><span class="wick" style="bottom:-12px;"></span></div>
-          <div class="candle up"><span class="wick" style="bottom:-8px;"></span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FREE MATERIALS -->
-  <section class="section">
-    <div class="res-wrap">
-      <h2 class="h2">Free materials</h2>
-      <div class="grid">
-        <article class="card">
-          <span class="tag">Playbook</span>
-          <h3>Opening Drive</h3>
-          <p class="muted">How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
-        </article>
-        <article class="card">
-          <span class="tag" style="background:#e7e1ff;color:#3d2aa5;">Template</span>
-          <h3>Journal Starter</h3>
-          <p class="muted">Tags, KPIs, and weekly review prompts that won’t rot in your Drive.</p>
-        </article>
-        <article class="card">
-          <span class="tag" style="background:#e4f6ea;color:#1f7a3f;">Checklist</span>
-          <h3>Pre-Market Routine</h3>
-          <p class="muted">10-minute flow that protects your focus before the bell.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- COURSE PREVIEW -->
-  <section id="previews" class="section" style="padding-top:10px;">
-    <div class="res-wrap">
-      <h2 class="h2">Course preview</h2>
-      <div class="grid">
-        <article class="card">
-          <span class="tag">Module</span>
-          <h3>Day 1: Market Foundations</h3>
-          <p class="muted">Auction theory, liquidity, session structure, and what actually moves price.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Module</span>
-          <h3>Day 2: Setups & Invalidations</h3>
-          <p class="muted">Entry triggers, kill-switch rules, and how to not marry a bias.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Module</span>
-          <h3>Day 3: Risk & Sizing</h3>
-          <p class="muted">Position sizing that won’t nuke your account when the tape goes feral.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- LOCKED AREA (OSU ONLY) -->
-  <section class="section" style="padding-top:10px;">
-    <div class="res-wrap">
-      <h2 class="h2">OSU-only course: Day Trading Fundamentals</h2>
-
-      <div class="locked">
+  <main class="page">
+    <!-- Hero -->
+    <section class="hero red-gradient">
+      <div class="container hero-grid">
         <div>
-          <div class="lockline" style="margin-bottom:8px;">
-            <svg class="lockicon" viewBox="0 0 24 24" fill="none">
-              <rect x="4" y="10" width="16" height="10" rx="2" fill="#d9d9d9"/>
-              <path d="M8 10V8a4 4 0 1 1 8 0v2" stroke="#d9d9d9" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <strong>Members area</strong>
-          </div>
-          <p class="muted" id="lockcopy">Sign in with <b>@osu.edu</b> and subscribe to unlock all modules, quizzes, and notes.</p>
-          <div class="res-cta" style="margin-top:12px;">
-            <a class="btn-pill" id="subscribeBtn" style="background:#8d0c10;color:#fff;">Subscribe</a>
-            <a class="btn-pill btn-ghost" href="auth.html">Manage account</a>
+          <h1 class="h1">Resources</h1>
+          <p class="lead">
+            Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an
+            <strong>@osu.edu</strong> email.
+          </p>
+          <div class="row gap-sm mt-md">
+            <a class="btn btn-primary" href="account.html">Sign in</a>
           </div>
         </div>
 
-        <ul class="ul muted">
-          <li>Day 1: Market Foundations</li>
-          <li>Day 2: Setups & Invalidations</li>
-          <li>Day 3: Risk & Sizing</li>
-          <li>Day 4: Live Lab & Review</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+        <!-- Right: video card with subtle bars behind -->
+        <div class="video-wrap">
+          <!-- transparent bars behind video -->
+          <div class="market-bars subtle" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
 
-  <!-- Footer -->
+          <div class="video-card">
+            <video id="courseVideo" class="video"
+                   playsinline muted loop preload="metadata"
+                   poster="assets/images/resources-hero-poster.jpg">
+              <!-- Put your MP4 here -->
+              <source src="assets/video/course-walkthrough.mp4" type="video/mp4" />
+            </video>
+            <button id="playBtn" class="play-btn" aria-label="Play video">
+              <div class="pulse"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Free materials -->
+    <section id="previews" class="container mt-xl">
+      <h2 class="h3 mb-md">Free materials</h2>
+
+      <div class="cards-3 gap-lg">
+        <article class="card p-lg">
+          <span class="pill pill-red">Playbook</span>
+          <h3 class="h5 mt-sm">Opening Drive</h3>
+          <p class="muted">How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
+          <a class="btn btn-inline mt-sm" href="assets/free/opening-drive.pdf" target="_blank">Download</a>
+        </article>
+
+        <article class="card p-lg">
+          <span class="pill pill-purple">Template</span>
+          <h3 class="h5 mt-sm">Journal Starter</h3>
+          <p class="muted">Tags, KPIs, and weekly review prompts that don’t rot in Google Drive.</p>
+          <a class="btn btn-inline mt-sm" href="assets/free/journal-starter.pdf" target="_blank">Download</a>
+        </article>
+
+        <article class="card p-lg">
+          <span class="pill pill-blue">Checklist</span>
+          <h3 class="h5 mt-sm">Pre-Market Routine</h3>
+          <p class="muted">10-minute flow that won’t nuke your focus before the bell.</p>
+          <a class="btn btn-inline mt-sm" href="assets/free/premarket-routine.pdf" target="_blank">Download</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Members area -->
+    <section class="container mt-xl">
+      <h2 class="h3 mb-md">OSU-only course: Day Trading Fundamentals</h2>
+
+      <div class="card p-xl row gap-lg items-center">
+        <div class="lock-icon" aria-hidden="true"></div>
+        <div class="grow">
+          <h3 class="h4 mb-sm">Members area</h3>
+          <p class="muted">Sign in with <strong>@osu.edu</strong> and subscribe to unlock all modules, quizzes, and notes.</p>
+          <ul class="bullets mt-sm">
+            <li>Day 1: Market Foundations</li>
+            <li>Day 2: Setups & Invalidations</li>
+            <li>Day 3: Risk & Sizing</li>
+            <li>Day 4: Live Lab & Review</li>
+          </ul>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="account.html">Subscribe</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <footer class="site-footer">
-    <div class="container">© 2025 OSU Day Traders</div>
+    <div class="container">&copy; 2025 OSU Day Traders</div>
   </footer>
 
-  <!-- Firebase + minimal gating logic (non-blocking; no redirects) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
-      authDomain: "osu-daytraders.firebaseapp.com",
-      projectId: "osu-daytraders",
-      storageBucket: "osu-daytraders.firebasestorage.app",
-      messagingSenderId: "63619855631",
-      appId: "1:63619855631:web:3416fee03d357715f0fa7a",
-      measurementId: "G-RXTL84LM0T"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const lockcopy = document.getElementById('lockcopy');
-    const subBtn   = document.getElementById('subscribeBtn');
-
-    // Gentle gating: show copy based on auth + claimed membership.
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        lockcopy.innerHTML = 'Sign in with <b>@osu.edu</b> and subscribe to unlock all modules, quizzes, and notes.';
-        subBtn.setAttribute('href','auth.html');
-        subBtn.textContent = 'Sign in to subscribe';
-        return;
-      }
-
-      // if not osu, let them know they can’t buy.
-      const email = user.email || '';
-      const isOSU = /@osu\.edu$/i.test(email);
-      if (!isOSU) {
-        lockcopy.textContent = 'You’re signed in, but only @osu.edu emails can purchase the course. You can still explore the free previews.';
-        subBtn.removeAttribute('href');
-        subBtn.style.opacity = .6;
-        subBtn.style.cursor = 'not-allowed';
-        subBtn.textContent = 'Subscription restricted';
-        return;
-      }
-
-      // check “memberships/{uid}”
-      try {
-        const ref = doc(db, 'memberships', user.uid);
-        const snap = await getDoc(ref);
-        const active = snap.exists() && snap.data()?.active === true;
-
-        if (active) {
-          lockcopy.textContent = 'You have access. Jump into modules, quizzes, and notes.';
-          subBtn.textContent = 'Go to course';
-          subBtn.setAttribute('href','course/index.html'); // point this to your course entry when ready
-        } else {
-          lockcopy.textContent = 'OSU email verified. Subscribe to unlock all modules, quizzes, and notes.';
-          subBtn.textContent = 'Subscribe';
-          subBtn.setAttribute('href','auth.html'); // temporary: send to account where you’ll add the Stripe link
-        }
-      } catch {
-        // fail soft
-      }
-    });
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    // simple play/pause toggle
+    const v = document.getElementById('courseVideo');
+    const btn = document.getElementById('playBtn');
+    if (v && btn) {
+      btn.addEventListener('click', () => {
+        if (v.paused) { v.play(); btn.classList.add('playing'); }
+        else { v.pause(); btn.classList.remove('playing'); }
+      });
+    }
   </script>
 </body>
 </html>
