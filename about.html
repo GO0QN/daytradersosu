@@ -1,18 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About • OSU Day Traders</title>
-  <link rel="stylesheet" href="css/style.css" />
+
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="assets/icons/favicon.ico"/>
+
+  <!-- Page polish to match Applications & Events -->
+  <style>
+    :root{
+      --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
+    }
+    body{background:var(--surface)}
+    .page{max-width:1100px;margin:0 auto;padding:1.6rem 1rem 3rem}
+
+    /* Headings normalized */
+    .lede h1{margin:.2rem 0 .6rem 0;font-weight:1000;color:var(--ink);font-size:clamp(1.9rem,2.9vw,2.2rem)}
+    .lede p{margin:.25rem 0 1.15rem 0;color:#3f3f3f;max-width:860px}
+    .lede h2{margin:1.4rem 0 .7rem 0;color:var(--ink);font-size:1.25rem;font-weight:1000}
+
+    /* Cards */
+    .grid{display:grid;gap:1rem}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:900px){ .grid-3{grid-template-columns:1fr} }
+
+    .card{
+      background:var(--panel); border:1px solid #eee; border-radius:20px;
+      padding:clamp(1rem,2vw,1.25rem);
+      box-shadow:0 16px 40px rgba(0,0,0,.08);
+      transition:transform .14s ease, box-shadow .14s ease;
+    }
+    .card:hover{ transform:translateY(-2px); box-shadow:0 24px 56px rgba(0,0,0,.12) }
+
+    .eyebrow{display:inline-block;background:var(--scarlet);color:#fff;font-weight:900;font-size:.74rem;padding:.28rem .55rem;border-radius:999px}
+
+    /* People */
+    .role{display:grid;grid-template-columns:72px 1fr;gap:.9rem;align-items:start}
+    .avatar{
+      width:72px;height:72px;border-radius:999px;object-fit:cover;
+      border:2px solid #f0f0f0;box-shadow:0 6px 16px rgba(0,0,0,.06);background:#fafafa
+    }
+    .avatar--initials{
+      display:grid;place-items:center;
+      font-weight:900;color:#fff;background:var(--scarlet);
+    }
+    .role h3{margin:.1rem 0 .25rem 0;color:var(--ink);font-size:1.05rem}
+    .role p{margin:0;color:#474747;line-height:1.45}
+
+    /* Advisor highlight (full width) */
+    .advisor{display:grid;grid-template-columns:110px 1fr;gap:1rem;align-items:center}
+    .advisor .avatar{width:96px;height:96px}
+    .advisor h3{margin:.15rem 0 .2rem 0;font-size:1.18rem}
+    .advisor .meta{color:#666;font-size:.95rem}
+    .advisor .desc{margin:.35rem 0 0 0;color:#3f3f3f}
+    @media (max-width:720px){ .advisor{grid-template-columns:84px 1fr} .advisor .avatar{width:84px;height:84px} }
+
+    /* Scarlet CTA band */
+    .cta-band{
+      margin:1.75rem 0 0 0;border-radius:18px;padding:1.6rem;
+      background:var(--scarlet); color:#fff; text-align:center;
+      box-shadow:0 18px 48px rgba(196,18,47,.28);
+    }
+    .cta-band h3{margin:.1rem 0 .5rem 0;font-weight:1000}
+    .btn{display:inline-block;border-radius:999px;padding:.85rem 1.05rem;font-weight:900;text-decoration:none}
+    .btn-light{background:#fff;color:#111;border:1px solid #eee}
+  </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png?v=20251013" alt="OSU Day Traders Logo" />
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
       <span>OSU Day Traders</span>
     </a>
-
     <nav class="site-nav" aria-label="Main navigation">
       <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
       <ul id="navMenu">
@@ -26,97 +88,143 @@
     </nav>
   </header>
 
-  <main class="content narrow">
-    <h1>About OSU Day Traders</h1>
-    <p>
-      We’re a student-led community focused on building consistent, disciplined trading processes.
-      Members get hands-on practice, structured playbooks, and accountability partners.
-    </p>
+  <main class="page">
+    <section class="lede">
+      <h1>About OSU Day Traders</h1>
+      <p>We’re a student-led community focused on building consistent, disciplined trading processes. Members get hands-on practice, structured playbooks, and accountability partners.</p>
 
-    <h2>What We Do</h2>
-    <ul class="checklist">
-      <li>Daily watchlists, levels, and reviews</li>
-      <li>Risk management and journaling</li>
-      <li>Guest speakers and workshops</li>
-      <li>Collaborative research</li>
-    </ul>
+      <h2>What We Do</h2>
+      <ul style="margin:.25rem 0 0 0;padding:0 0 0 1.1rem;display:grid;gap:.3rem">
+        <li>Daily watchlists, levels, and reviews</li>
+        <li>Risk management and journaling</li>
+        <li>Guest speakers and workshops</li>
+        <li>Collaborative research</li>
+      </ul>
+    </section>
 
-    <h2>Leadership</h2>
-
-    <!-- Featured row -->
-    <div class="leaders-featured">
-      <div class="leader card leader--wide">
-        <img src="assets/images/president.jpg?v=20251013" alt="President — Steven Wang" class="leader-photo" />
-        <div class="leader-body">
-          <h3>President — Steven Wang</h3>
-          <p>Leads strategy, partnerships, and weekly programming.</p>
+    <!-- Advisor spotlight (full width single card) -->
+    <section class="card" style="margin-top:1.25rem">
+      <div class="advisor">
+        <!-- Replace src + text when you have the real advisor info -->
+        <img class="avatar" src="assets/images/public-relations.jpg" alt="Faculty Advisor"/>
+        <div>
+          <span class="eyebrow">Faculty Advisor</span>
+          <h3>Dr. [Advisor Name]</h3>
+          <div class="meta">Department of [Discipline], The Ohio State University</div>
+          <p class="desc">Guides the club’s academic alignment and ethics, supports programming, and helps coordinate university resources. Provides feedback on speaker topics and process standards.</p>
         </div>
       </div>
+    </section>
 
-      <div class="leader card leader--wide">
-        <img src="assets/images/vice-president.jpg?v=20251013" alt="Vice President — Maxim Towers" class="leader-photo" />
-        <div class="leader-body">
-          <h3>Vice President — Maxim Towers</h3>
-          <p>Coordinates events and supports the president in decisions.</p>
+    <!-- Leadership grid -->
+    <h2 style="margin-top:1.45rem">Leadership</h2>
+    <section class="grid grid-3">
+      <article class="card">
+        <div class="role">
+          <img class="avatar" src="assets/images/president.jpg" alt="President — Steven Wang"/>
+          <div>
+            <span class="eyebrow">President</span>
+            <h3>Steven Wang</h3>
+            <p>Leads strategy, partnerships, and weekly programming.</p>
+          </div>
         </div>
-      </div>
-    </div>
+      </article>
 
-    <!-- Other leaders -->
-    <div class="leaders-others">
-      <div class="leader card">
-        <img src="assets/images/public-relations.jpg?v=20251013" alt="CD — Jenny Zhu" class="leader-photo" />
-        <div class="leader-body">
-          <h3>CD — Jenny Zhu</h3>
-          <p>Oversees design of media</p>
+      <article class="card">
+        <div class="role">
+          <img class="avatar" src="assets/images/vice-president.jpg" alt="Vice President — Maxim Towers"/>
+          <div>
+            <span class="eyebrow">Vice President</span>
+            <h3>Maxim Towers</h3>
+            <p>Coordinates events and supports the president in decisions.</p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="leader card">
-        <img src="assets/images/secretary.jpg?v=20251013" alt="Secretary — Vivian Wang" class="leader-photo" />
-        <div class="leader-body">
-          <h3>Secretary — Vivian Wang</h3>
-          <p>Handles communications, notes, schedules, and records.</p>
+      <article class="card">
+        <div class="role">
+          <img class="avatar" src="assets/images/secretary.jpg" alt="Secretary — Vivian Wang"/>
+          <div>
+            <span class="eyebrow">Secretary</span>
+            <h3>Vivian Wang</h3>
+            <p>Handles communications, notes, schedules, and records.</p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="leader card">
-        <img src="assets/images/treasurer.jpg?v=20251013" alt="Treasurer — Anastas Raykov" class="leader-photo" />
-        <div class="leader-body">
-          <h3>Treasurer — Anastas Raykov</h3>
-          <p>Manages budgeting, reimbursements, and fundraising.</p>
+      <article class="card">
+        <div class="role">
+          <img class="avatar" src="assets/images/treasurer.jpg" alt="Treasurer — Anastas Raykov"/>
+          <div>
+            <span class="eyebrow">Treasurer</span>
+            <h3>Anastas Raykov</h3>
+            <p>Manages budgeting, reimbursements, and fundraising.</p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="leader card">
-        <img src="assets/images/trading-committee.jpg?v=20251013" alt="PR — Brian Liao" class="leader-photo" />
-        <div class="leader-body">
-          <h3>PR — Brian Liao</h3>
-          <p>Oversees all Social Media</p>
+      <!-- Roles without images use initials avatars -->
+      <article class="card">
+        <div class="role">
+          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Jenny Zhu">JZ</span>
+          <div>
+            <span class="eyebrow">Creative Director</span>
+            <h3>Jenny Zhu</h3>
+            <p>Oversees design and media for the club.</p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="leader card">
-        <img src="assets/images/blank.png?v=20251013" alt="Trading Commitee Lead - Faraz Ayub" class="leader-photo" />
-        <div class="leader-body">
-          <h3>Trading Commitee Lead - Faraz Ayub</h3>
-          <p>Responsible for teaching trading concepts and strategies.</p>
+      <article class="card">
+        <div class="role">
+          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Brian Liao">BL</span>
+          <div>
+            <span class="eyebrow">Public Relations</span>
+            <h3>Brian Liao</h3>
+            <p>Leads social channels and external communications.</p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="leader card">
-        <img src="assets/images/blank.png?v=20251013" alt="Risk & Analytics" class="leader-photo" />
-        <div class="leader-body">
-          <h3>Risk &amp; Analytics</h3>
-          <p>Builds dashboards and trade reviews to enforce process.</p>
+      <article class="card">
+        <div class="role">
+          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Faraz Ayub">FA</span>
+          <div>
+            <span class="eyebrow">Trading Committee Lead</span>
+            <h3>Faraz Ayub</h3>
+            <p>Teaches trading concepts, standards, and review methods.</p>
+          </div>
         </div>
-      </div>
-    </div>
+      </article>
 
-    <section class="cta-banner" style="margin-top:2rem">
+      <article class="card">
+        <div class="role">
+          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Risk & Analytics">RA</span>
+          <div>
+            <span class="eyebrow">Risk & Analytics</span>
+            <h3>Team</h3>
+            <p>Builds dashboards and runs trade reviews to enforce process.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="role">
+          <img class="avatar" src="assets/images/trading-committee.jpg" alt="Board of Traders"/>
+          <div>
+            <span class="eyebrow">Board of Traders</span>
+            <h3>Committee</h3>
+            <p>Sets process standards, audits journals, and mentors members.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- CTA band -->
+    <section class="cta-band">
       <h3>Want to get involved?</h3>
-      <p>Come to an event or reach out — we’re always welcoming serious, curious learners.</p>
-      <p><a class="btn btn--light" href="contact.html">Contact Us</a></p>
+      <p style="margin:.25rem 0 1rem 0">Come to an event or reach out — we’re always welcoming serious, curious learners.</p>
+      <a class="btn btn-light" href="contact.html">Contact us</a>
     </section>
   </main>
 
@@ -124,7 +232,7 @@
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <script src="js/main.js?v=20251013"></script>
+  <script src="js/main.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
