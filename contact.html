@@ -6,68 +6,71 @@
   <title>Contact • OSU Day Traders</title>
   <link rel="icon" href="assets/icons/favicon.ico"/>
 
-  <!-- Page-local styles to match site theme -->
+  <!-- Local page styles (kept minimal, on-brand) -->
   <style>
     :root{
-      --scarlet:#c4122f; --ink:#121212; --muted:#5b5b5b; --surface:#f6f6f6; --panel:#ffffff;
+      --scarlet:#c4122f; --ink:#111; --muted:#575757;
+      --surface:#f6f6f6; --panel:#fff;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--surface)}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--surface)}
 
-    /* Header */
+    /* Top bar (same visual language as other pages) */
     header{background:var(--scarlet);padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:.55rem;color:#fff;text-decoration:none;font-weight:800}
+    .brand{display:flex;align-items:center;gap:.6rem;color:#fff;text-decoration:none;font-weight:900}
     .brand img{width:34px;height:34px;border-radius:50%}
-    nav ul{display:flex;gap:1.25rem;margin:0;padding:0;list-style:none}
-    nav a{color:#fff;text-decoration:none;font-weight:700;font-size:.95rem;opacity:.92}
-    nav a:hover,.active{opacity:1}
+    nav ul{margin:0;padding:0;list-style:none;display:flex;gap:1.15rem}
+    nav a{color:#fff;text-decoration:none;font-weight:800;opacity:.95}
+    nav a.active,nav a:hover{opacity:1}
 
     /* Page shell */
     .wrap{max-width:980px;margin:0 auto;padding:2.2rem 1rem 3.2rem}
-    h1{margin:0 0 .6rem;font-size:clamp(1.75rem,3.2vw,2.1rem);font-weight:900}
-    .lede{color:#444;margin:0 0 1.1rem}
+    h1{margin:0 0 .45rem;font-size:clamp(1.9rem,3.2vw,2.2rem);font-weight:900;letter-spacing:.2px}
+    .lede{margin:0 0 1.25rem;color:#444}
 
     /* Card */
     .card{
-      background:var(--panel);border-radius:20px;padding:1.2rem;
-      box-shadow:0 18px 40px rgba(0,0,0,.12);
+      background:var(--panel);border-radius:22px;padding:1.25rem 1.25rem 1.4rem;
+      box-shadow:0 18px 40px rgba(0,0,0,.12);max-width:860px;margin:0 auto;
     }
 
     /* Form */
-    form{display:grid;gap:.9rem;margin-top:.2rem}
-    label{font-weight:800;font-size:.95rem}
+    form{display:grid;gap:1rem}
+    .row{display:grid;gap:.4rem}
+    label{font-weight:850;font-size:.95rem}
     input,textarea{
-      width:100%;border:1px solid #e8e8e8;background:#fff;border-radius:14px;
-      padding:.85rem 1rem;font-size:1rem;outline:none;transition:border-color .15s, box-shadow .15s;
+      width:100%;border:1px solid #e9e9e9;background:#fff;border-radius:16px;
+      padding:1rem 1.1rem;font-size:1rem;outline:none;transition:border-color .15s, box-shadow .15s;
     }
-    input:focus,textarea:focus{border-color:#d7d7d7;box-shadow:0 0 0 4px rgba(196,18,47,.12)}
-    textarea{min-height:150px;resize:vertical}
+    input:focus,textarea:focus{border-color:#dadada;box-shadow:0 0 0 4px rgba(196,18,47,.12)}
+    textarea{min-height:160px;resize:vertical}
 
-    .actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-top:.2rem}
+    .actions{display:flex;gap:.9rem;align-items:center;flex-wrap:wrap}
     .btn{
-      display:inline-block;border:none;border-radius:999px;padding:.9rem 1.15rem;
-      font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s, filter .15s;
+      border:none;border-radius:999px;padding:.95rem 1.2rem;font-weight:900;font-size:1rem;cursor:pointer;
+      transition:transform .15s, filter .15s, box-shadow .15s;
     }
-    .btn-primary{background:var(--scarlet);color:#fff;box-shadow:0 10px 22px rgba(196,18,47,.28)}
+    .btn-primary{background:var(--scarlet);color:#fff;box-shadow:0 12px 24px rgba(196,18,47,.28)}
     .btn-primary:hover{transform:translateY(-2px);filter:brightness(.97)}
-    .hint{color:#666;font-size:.9rem}
+    .hint{color:#666;font-size:.92rem}
 
-    /* Alerts */
-    .alert{display:none;margin-top:.9rem;padding:.85rem 1rem;border-radius:14px;font-weight:700}
-    .alert.ok{background:#eaf7ee;color:#145c2e}
-    .alert.err{background:#fdeaea;color:#7a0f0f}
+    /* Inline states */
+    .alert{display:none;margin-top:.6rem;padding:.85rem 1rem;border-radius:14px;font-weight:800}
+    .alert.ok{background:#eaf7ee;color:#135a2c}
+    .alert.err{background:#fdeaea;color:#7a1010}
 
     /* Footer */
-    footer{background:#121212;color:#fff;text-align:center;padding:1.1rem 1rem;font-size:.92rem;margin-top:2.2rem}
+    footer{background:#111;color:#fff;text-align:center;padding:1.1rem 1rem;font-size:.92rem;margin-top:2.2rem}
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo">
       <span>OSU Day Traders</span>
     </a>
-    <nav>
+    <nav aria-label="Main">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -79,31 +82,32 @@
     </nav>
   </header>
 
+  <!-- Content -->
   <main class="wrap">
     <h1>Contact</h1>
-    <p class="lede">If you have questions about joining, speaking, partnering, or sponsoring OSU Day Traders, reach out below.</p>
+    <p class="lede">Questions about joining, speaking, partnering, or sponsoring OSU Day Traders? Drop a note below.</p>
 
     <section class="card" aria-labelledby="contactFormTitle">
       <h2 id="contactFormTitle" style="position:absolute;left:-9999px">Contact form</h2>
 
       <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST">
-        <div>
+        <div class="row">
           <label for="name">Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required/>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
         </div>
 
-        <div>
+        <div class="row">
           <label for="email">Email</label>
-          <input id="email" name="_replyto" type="email" inputmode="email" autocomplete="email" placeholder="you@osu.edu" required/>
+          <input id="email" name="_replyto" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
         </div>
 
-        <div>
+        <div class="row">
           <label for="message">Message</label>
           <textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea>
         </div>
 
-        <!-- honey pot to reduce spam -->
-        <input type="text" name="_gotcha" style="display:none" aria-hidden="true"/>
+        <!-- spam honeypot -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div class="actions">
           <button class="btn btn-primary" type="submit" id="sendBtn">Send</button>
@@ -111,20 +115,20 @@
         </div>
 
         <div id="formOk"  class="alert ok">Thanks — your message was sent.</div>
-        <div id="formErr" class="alert err">Something went wrong. Try again in a moment.</div>
+        <div id="formErr" class="alert err">Couldn’t send right now. Try again in a bit.</div>
       </form>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
+  <!-- Lightweight JS for inline success/fail UX -->
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Ajax submit to Formspree for inline success message
     const form = document.getElementById('contactForm');
     const sendBtn = document.getElementById('sendBtn');
     const ok  = document.getElementById('formOk');
@@ -133,7 +137,7 @@
 
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      ok.style.display = 'none'; err.style.display = 'none';
+      ok.style.display='none'; err.style.display='none';
       sendBtn.disabled = true; sendBtn.textContent = 'Sending…';
 
       try{
@@ -144,13 +148,13 @@
         });
         if(res.ok){
           form.reset();
-          ok.style.display = 'block';
-          hint.textContent = 'We’ll reply soon.';
+          ok.style.display='block';
+          hint.textContent='We’ll reply soon.';
         }else{
-          err.style.display = 'block';
+          err.style.display='block';
         }
       }catch{
-        err.style.display = 'block';
+        err.style.display='block';
       }finally{
         sendBtn.disabled = false; sendBtn.textContent = 'Send';
       }
