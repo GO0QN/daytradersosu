@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="icon" href="assets/icons/favicon.ico"/>
 
-  <!-- Page polish to match Applications & Events -->
   <style>
     :root{
       --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
@@ -16,12 +15,10 @@
     body{background:var(--surface)}
     .page{max-width:1100px;margin:0 auto;padding:1.6rem 1rem 3rem}
 
-    /* Headings normalized */
     .lede h1{margin:.2rem 0 .6rem 0;font-weight:1000;color:var(--ink);font-size:clamp(1.9rem,2.9vw,2.2rem)}
     .lede p{margin:.25rem 0 1.15rem 0;color:#3f3f3f;max-width:860px}
     .lede h2{margin:1.4rem 0 .7rem 0;color:var(--ink);font-size:1.25rem;font-weight:1000}
 
-    /* Cards */
     .grid{display:grid;gap:1rem}
     .grid-3{grid-template-columns:repeat(3,1fr)}
     @media (max-width:900px){ .grid-3{grid-template-columns:1fr} }
@@ -36,40 +33,30 @@
 
     .eyebrow{display:inline-block;background:var(--scarlet);color:#fff;font-weight:900;font-size:.74rem;padding:.28rem .55rem;border-radius:999px}
 
-    /* People */
     .role{display:grid;grid-template-columns:72px 1fr;gap:.9rem;align-items:start}
-    .avatar{
-      width:72px;height:72px;border-radius:999px;object-fit:cover;
-      border:2px solid #f0f0f0;box-shadow:0 6px 16px rgba(0,0,0,.06);background:#fafafa
-    }
-    .avatar--initials{
-      display:grid;place-items:center;
-      font-weight:900;color:#fff;background:var(--scarlet);
-    }
+    .avatar{width:72px;height:72px;border-radius:999px;object-fit:cover;border:2px solid #f0f0f0;box-shadow:0 6px 16px rgba(0,0,0,.06);background:#fafafa}
+    .avatar--initials{display:grid;place-items:center;font-weight:900;color:#fff;background:var(--scarlet)}
+
     .role h3{margin:.1rem 0 .25rem 0;color:var(--ink);font-size:1.05rem}
     .role p{margin:0;color:#474747;line-height:1.45}
 
-    /* Advisor highlight (full width) */
+    /* Featured leadership (President/VP) bigger cards */
+    .featured{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.5rem 0 1rem}
+    @media (max-width:900px){.featured{grid-template-columns:1fr}}
+    .featured .role{grid-template-columns:88px 1fr}
+    .featured .avatar{width:88px;height:88px}
+    .featured h3{font-size:1.15rem}
+
+    /* Advisor block full width */
     .advisor{display:grid;grid-template-columns:110px 1fr;gap:1rem;align-items:center}
     .advisor .avatar{width:96px;height:96px}
     .advisor h3{margin:.15rem 0 .2rem 0;font-size:1.18rem}
     .advisor .meta{color:#666;font-size:.95rem}
     .advisor .desc{margin:.35rem 0 0 0;color:#3f3f3f}
     @media (max-width:720px){ .advisor{grid-template-columns:84px 1fr} .advisor .avatar{width:84px;height:84px} }
-
-    /* Scarlet CTA band */
-    .cta-band{
-      margin:1.75rem 0 0 0;border-radius:18px;padding:1.6rem;
-      background:var(--scarlet); color:#fff; text-align:center;
-      box-shadow:0 18px 48px rgba(196,18,47,.28);
-    }
-    .cta-band h3{margin:.1rem 0 .5rem 0;font-weight:1000}
-    .btn{display:inline-block;border-radius:999px;padding:.85rem 1.05rem;font-weight:900;text-decoration:none}
-    .btn-light{background:#fff;color:#111;border:1px solid #eee}
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
@@ -102,10 +89,9 @@
       </ul>
     </section>
 
-    <!-- Advisor spotlight (full width single card) -->
-    <section class="card" style="margin-top:1.25rem">
+    <!-- Advisor -->
+    <section class="card" style="margin-top:1.1rem">
       <div class="advisor">
-        <!-- Replace src + text when you have the real advisor info -->
         <img class="avatar" src="assets/images/public-relations.jpg" alt="Faculty Advisor"/>
         <div>
           <span class="eyebrow">Faculty Advisor</span>
@@ -116,9 +102,9 @@
       </div>
     </section>
 
-    <!-- Leadership grid -->
-    <h2 style="margin-top:1.45rem">Leadership</h2>
-    <section class="grid grid-3">
+    <!-- Featured leadership -->
+    <h2 style="margin-top:1.3rem">Leadership</h2>
+    <section class="featured">
       <article class="card">
         <div class="role">
           <img class="avatar" src="assets/images/president.jpg" alt="President — Steven Wang"/>
@@ -129,7 +115,6 @@
           </div>
         </div>
       </article>
-
       <article class="card">
         <div class="role">
           <img class="avatar" src="assets/images/vice-president.jpg" alt="Vice President — Maxim Towers"/>
@@ -140,7 +125,10 @@
           </div>
         </div>
       </article>
+    </section>
 
+    <!-- Rest of the team -->
+    <section class="grid grid-3">
       <article class="card">
         <div class="role">
           <img class="avatar" src="assets/images/secretary.jpg" alt="Secretary — Vivian Wang"/>
@@ -163,10 +151,9 @@
         </div>
       </article>
 
-      <!-- Roles without images use initials avatars -->
       <article class="card">
         <div class="role">
-          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Jenny Zhu">JZ</span>
+          <span class="avatar avatar--initials" style="width:72px;height:72px;border-radius:999px" title="Jenny Zhu">JZ</span>
           <div>
             <span class="eyebrow">Creative Director</span>
             <h3>Jenny Zhu</h3>
@@ -177,7 +164,7 @@
 
       <article class="card">
         <div class="role">
-          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Brian Liao">BL</span>
+          <span class="avatar avatar--initials" style="width:72px;height:72px;border-radius:999px" title="Brian Liao">BL</span>
           <div>
             <span class="eyebrow">Public Relations</span>
             <h3>Brian Liao</h3>
@@ -188,22 +175,11 @@
 
       <article class="card">
         <div class="role">
-          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Faraz Ayub">FA</span>
+          <span class="avatar avatar--initials" style="width:72px;height:72px;border-radius:999px" title="Faraz Ayub">FA</span>
           <div>
             <span class="eyebrow">Trading Committee Lead</span>
             <h3>Faraz Ayub</h3>
             <p>Teaches trading concepts, standards, and review methods.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="role">
-          <span class="avatar avatar--initials" aria-hidden="true" style="width:72px;height:72px;border-radius:999px" title="Risk & Analytics">RA</span>
-          <div>
-            <span class="eyebrow">Risk & Analytics</span>
-            <h3>Team</h3>
-            <p>Builds dashboards and runs trade reviews to enforce process.</p>
           </div>
         </div>
       </article>
@@ -219,13 +195,6 @@
         </div>
       </article>
     </section>
-
-    <!-- CTA band -->
-    <section class="cta-band">
-      <h3>Want to get involved?</h3>
-      <p style="margin:.25rem 0 1rem 0">Come to an event or reach out — we’re always welcoming serious, curious learners.</p>
-      <a class="btn btn-light" href="contact.html">Contact us</a>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -233,8 +202,6 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
