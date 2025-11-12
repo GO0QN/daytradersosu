@@ -21,7 +21,7 @@
       <li><a class="active" href="resources.html">Resources</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="applications.html">Applications</a></li>
-      <li><button id="logout-btn" class="btn" style="background:none;border:none;color:white;font-weight:700;cursor:pointer;">Logout</button></li>
+      <li><button id="logout-btn" style="background:none;border:none;color:#fff;font-weight:800;cursor:pointer;">Logout</button></li>
     </ul>
   </nav>
 </header>
@@ -32,36 +32,41 @@
   <section id="free-resources">
     <h2>Open Materials</h2>
     <ul class="cards cards--2">
-      <li class="card"><h3>Trading Playbooks</h3><p>Access our foundational strategies, including Opening Range Breakout and VWAP Reclaim.</p></li>
-      <li class="card"><h3>Tools List</h3><p>Charting: TradingView / Thinkorswim<br>Paper Trading: Webull / Tastyworks<br>Journal: Notion templates</p></li>
+      <li class="card">
+        <h3>Trading Playbooks</h3>
+        <p>Opening Range Breakout, VWAP Reclaim, risk frameworks, and review checklists.</p>
+      </li>
+      <li class="card">
+        <h3>Tools</h3>
+        <p>Charting: TradingView / Thinkorswim<br>Paper: Webull / Tastyworks<br>Journal: Notion / Sheets templates</p>
+      </li>
     </ul>
   </section>
 
-  <!-- PAID SECTION -->
-  <section id="premium" class="premium-section" style="margin-top:2rem;">
-    <h2>Exclusive OSU Course: Day Trading Fundamentals</h2>
-    <p>This section is available only to verified <strong>@osu.edu</strong> members with an active subscription.</p>
+  <!-- PAID COURSE -->
+  <section id="premium" style="margin-top:2rem;">
+    <h2>OSU-Only Course: Day Trading Fundamentals</h2>
+    <p>Access limited to verified <strong>@osu.edu</strong> accounts with an active membership.</p>
 
-    <div id="locked-content">
-      <div class="locked-overlay" style="text-align:center;padding:2rem;border:2px dashed #bbb;border-radius:12px;background:#f9f9f9;">
-        <p style="font-size:1.1rem;">🔒 This content is locked.</p>
-        <p style="color:#555;">OSU students can subscribe below to unlock the full interactive course.</p>
-        <button id="subscribe-btn" class="btn btn--light" style="margin-top:1rem;">Subscribe with Stripe</button>
-      </div>
+    <div id="locked-content" style="text-align:center;padding:2rem;border:2px dashed #bbb;border-radius:12px;background:#f9f9f9;">
+      <p style="font-size:1.1rem;">🔒 This content is locked.</p>
+      <p style="color:#555;">OSU students can subscribe below to unlock the full interactive course.</p>
+      <button id="subscribe-btn" class="btn btn--light" style="margin-top:1rem;">Subscribe with Stripe</button>
     </div>
 
-    <!-- Once unlocked, replace above with the course -->
-    <div id="unlocked-content" style="display:none;">
+    <div id="unlocked-content" style="display:none;margin-top:1.25rem;">
       <h3>Day 1: Market Foundations</h3>
-      <p>Learn how markets move, core terminology, and build your first trading plan.</p>
+      <p>How markets move, order types, platform basics, first trading plan.</p>
 
       <video width="100%" controls style="border-radius:12px;">
-        <source src="assets/videos/day1.mp4" type="video/mp4">
+        <source src="assets/videos/day1.mp4" type="video/mp4"/>
         Your browser does not support the video tag.
       </video>
 
       <h4>Interactive Quiz</h4>
-      <div id="quiz"></div>
+      <div id="quiz">
+        <!-- quiz will go here later -->
+      </div>
 
       <h4>Notes & Downloads</h4>
       <ul>
