@@ -1,23 +1,31 @@
-<!-- /js/firebase-init.js -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+// js/firebase-init.js
+// Loads Firebase (App/Auth/Firestore) via CDN and exposes instances on window.
+// Fill in your own config below.
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
-    authDomain: "osu-daytraders.firebaseapp.com",
-    projectId: "osu-daytraders",
-    storageBucket: "osu-daytraders.firebasestorage.app",
-    messagingSenderId: "63619855631",
-    appId: "1:63619855631:web:3416fee03d357715f0fa7a",
-    measurementId: "G-RXTL84LM0T"
-  };
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+import * as _auth       from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import * as _firestore  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  getAnalytics(app);
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  appId: "YOUR_APP_ID"
+  // no storage; we’re not using it
+};
 
-  // Expose for other modules
-  window.__firebase = { app, auth };
-</script>
+const app  = initializeApp(firebaseConfig);
+const auth = _auth.getAuth(app);
+const db   = _firestore.getFirestore(app);
+
+// Persistence (local)
+_auth.setPersistence(auth, _auth.browserLocalPersistence);
+
+// Expose so auth.js can use them without re-importing
+window.app = app;
+window.auth = auth;
+window.db = db;
+
+// Also expose the module namespaces in case auth.js wants functions
+window.firebaseAuthExports = _auth;
+window.firebaseFirestoreExports = _firestore;
