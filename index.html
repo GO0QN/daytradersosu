@@ -1,112 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OSU Day Traders • Learn. Trade. Grow.</title>
+  <title>OSU Day Traders</title>
 
   <link rel="stylesheet" href="css/style.css"/>
-  <link rel="icon" href="assets/icons/favicon.ico"/>
+  <link rel="icon" href="assets/icons/favicon.ico" />
 
-  <meta property="og:title" content="OSU Day Traders — Learn. Trade. Grow."/>
-  <meta property="og:description" content="The official day trading community at The Ohio State University."/>
-  <meta property="og:image" content="assets/images/osu-daytraders-logo.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-
-  <!-- Minimal, centered, brand-consistent polish -->
   <style>
-    :root{
-      --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
+    :root {
+      --scarlet: #c4122f;
+      --ink: #121212;
+      --muted: #5b5b5b;
+      --surface: #f6f6f6;
+      --panel: #fff;
     }
-    body{background:var(--surface)}
 
-    /* ===== HERO (centered) ===== */
-    .hero{
-      position:relative; color:#fff; overflow:hidden; text-align:center;
-      background:radial-gradient(1200px 480px at 70% -10%, #de2946 0%, #c4122f 45%, #7c0e20 100%);
-      padding:clamp(3.4rem,6vw,6rem) 1rem;
-      box-shadow:inset 0 -6px 20px rgba(0,0,0,.12);
-      isolation:isolate;
+    body {
+      background: var(--surface);
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
     }
-    .hero .wrap{max-width:960px;margin:0 auto}
-    .hero h1{
-      margin:0 0 .5rem 0;font-weight:1000;letter-spacing:.01em;
-      font-size:clamp(2.2rem,4.8vw,3.8rem);line-height:1.06
-    }
-    .hero p{
-      margin:.4rem auto 1.2rem;max-width:780px;color:#ffeef1;
-      font-size:clamp(1rem,1.25vw,1.15rem)
-    }
-    /* faint accent image on right, very subtle */
-    .hero::after{
-      content:""; position:absolute; right:-120px; top:-80px; width:520px; height:520px;
-      background:url("assets/images/osu-daytraders-logo.png") center/contain no-repeat;
-      opacity:.06; filter:grayscale(1) contrast(1.1);
-      pointer-events:none; z-index:0;
-    }
-    .cta-row{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;position:relative;z-index:1}
-    .btn{display:inline-block;border-radius:999px;padding:.95rem 1.2rem;font-weight:900;text-decoration:none}
-    .btn-primary{background:#fff;color:#111;box-shadow:0 10px 24px rgba(255,255,255,.25)}
-    .btn-outline{background:transparent;color:#fff;border:2px solid #fff}
-    .btn:hover{filter:brightness(.95)}
 
-    /* ===== PAGE SHELL ===== */
-    .page{max-width:1100px;margin:0 auto;padding:2rem 1rem 3rem}
-
-    /* ===== SECTION HEADERS (centered) ===== */
-    .section-head{display:grid;justify-items:center;margin:1.6rem 0 1rem}
-    .section-head h2{
-      margin:0 0 .7rem 0;font-weight:1000;color:var(--ink);
-      font-size:clamp(1.5rem,2.6vw,2rem)
+    /* HERO SECTION */
+    .hero {
+      position: relative;
+      background: linear-gradient(145deg, #c4122f 0%, #8a0d21 100%);
+      color: #fff;
+      text-align: center;
+      padding: clamp(6rem, 12vw, 8rem) 1rem 5rem;
+      overflow: hidden;
     }
-    .btn-light{background:#fff;color:#111;border:1px solid #eee;border-radius:999px;padding:.75rem 1.05rem;font-weight:900;text-decoration:none}
 
-    /* ===== FEATURE CARDS (no images) ===== */
-    .grid{display:grid;gap:1rem}
-    .grid-3{grid-template-columns:repeat(3,1fr)}
-    @media (max-width:900px){.grid-3{grid-template-columns:1fr}}
-    .feature{
-      background:var(--panel);border:1px solid #eee;border-radius:20px;padding:1.15rem;
-      box-shadow:0 16px 40px rgba(0,0,0,.08);
-      transition:transform .14s ease, box-shadow .14s ease;
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -140px;
+      top: -100px;
+      width: 600px;
+      height: 600px;
+      background: url("assets/images/translogo.png") center/contain no-repeat;
+      opacity: 0.08;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 0;
+      filter: brightness(1.1);
     }
-    .feature:hover{transform:translateY(-2px);box-shadow:0 24px 56px rgba(0,0,0,.12)}
-    .feature h3{margin:.1rem 0 .35rem;color:var(--ink);font-size:1.08rem}
-    .feature p{margin:0;color:#535353}
 
-    /* ===== NEXT EVENT ===== */
-    .next-wrap{max-width:900px;margin:0 auto}
-    .next-event{display:grid;gap:1rem;grid-template-columns:1fr 1fr}
-    @media (max-width:900px){.next-event{grid-template-columns:1fr}}
-    .card{
-      background:var(--panel);border:1px solid #eee;border-radius:20px;
-      padding:clamp(1rem,2vw,1.25rem);box-shadow:0 16px 40px rgba(0,0,0,.08);
-      transition:transform .14s ease, box-shadow .14s ease;
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 850px;
+      margin: 0 auto;
     }
-    .card:hover{transform:translateY(-2px);box-shadow:0 24px 56px rgba(0,0,0,.12)}
-    .event-title{margin:.1rem 0 .35rem 0;font-weight:1000;color:var(--ink);font-size:1.35rem}
-    .meta{display:grid;gap:.35rem;color:#565656}
-    .event-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
-    .btn-scarlet{background:var(--scarlet);color:#fff;border-radius:999px;padding:.9rem 1.1rem;font-weight:900;text-decoration:none}
 
-    /* compact info card */
-    .event-pill{
-      display:grid;gap:.5rem;align-content:start;
-      background:linear-gradient(180deg,#fff,#fafafa);border:1px solid #eee;border-radius:18px;
-      padding:1rem
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      margin: 0 0 1rem;
     }
-    .chip{display:inline-block;background:var(--scarlet);color:#fff;font-weight:900;font-size:.75rem;padding:.32rem .65rem;border-radius:999px}
-    .k{color:#333}
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+    }
+
+    .hero .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero .btn {
+      padding: 0.9rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--scarlet);
+      border: none;
+    }
+
+    .btn-outline {
+      border: 2px solid #fff;
+      color: #fff;
+      background: transparent;
+    }
+
+    .btn-white:hover,
+    .btn-outline:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    /* SECTION WRAPPER */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+    }
+
+    h2.section-title {
+      font-size: 1.9rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--ink);
+    }
+
+    /* WHAT WE DO */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature {
+      background: var(--panel);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature h3 {
+      margin: 0 0 0.4rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* NEXT EVENT */
+    .next-wrap {
+      background: #fff;
+      border-top: 1px solid #eee;
+      padding: 4rem 1rem;
+    }
+
+    .next-wrap h2 {
+      text-align: center;
+      font-size: 1.9rem;
+      font-weight: 900;
+      margin-bottom: 2rem;
+      color: var(--ink);
+    }
+
+    .event-card {
+      background: var(--panel);
+      border-radius: 22px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .event-chip {
+      display: inline-block;
+      background: var(--scarlet);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .event-card h3 {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin: 0.3rem 0 0.6rem;
+    }
+
+    .event-card p {
+      color: #555;
+      margin: 0.25rem 0;
+      line-height: 1.5;
+    }
+
+    .event-card .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      background: #121212;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
+
 <body>
-  <!-- Header -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
       <span>OSU Day Traders</span>
     </a>
-    <nav class="site-nav" aria-label="Main navigation">
+    <nav class="site-nav">
       <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
       <ul id="navMenu">
         <li><a class="active" href="index.html">Home</a></li>
@@ -121,104 +239,61 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="wrap">
+    <div class="hero-content">
       <h1>Learn. Trade. Grow.</h1>
       <p>The official day trading community at The Ohio State University. Workshops, strategy labs, and a process-first culture built around risk, review, and accountability.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="applications.html#member">Join the club</a>
-        <a class="btn btn-outline" href="events.html">See upcoming events</a>
+      <div class="btn-group">
+        <a href="applications.html" class="btn btn-white">Join the club</a>
+        <a href="events.html" class="btn btn-outline">See upcoming events</a>
       </div>
     </div>
   </section>
 
-  <main class="page">
-    <!-- WHAT WE DO -->
-    <div class="section-head">
-      <h2>What we do</h2>
-      <a class="btn-light" href="resources.html">View resources</a>
-    </div>
-    <section class="grid grid-3" style="max-width:980px;margin:0 auto">
-      <article class="feature">
+  <!-- WHAT WE DO -->
+  <section class="section">
+    <h2 class="section-title">What we do</h2>
+    <div class="features">
+      <div class="feature">
         <h3>Strategy Lab</h3>
-        <p>Backtesting, journal review, and Q&A together to make process repeatable.</p>
-      </article>
-      <article class="feature">
-        <h3>Risk & Process</h3>
-        <p>Position sizing, stop logic, and pre/post-trade checklists that keep you sane.</p>
-      </article>
-      <article class="feature">
-        <h3>Speakers & Workshops</h3>
-        <p>Traders, quants, and builders sharing real lessons, not highlight reels.</p>
-      </article>
-    </section>
-
-    <!-- NEXT UPCOMING EVENT -->
-    <div class="section-head" style="margin-top:1.8rem">
-      <h2>Next upcoming event</h2>
-      <a class="btn-light" href="events.html">Open calendar</a>
-    </div>
-    <section class="next-wrap">
-      <div class="next-event">
-        <aside class="event-pill">
-          <span class="chip" id="evChip">Weekly</span>
-          <div><span class="k">When:</span> <span id="evWhen">Mon, Jan 1 • 6:00 PM ET</span></div>
-          <div><span class="k">Where:</span> <span id="evWhere">Virtual (Zoom)</span></div>
-        </aside>
-        <article class="card">
-          <h3 class="event-title" id="evName">Weekly Meeting</h3>
-          <div class="meta">
-            <p id="evDesc">Market rundown, risk review, and a breakout scalp workflow.</p>
-          </div>
-          <div class="event-actions">
-            <a class="btn-scarlet" id="evZoom" target="_blank" rel="noopener">Register on Zoom</a>
-            <a class="btn-light" id="evAdd" target="_blank" rel="noopener">Add to Google Calendar</a>
-          </div>
-        </article>
+        <p>Backtesting, journal review, and Q&amp;A together to make process repeatable.</p>
       </div>
-    </section>
-  </main>
+      <div class="feature">
+        <h3>Risk &amp; Process</h3>
+        <p>Position sizing, stop logic, and pre/post-trade checklists that keep you sane.</p>
+      </div>
+      <div class="feature">
+        <h3>Speakers &amp; Workshops</h3>
+        <p>Traders, quants, and builders sharing real lessons, not highlight reels.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="resources.html" class="btn btn-outline">View resources</a>
+    </div>
+  </section>
 
-  <footer class="site-footer">
+  <!-- NEXT EVENT -->
+  <section class="next-wrap">
+    <h2>Next upcoming event</h2>
+    <div class="event-card">
+      <span class="event-chip">Weekly</span>
+      <h3>Weekly Meeting</h3>
+      <p><strong>When:</strong> Monday, November 17 · 6:00 PM ET</p>
+      <p><strong>Where:</strong> Virtual (Zoom)</p>
+      <p>Market rundown, risk review, and a breakout scalp workflow.</p>
+      <div class="btn-group">
+        <a href="https://osu.zoom.us/meeting/register/OBKK4x6ARW-nLENvzqbGAg" target="_blank" class="btn btn-white">Register on Zoom</a>
+        <a href="https://calendar.google.com" target="_blank" class="btn btn-outline">Add to Google Calendar</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
   <script src="js/main.js"></script>
   <script>
-    // Footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Next-event data (kept consistent with Events page)
-    const now = new Date();
-    const next = {
-      name: "Weekly Meeting",
-      start: new Date(now.getFullYear(), now.getMonth(), 17, 18, 0), // 17th • 6 PM ET
-      duration: 75,
-      virtual: true,
-      zoom: "https://osu.zoom.us/meeting/register/OBKK4x6ARW-nLENvzqbGAg",
-      description: "Market rundown, risk review, and a breakout scalp workflow."
-    };
-
-    // Render preview
-    const fmtDate = d => d.toLocaleDateString([], {weekday:"short", month:"short", day:"numeric"});
-    const fmtTime = d => d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
-    document.getElementById("evName").textContent = next.name;
-    document.getElementById("evWhen").textContent = `${fmtDate(next.start)} • ${fmtTime(next.start)} ET`;
-    document.getElementById("evWhere").textContent = "Virtual (Zoom)";
-    document.getElementById("evDesc").textContent = next.description;
-    document.getElementById("evZoom").href = next.zoom;
-
-    // Google Calendar deep link
-    function pad(n){return String(n).padStart(2,"0")}
-    const end = new Date(next.start.getTime() + (next.duration||60)*60000);
-    const fmtICS = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
-    const gcal = new URLSearchParams({
-      action:"TEMPLATE",
-      text: next.name,
-      details: `${next.description}\nZoom: ${next.zoom}`,
-      location: "Virtual",
-      dates: `${fmtICS(next.start)}/${fmtICS(end)}`
-    });
-    document.getElementById("evAdd").href = `https://calendar.google.com/calendar/render?${gcal.toString()}`;
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
