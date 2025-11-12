@@ -25,7 +25,7 @@ body{
 }
 .brand{
   display:flex;align-items:center;
-  gap:.45rem; /* tightened to 75% of previous */
+  gap:.22rem; /* reduced to ~half previous spacing */
   color:var(--white);text-decoration:none;font-weight:800;
 }
 .brand img{height:48px;width:auto;border-radius:50%}
@@ -52,7 +52,7 @@ body{
   }
 }
 
-/* ===== Hero (generic) ===== */
+/* ===== Hero ===== */
 .hero{
   min-height:48vh;display:grid;place-items:center;text-align:center;
   background:
@@ -223,13 +223,23 @@ body{
   .resource-hero .candles span{width:12px}
 }
 
-/* ===== Forced logo spacing fallbacks (consistent) ===== */
-.brand { display:inline-flex !important; align-items:center; gap:.45rem !important; }
-.brand img { margin-right:.45rem !important; flex:0 0 auto; }
+/* ===== Tight logo-text spacing overrides ===== */
+.brand { display:inline-flex !important; align-items:center; gap:.22rem !important; }
+.brand img { margin-right:.22rem !important; flex:0 0 auto; }
 .brand + .site-title,
 .brand + .brand-name,
 .brand + h1,
 .brand + h2,
 .brand + span,
-.brand + a { margin-left:.45rem !important; }
-.site-header .brand > * + * { margin-left:.45rem; }
+.brand + a { margin-left:.22rem !important; }
+.site-header .brand > * + * { margin-left:.22rem; }
+@media (max-width:700px){
+  .brand{gap:.2rem !important;}
+  .brand img{margin-right:.2rem !important;}
+  .brand + .site-title,
+  .brand + .brand-name,
+  .brand + h1,
+  .brand + h2,
+  .brand + span,
+  .brand + a{margin-left:.2rem !important;}
+}
