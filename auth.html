@@ -4,11 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Account • OSU Day Traders</title>
-
-  <!-- your global styles -->
   <link rel="stylesheet" href="css/style.css"/>
-
-  <!-- page styles -->
   <link rel="stylesheet" href="css/auth.css"/>
 </head>
 <body>
@@ -32,46 +28,34 @@
 
   <main class="auth-wrap">
     <section class="auth-card">
-      <div class="auth-head">
-        <h1>Account</h1>
-        <p class="muted">
-          Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.
-        </p>
-      </div>
+      <h1>Account</h1>
+      <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
 
-      <div class="auth-actions">
-        <button id="google-btn" class="btn btn-google">
-          <span class="g"></span> Continue with Google
-        </button>
+      <div class="grid2">
+        <div class="block">
+          <h3>Create account / Sign in</h3>
 
-        <p id="status" class="status muted"></p>
-      </div>
+          <button id="google-btn" class="btn btn-google">
+            <span class="g"></span> Continue with Google
+          </button>
 
-      <div class="auth-profile" id="profile" hidden>
-        <div class="profile-row">
-          <img id="avatar" class="avatar" alt="">
-          <div>
-            <div class="name" id="name"></div>
-            <div class="email" id="email"></div>
-            <div class="pill" id="membershipPill">Member: free</div>
-          </div>
+          <div class="or"><span>or</span></div>
+
+          <form id="email-form" class="form">
+            <label>Email</label>
+            <input id="email" type="email" autocomplete="email" required>
+            <label>Password</label>
+            <input id="password" type="password" autocomplete="current-password" minlength="6" required>
+
+            <div class="btn-row">
+              <button id="signup-btn" type="button" class="btn btn-primary">Create account</button>
+              <button id="login-btn"  type="button" class="btn btn-ghost">Log in</button>
+            </div>
+          </form>
+
+          <p id="status" class="status muted" role="status"></p>
         </div>
 
-        <div class="btn-row">
-          <a class="btn btn-ghost" href="resources.html">Go to Resources</a>
-          <button id="signout-btn" class="btn btn-outline">Sign out</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>© <span id="year"></span> OSU Day Traders</p>
-  </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-
-  <!-- Firebase + page logic -->
-  <script type="module" src="js/firebase-init.js"></script>
-  <script type="module" src="js/auth.js"></script>
-</body>
-</html>
+        <div class="block">
+          <h3>Your profile</h3>
+          <div id="profile" class="profile" hidden>
