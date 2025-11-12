@@ -1,0 +1,48 @@
+/* Account page */
+.auth-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 16px 48px;
+}
+.auth-card{
+  background:#fff;
+  border-radius:22px;
+  padding:22px 22px 20px;
+  box-shadow:0 14px 36px rgba(0,0,0,.08);
+  border:1px solid #eee;
+}
+.auth-head h1{
+  margin:0 0 6px;
+  font-size:clamp(1.6rem,3.4vw,2.1rem);
+  font-weight:900;
+}
+.muted{color:#666}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  border-radius:999px;font-weight:800;
+  padding:.78rem 1.1rem;text-decoration:none;cursor:pointer;border:none;
+}
+.btn-ghost{border:2px solid #c4122f;color:#c4122f;background:#fff}
+.btn-outline{border:2px solid #ddd;background:#fff}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.auth-actions{margin-top:10px;margin-bottom:10px}
+
+/* Google button */
+.btn-google{
+  background:#fff;border:2px solid #eee;color:#111;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
+}
+.btn-google:hover{border-color:#ddd}
+.g{width:18px;height:18px;display:inline-block;background:url('https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg') center/contain no-repeat}
+
+/* Profile */
+.auth-profile{margin-top:8px}
+.profile-row{display:flex;gap:12px;align-items:center}
+.avatar{width:44px;height:44px;border-radius:999px;background:#eee}
+.name{font-weight:800}
+.email{font-size:.95rem;color:#555}
+.pill{
+  display:inline-block;margin-top:4px;
+  background:#c4122f;color:#fff;border-radius:999px;padding:.2rem .6rem;font-weight:800;font-size:.78rem
+}
+.status{margin-top:10px}
