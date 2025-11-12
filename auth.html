@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Account • OSU Day Traders</title>
+
+  <!-- your global styles -->
   <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- page styles -->
+  <link rel="stylesheet" href="css/auth.css"/>
 </head>
 <body>
   <header class="site-header">
@@ -25,27 +30,48 @@
     </nav>
   </header>
 
-  <main class="content narrow">
-    <div class="card">
-      <h1 style="margin-top:0">Account</h1>
-      <p>Sign in to save your profile and manage access. Anyone can create an account. Only <b>@osu.edu</b> emails can purchase the paid course.</p>
+  <main class="auth-wrap">
+    <section class="auth-card">
+      <div class="auth-head">
+        <h1>Account</h1>
+        <p class="muted">
+          Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.
+        </p>
+      </div>
 
-      <button id="google-login" class="auth-btn" style="margin-top:.5rem">Continue with Google</button>
-      <p id="auth-error" class="form-note" style="margin:.75rem 0 0"></p>
+      <div class="auth-actions">
+        <button id="google-btn" class="btn btn-google">
+          <span class="g"></span> Continue with Google
+        </button>
 
-      <hr style="margin:1.25rem 0;border:none;border-top:1px solid #eee">
+        <p id="status" class="status muted"></p>
+      </div>
 
-      <div id="whoami" class="form-note"></div>
-      <button id="logout-btn" class="btn btn--dark" style="display:none;margin-top:.5rem">Log out</button>
-    </div>
+      <div class="auth-profile" id="profile" hidden>
+        <div class="profile-row">
+          <img id="avatar" class="avatar" alt="">
+          <div>
+            <div class="name" id="name"></div>
+            <div class="email" id="email"></div>
+            <div class="pill" id="membershipPill">Member: free</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <a class="btn btn-ghost" href="resources.html">Go to Resources</a>
+          <button id="signout-btn" class="btn btn-outline">Sign out</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <p>© <span id="year"></span> OSU Day Traders</p>
   </footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
+  <!-- Firebase + page logic -->
   <script type="module" src="js/firebase-init.js"></script>
-  <script type="module" src="js/auth-page.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
