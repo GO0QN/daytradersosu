@@ -1,51 +1,104 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Account • OSU Day Traders</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- Site base styles -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <!-- Page styles -->
+  <link rel="stylesheet" href="css/auth.css"/>
 </head>
 <body>
+  <!-- Header (matches your site) -->
   <header class="site-header">
-    <div class="container nav-wrap">
+    <div class="topbar">
       <a class="brand" href="index.html">
-        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders" />
-        <span>OSU Day Traders</span>
+        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders" class="brand-logo"/>
+        <span class="brand-name">OSU Day Traders</span>
       </a>
       <nav class="site-nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="resources.html">Resources</a>
-        <a class="active" href="account.html">Account</a>
-        <a href="contact.html">Contact</a>
-        <a href="applications.html">Applications</a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a class="active" href="auth.html">Account</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="applications.html">Applications</a></li>
+        </ul>
       </nav>
     </div>
   </header>
 
-  <main class="page">
-    <section class="container card p-xl">
-      <h1 class="h2">Account</h1>
-      <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
+  <!-- Content -->
+  <main class="auth-wrap">
+    <section class="card">
+      <div class="card-head">
+        <h1>Account</h1>
+        <p class="muted">
+          Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.
+        </p>
+      </div>
 
-      <div class="grid-2 gap-lg mt-lg">
-        <!-- Left: Create / Sign in -->
-        <div class="card p-lg">
-          <h2 class="h4 mb-md">Create account / Sign in</h2>
+      <div class="grid-2">
+        <!-- Left: sign in -->
+        <div class="panel">
+          <h3>Create account / Sign in</h3>
 
-          <button id="googleBtn" class="btn btn-google mb-md">
-            <img src="assets/images/google.svg" alt="" /> Continue with Google
+          <button id="google-btn" class="btn btn-google">
+            <span class="gicon"></span> Continue with Google
           </button>
 
-          <div class="muted mb-sm">or</div>
+          <div class="separator"><span>or</span></div>
 
-          <label class="label">Email</label>
-          <input id="emailInput" class="input" type="email" placeholder="you@email.com" />
+          <form class="form" onsubmit="return false">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required/>
 
-          <label class="label mt-sm">Password</label>
-          <input id="passInput" class="input" type="password" placeholder="••••••••" />
+            <label for="password">Password</label>
+            <input id="password" type="password" minlength="6" autocomplete="current-password" required/>
 
-          <div class="row gap-sm mt-md">
-            <but
+            <div class="row">
+              <button id="signup-btn" type="button" class="btn btn-primary">Create account</button>
+              <button id="login-btn"  type="button" class="btn btn-outline">Log in</button>
+            </div>
+          </form>
+
+          <p id="status" class="status" role="status"></p>
+        </div>
+
+        <!-- Right: profile -->
+        <div class="panel">
+          <h3>Your profile</h3>
+          <div id="profile" class="profile" hidden>
+            <img id="avatar" class="avatar" alt=""/>
+            <div class="info">
+              <div id="name" class="name"></div>
+              <div id="emailTxt" class="email"></div>
+              <div id="membershipPill" class="pill pill-free">Member: free</div>
+            </div>
+            <div class="row">
+              <a class="btn btn-ghost" href="resources.html">Go to Resources</a>
+              <button id="signout-btn" type="button" class="btn">Sign out</button>
+            </div>
+          </div>
+          <p id="profile-empty" class="muted">Sign in to see your profile.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (matches your site) -->
+  <footer class="site-footer">
+    <p>© <span id="year"></span> OSU Day Traders</p>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <!-- Firebase & logic -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
+
+
