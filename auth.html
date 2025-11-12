@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSU Day Traders Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" class="logo" />
+    <h2>Member Login</h2>
+    <p>Sign in with your OSU email to access premium resources.</p>
+
+    <button id="login-btn" class="btn">Sign in with Outlook</button>
+    <p id="error-message" style="color:red; margin-top:10px;"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, signInWithPopup, OAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { firebaseConfig } from "./js/auth.js";
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new OAuthProvider('microsoft.com');
+
+    const loginBtn = document.getElementById('login-btn');
+    const errorMessage = document.getElementById('error-message');
+
+    loginBtn.addEventListener('click', async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        // Restrict to osu.edu emails only
+        if (!user.email.endsWith("@osu.edu")) {
+          errorMessage.textContent = "Access denied. Please use your osu.edu email.";
+          await auth.signOut();
+          return;
+        }
+
+        // Add user to Firestore if not already present
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName,
+          email: user.email,
+          timestamp: new Date()
+        });
+
+        // Redirect to Resources page after successful login
+        window.location.href = "resources.html";
+      } catch (error) {
+        console.error(error);
+        errorMessage.textContent = "Login failed. Try again.";
+      }
+    });
+  </script>
+</body>
+</html>
