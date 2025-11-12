@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Account • OSU Day Traders</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/auth.css"/>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html">
+            <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
+            <span>OSU Day Traders</span>
+        </a>
+        <nav class="site-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a class="active" href="account.html">Account</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="applications.html">Applications</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="wrap section">
+        <h1>Account</h1>
+        <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
+        
+        <div class="grid grid-2">
+            <section class="card">
+                <h3>Create account / Sign in</h3>
+                <button class="google-signin">
+                    <img src="assets/icons/google.svg" alt=""/>
+                    Continue with Google
+                </button>
+                <p>or</p>
+                <form class="auth-form">
+                    <label>
+                        Email
+                        <input type="email" placeholder="you@email.com" required/>
+                    </label>
+                    <label>
+                        Password
+                        <input type="password" placeholder="********" required/>
+                    </label>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary">Create account</button>
+                        <button type="button" class="btn btn--secondary">Log in</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card">
+                <h3>Your profile</h3>
+                <div class="profile">
+                    <div class="avatar"></div>
+                    <p><strong>Not signed in</strong></p>
+                    <p class="muted">Member: free</p>
+                    <a href="resources.html" class="link">Go to Resources</a>
+                    <button class="btn btn--outline">Sign out</button>
+                </div>
+                <p>Sign in to see your profile.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 OSU Day Traders</p>
+    </footer>
+</body>
+</html>
