@@ -5,15 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Account • OSU Day Traders</title>
 
-  <!-- Global styles (keeps the correct header scarlet) -->
+  <!-- Base + auth styles -->
   <link rel="stylesheet" href="css/style.css"/>
-  <!-- Auth page styles below -->
   <link rel="stylesheet" href="css/auth.css"/>
 
-  <link rel="icon" href="assets/icons/favicon.ico"/>
+  <!-- Force header to brand scarlet on this page (prevents any legacy overrides) -->
+  <style>
+    :root { --scarlet:#bb0000; }
+    .site-header{ background:var(--scarlet) !important; }
+  </style>
 </head>
 <body>
-  <!-- Header uses the same scarlet from style.css; no overrides here -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
@@ -37,59 +39,45 @@
     <h1>Account</h1>
     <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
 
-    <!-- Auth grid: columns are same width; panels same visual weight -->
-    <div class="auth-grid">
+    <div class="grid grid-2 auth-grid">
       <!-- Create account -->
-      <section class="card auth-card">
-        <h2>Create account</h2>
+      <section class="card">
+        <h3>Create account</h3>
 
-        <button id="createWithGoogle" class="btn btn--light btn--xl btn-google" type="button">
-          <img src="assets/icons/google.svg" alt="" class="gicon"/>
+        <button id="signupGoogle" class="google-btn" type="button">
+          <svg viewBox="0 0 48 48" aria-hidden="true" class="gicon"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16.2 18.9 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 16 4 9.2 8.6 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.5-5.3l-6.2-5.1C29.2 35.7 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.8l-6.6 5.1C9.1 39.4 16 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.7-4.7 6-8.3 6-5.2 0-9.6-4.2-9.6-9.5S19.8 15 25 15c2.7 0 5 .9 6.8 2.7l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/></svg>
           Continue with Google
         </button>
 
         <div class="or">or</div>
 
-        <form id="createForm" class="auth-form" novalidate>
+        <form id="signupForm" class="auth-form" novalidate>
           <label>Email
-            <input id="createEmail" type="email" placeholder="you@email.com" required/>
+            <input id="signupEmail" type="email" placeholder="you@email.com" required/>
           </label>
-
           <label>Password
-            <input id="createPassword" type="password" placeholder="********" required/>
+            <input id="signupPassword" type="password" placeholder="********" required/>
           </label>
 
           <div class="upload-wrap">
-            <div class="upload-head">
-              <h3>Upload profile picture</h3>
-            </div>
-
-            <!-- Preview circle always shows defaultprofile.png initially -->
-            <img id="avatarPreview" class="avatar avatar--preview" 
-                 src="assets/images/defaultprofile.png" alt="Preview"/>
-
-            <label class="file-row">
+            <label class="upload-label">Upload profile picture</label>
+            <div class="upload-box">
+              <img id="avatarPreview" class="avatar-preview" src="assets/images/defaultprofile.png" alt="Profile preview"/>
               <input id="avatarInput" type="file" accept="image/*"/>
-              <span class="file-faux">Choose File</span>
-              <span id="fileName" class="file-name">no file selected</span>
-            </label>
-            <p class="muted small">Optional. Preview only. Uploads are disabled on the free plan.</p>
+            </div>
+            <p class="form-note">Optional. Preview only. Uploads are disabled on the Spark plan.</p>
           </div>
 
-          <button class="btn btn--scarlet btn--xl" type="submit" id="createAccountBtn">
-            Create account
-          </button>
-
-          <p id="createMsg" class="form-note" role="status" aria-live="polite"></p>
+          <button class="btn btn--scarlet" type="submit">Create account</button>
         </form>
       </section>
 
       <!-- Log in -->
-      <section class="card auth-card">
-        <h2>Log into existing account</h2>
+      <section class="card">
+        <h3>Log into existing account</h3>
 
-        <button id="loginWithGoogle" class="btn btn--light btn--xl btn-google" type="button">
-          <img src="assets/icons/google.svg" alt="" class="gicon"/>
+        <button id="loginGoogle" class="google-btn" type="button">
+          <svg viewBox="0 0 48 48" aria-hidden="true" class="gicon"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16.2 18.9 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 16 4 9.2 8.6 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.5-5.3l-6.2-5.1C29.2 35.7 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.8l-6.6 5.1C9.1 39.4 16 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.7-4.7 6-8.3 6-5.2 0-9.6-4.2-9.6-9.5S19.8 15 25 15c2.7 0 5 .9 6.8 2.7l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/></svg>
           Continue with Google
         </button>
 
@@ -99,41 +87,36 @@
           <label>Email
             <input id="loginEmail" type="email" placeholder="you@email.com" required/>
           </label>
-
           <label>Password
             <input id="loginPassword" type="password" placeholder="********" required/>
           </label>
 
-          <div class="actions-row">
-            <button class="btn btn--dark btn--xl" type="submit" id="loginBtn">Log in</button>
-            <button class="btn btn--ghost btn--xl" type="button" id="forgotBtn">Forgot password</button>
+          <div class="form-actions">
+            <button class="btn btn--dark" type="submit">Log in</button>
+            <button id="forgotBtn" class="btn btn--pill" type="button">Forgot password</button>
           </div>
-
-          <p id="loginMsg" class="form-note" role="status" aria-live="polite"></p>
         </form>
       </section>
     </div>
 
-    <!-- Profile panel -->
+    <!-- Profile card -->
     <section class="card profile-card">
-      <div class="profile-left">
-        <img id="profileAvatar" class="avatar avatar--profile"
-             src="assets/images/defaultprofile.png" alt="Profile avatar"/>
-      </div>
-
-      <div class="profile-right">
-        <h2 id="profileTitle">Not signed in</h2>
-        <div class="tier-row">
-          <span id="memberTier" class="badge-tier free">Member: free</span>
-          <span id="emailStatus" class="badge-email hidden">Email not verified</span>
-        </div>
-
-        <div class="profile-actions">
-          <a href="resources.html" class="btn btn--link link-strong">Go to Resources</a>
-          <button id="verifyEmailBtn" class="btn btn--scarlet btn--sm hidden" type="button">
-            Send verification email
-          </button>
-          <button id="signOutBtn" class="btn btn--light btn--sm" type="button">Sign out</button>
+      <h3>Your profile</h3>
+      <div class="profile">
+        <img id="profileAvatar" class="avatar-profile" src="assets/images/defaultprofile.png" alt="Profile picture"/>
+        <div class="profile-main">
+          <div id="profileStatus" class="status-row">
+            <strong id="signedState">Not signed in</strong>
+            <span id="verifyBadge" class="badge badge--warn" hidden>Verify email</span>
+          </div>
+          <div class="tier-row">
+            <span class="tier-label">Member:</span>
+            <span id="memberTier" class="tier-pill tier--free">free</span>
+          </div>
+          <div class="profile-actions">
+            <a href="resources.html" class="link">Go to Resources</a>
+            <button id="signOutBtn" class="btn btn--pill">Sign out</button>
+          </div>
         </div>
       </div>
     </section>
@@ -143,9 +126,8 @@
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <!-- Firebase bootstrap -->
+  <!-- Firebase init + auth logic -->
   <script type="module" src="js/firebase-init.js"></script>
-  <!-- Auth logic -->
   <script type="module" src="js/auth.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
