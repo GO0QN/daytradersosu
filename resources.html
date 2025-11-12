@@ -1,182 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resources • OSU Day Traders</title>
-
-  <!-- your existing site CSS -->
   <link rel="stylesheet" href="css/style.css"/>
 
-  <!-- page-specific polish -->
-  <link rel="stylesheet" href="css/resources.css"/>
+  <!-- Page-scoped styles so we don’t touch the rest of your site -->
+  <style>
+    /* Hero */
+    .res-hero {
+      position: relative;
+      background: radial-gradient(1200px 600px at 75% 30%, rgba(255,255,255,0.07), rgba(0,0,0,0) 60%),
+                  linear-gradient(180deg, #b70f14 0%, #8d0c10 100%);
+      color: #fff;
+      padding: 72px 0 56px;
+    }
+    .res-wrap { width: min(1100px, 92vw); margin: 0 auto; }
+
+    .res-title { font-size: clamp(30px, 4vw, 44px); line-height: 1.1; font-weight: 800; letter-spacing: .3px; }
+    .res-sub { margin-top: 10px; max-width: 680px; opacity: .92; }
+
+    .res-cta { display:flex; gap:14px; margin-top:22px; flex-wrap:wrap; }
+    .btn-pill {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 18px; border-radius:999px; font-weight:700; cursor:pointer;
+      text-decoration:none; transition:transform .08s ease, box-shadow .18s ease, background .2s ease, color .2s ease;
+    }
+    .btn-white { background:#fff; color:#8d0c10; box-shadow:0 10px 24px rgba(0,0,0,.15); }
+    .btn-ghost { border:2px solid rgba(255,255,255,.65); color:#fff; }
+    .btn-pill:active { transform:translateY(1px); }
+
+    /* Candlestick animation cluster (right side) */
+    .candles {
+      position:absolute; inset:0; pointer-events:none;
+      display:grid; align-items:center; justify-items:end;
+      padding-right: clamp(16px, 6vw, 56px);
+    }
+    .c-stack {
+      position:relative; width:min(360px, 36vw); height:180px; opacity:.9;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,.25));
+    }
+    .c-row { position:absolute; bottom:0; left:0; right:0; height:100%; display:flex; gap:10px; align-items:flex-end; }
+    .candle { width:18px; background:#f3d9d9; border-radius:4px; position:relative; overflow:visible; }
+    .candle.up { background:#ffecec; }
+    .wick { position:absolute; left:50%; transform:translateX(-50%); width:3px; background:#fff; border-radius:2px; }
+
+    /* Bar heights animate like a tiny market tape */
+    @keyframes flick {
+      0%   { height: 38%; }
+      20%  { height: 72%; }
+      40%  { height: 46%; }
+      60%  { height: 88%; }
+      80%  { height: 33%; }
+      100% { height: 60%; }
+    }
+    @keyframes wickf {
+      0%   { height: 95%; }
+      50%  { height: 70%; }
+      100% { height: 95%; }
+    }
+    .candle { animation: flick 2.6s ease-in-out infinite alternate; }
+    .candle .wick { animation: wickf 2.6s ease-in-out infinite alternate; }
+
+    /* Stagger so it looks organic */
+    .candle:nth-child(1){ animation-delay:.0s }  .candle:nth-child(1) .wick{ animation-delay:.0s }
+    .candle:nth-child(2){ animation-delay:.2s }  .candle:nth-child(2) .wick{ animation-delay:.2s }
+    .candle:nth-child(3){ animation-delay:.4s }  .candle:nth-child(3) .wick{ animation-delay:.4s }
+    .candle:nth-child(4){ animation-delay:.6s }  .candle:nth-child(4) .wick{ animation-delay:.6s }
+    .candle:nth-child(5){ animation-delay:.8s }  .candle:nth-child(5) .wick{ animation-delay:.8s }
+    .candle:nth-child(6){ animation-delay:1.0s } .candle:nth-child(6) .wick{ animation-delay:1.0s }
+    .candle:nth-child(7){ animation-delay:1.2s } .candle:nth-child(7) .wick{ animation-delay:1.2s }
+
+    /* Sections */
+    .section { background:#f5f5f5; padding:56px 0; }
+    .h2 { font-size: clamp(22px, 2.8vw, 28px); font-weight:800; margin-bottom:18px; }
+
+    /* Card grid */
+    .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+    @media (max-width: 900px){ .grid{ grid-template-columns:1fr 1fr } }
+    @media (max-width: 640px){ .grid{ grid-template-columns:1fr } .candles{ display:none } }
+
+    .card {
+      background:#fff; border-radius:18px; padding:20px;
+      box-shadow:0 10px 26px rgba(0,0,0,.08);
+    }
+    .tag { display:inline-block; font-size:12px; font-weight:800; padding:6px 10px; border-radius:999px; background:#f4d2d2; color:#8d0c10; margin-bottom:10px; }
+    .card h3{ margin:6px 0 8px; font-size:18px; }
+    .muted{ color:#444; opacity:.8 }
+
+    /* Locked box */
+    .locked {
+      background:#fff; border-radius:28px; padding:26px;
+      box-shadow:0 20px 40px rgba(0,0,0,.08);
+      display:grid; grid-template-columns:1fr auto; align-items:center; gap:18px;
+    }
+    .lockline { display:flex; align-items:center; gap:12px; }
+    .lockicon{ width:22px; height:22px; }
+    .ul { margin:0; padding-left:18px; }
+  </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header class="site-header">
-    <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo">
-      <span>OSU Day Traders</span>
-    </a>
-    <nav class="site-nav">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a class="active" href="resources.html">Resources</a></li>
-        <li><a href="auth.html">Account</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="applications.html">Applications</a></li>
-      </ul>
-    </nav>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders logo" style="height:34px; vertical-align:middle"/>
+        <span style="margin-left:8px; font-weight:800;">OSU Day Traders</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a class="active" href="resources.html">Resources</a>
+        <a href="auth.html">Account</a>
+        <a href="contact.html">Contact</a>
+        <a href="applications.html">Applications</a>
+      </nav>
+    </div>
   </header>
 
   <!-- HERO -->
   <section class="res-hero">
-    <div class="res-hero__inner">
-      <div class="res-hero__copy">
-        <h1>Resources</h1>
-        <p>Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an @osu.edu email.</p>
-        <div class="res-cta-row">
-          <a class="btn btn-red" href="auth.html">Sign in</a>
-          <a class="btn btn-ghost" href="#preview">Preview the course</a>
-        </div>
+    <div class="res-wrap">
+      <h1 class="res-title">Resources</h1>
+      <p class="res-sub">
+        Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an
+        <strong>@osu.edu</strong> email.
+      </p>
+      <div class="res-cta">
+        <a class="btn-pill btn-white" href="auth.html">Sign in</a>
+        <a class="btn-pill btn-ghost" href="#previews">Preview the course</a>
       </div>
+    </div>
 
-      <!-- animated teaser tile -->
-      <div class="res-hero__teaser">
-        <div class="pulse-wrap">
-          <button class="teaser-play" aria-label="Play teaser"></button>
-          <span class="pulse ring r1"></span>
-          <span class="pulse ring r2"></span>
-          <span class="pulse ring r3"></span>
+    <!-- animated “market tape” candles -->
+    <div class="candles" aria-hidden="true">
+      <div class="c-stack">
+        <div class="c-row">
+          <!-- each candle animates height; wick animates independently -->
+          <div class="candle up"><span class="wick" style="bottom:0;"></span></div>
+          <div class="candle"><span class="wick" style="bottom:-8px;"></span></div>
+          <div class="candle up"><span class="wick" style="bottom:-4px;"></span></div>
+          <div class="candle"><span class="wick" style="bottom:-10px;"></span></div>
+          <div class="candle up"><span class="wick" style="bottom:-6px;"></span></div>
+          <div class="candle"><span class="wick" style="bottom:-12px;"></span></div>
+          <div class="candle up"><span class="wick" style="bottom:-8px;"></span></div>
         </div>
-        <p class="teaser-caption">Course walkthrough</p>
       </div>
     </div>
   </section>
 
-  <main class="content">
-
-    <!-- FREE STUFF -->
-    <section class="res-section">
-      <h2>Free materials</h2>
+  <!-- FREE MATERIALS -->
+  <section class="section">
+    <div class="res-wrap">
+      <h2 class="h2">Free materials</h2>
       <div class="grid">
         <article class="card">
-          <span class="pill">Playbook</span>
+          <span class="tag">Playbook</span>
           <h3>Opening Drive</h3>
-          <p>How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
-          <a class="btn btn-ghost" href="#">Download PDF</a>
+          <p class="muted">How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
         </article>
-
         <article class="card">
-          <span class="pill">Template</span>
+          <span class="tag" style="background:#e7e1ff;color:#3d2aa5;">Template</span>
           <h3>Journal Starter</h3>
-          <p>Tags, KPIs, and weekly review prompts that don’t rot in Google Drive.</p>
-          <a class="btn btn-ghost" href="#">Use Template</a>
+          <p class="muted">Tags, KPIs, and weekly review prompts that won’t rot in your Drive.</p>
         </article>
-
         <article class="card">
-          <span class="pill">Checklist</span>
+          <span class="tag" style="background:#e4f6ea;color:#1f7a3f;">Checklist</span>
           <h3>Pre-Market Routine</h3>
-          <p>10-minute flow that won’t nuke your focus before the bell.</p>
-          <a class="btn btn-ghost" href="#">View</a>
+          <p class="muted">10-minute flow that protects your focus before the bell.</p>
         </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PREVIEW -->
-    <section id="preview" class="res-section">
-      <h2>Course preview</h2>
-      <div class="preview-row">
-        <div class="preview-video">
-          <!-- fake video frame with moving glow so it feels alive -->
-          <div class="video-frame">
-            <div class="video-pulse"></div>
-            <div class="video-pulse delay"></div>
-            <div class="video-play"></div>
-          </div>
-          <p class="muted small">Preview clip: “Day 1 · Market Foundations”</p>
-        </div>
-        <div class="preview-copy">
-          <ul class="bullets">
-            <li>Market structure, sessions, and the only three setups we actually trade</li>
-            <li>Risk math that keeps you in the game</li>
-            <li>Journal tags and review cadence that builds an edge</li>
-          </ul>
-          <a class="btn btn-red" href="auth.html">Sign in to continue</a>
-        </div>
+  <!-- COURSE PREVIEW -->
+  <section id="previews" class="section" style="padding-top:10px;">
+    <div class="res-wrap">
+      <h2 class="h2">Course preview</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Module</span>
+          <h3>Day 1: Market Foundations</h3>
+          <p class="muted">Auction theory, liquidity, session structure, and what actually moves price.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Module</span>
+          <h3>Day 2: Setups & Invalidations</h3>
+          <p class="muted">Entry triggers, kill-switch rules, and how to not marry a bias.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Module</span>
+          <h3>Day 3: Risk & Sizing</h3>
+          <p class="muted">Position sizing that won’t nuke your account when the tape goes feral.</p>
+        </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- LOCKED COURSE -->
-    <section class="res-section">
-      <h2>OSU-only course: Day Trading Fundamentals</h2>
-      <p id="osu-warning" class="form-note"></p>
+  <!-- LOCKED AREA (OSU ONLY) -->
+  <section class="section" style="padding-top:10px;">
+    <div class="res-wrap">
+      <h2 class="h2">OSU-only course: Day Trading Fundamentals</h2>
 
-      <div id="locked-content" class="locked card">
-        <div class="lock-left">
-          <div class="lock-icon">🔒</div>
-          <div>
-            <h3>Members area</h3>
-            <p>Sign in with @osu.edu and subscribe to unlock all modules, quizzes, and notes.</p>
-            <div class="btn-row">
-              <a id="inline-login" class="btn btn-ghost" href="auth.html">Sign in</a>
-              <button id="subscribe-btn" class="btn btn-red">Subscribe</button>
-            </div>
+      <div class="locked">
+        <div>
+          <div class="lockline" style="margin-bottom:8px;">
+            <svg class="lockicon" viewBox="0 0 24 24" fill="none">
+              <rect x="4" y="10" width="16" height="10" rx="2" fill="#d9d9d9"/>
+              <path d="M8 10V8a4 4 0 1 1 8 0v2" stroke="#d9d9d9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <strong>Members area</strong>
+          </div>
+          <p class="muted" id="lockcopy">Sign in with <b>@osu.edu</b> and subscribe to unlock all modules, quizzes, and notes.</p>
+          <div class="res-cta" style="margin-top:12px;">
+            <a class="btn-pill" id="subscribeBtn" style="background:#8d0c10;color:#fff;">Subscribe</a>
+            <a class="btn-pill btn-ghost" href="auth.html">Manage account</a>
           </div>
         </div>
-        <ul class="lock-list">
+
+        <ul class="ul muted">
           <li>Day 1: Market Foundations</li>
           <li>Day 2: Setups & Invalidations</li>
           <li>Day 3: Risk & Sizing</li>
           <li>Day 4: Live Lab & Review</li>
         </ul>
       </div>
+    </div>
+  </section>
 
-      <div id="unlocked-content" class="card" style="display:none">
-        <h3>Day 1: Market Foundations</h3>
-        <p class="muted small">You’re in. Modules, videos, quizzes and notes appear here once membership is active.</p>
-
-        <!-- Skeleton of first lesson -->
-        <div class="lesson">
-          <div class="lesson-head">
-            <span class="dot"></span>
-            <h4>Lesson 1 · Sessions & Structure</h4>
-          </div>
-          <div class="lesson-body">
-            <p>Video + slides go here. Add your embeds when you’re ready.</p>
-          </div>
-        </div>
-
-        <div class="lesson">
-          <div class="lesson-head">
-            <span class="dot"></span>
-            <h4>Lesson 2 · Order Types & Triggers</h4>
-          </div>
-          <div class="lesson-body">
-            <p>Video + slides go here.</p>
-          </div>
-        </div>
-
-        <div class="lesson">
-          <div class="lesson-head">
-            <span class="dot"></span>
-            <h4>Quiz · Day 1 Check</h4>
-          </div>
-          <div class="lesson-body">
-            <p>Interactive quiz placeholder.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
+  <!-- Footer -->
   <footer class="site-footer">
-    <p>© <span id="year"></span> OSU Day Traders</p>
+    <div class="container">© 2025 OSU Day Traders</div>
   </footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 
-  <script type="module" src="js/firebase-init.js"></script>
-  <script type="module" src="js/paywall.js"></script>
+  <!-- Firebase + minimal gating logic (non-blocking; no redirects) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
+      authDomain: "osu-daytraders.firebaseapp.com",
+      projectId: "osu-daytraders",
+      storageBucket: "osu-daytraders.firebasestorage.app",
+      messagingSenderId: "63619855631",
+      appId: "1:63619855631:web:3416fee03d357715f0fa7a",
+      measurementId: "G-RXTL84LM0T"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const lockcopy = document.getElementById('lockcopy');
+    const subBtn   = document.getElementById('subscribeBtn');
+
+    // Gentle gating: show copy based on auth + claimed membership.
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        lockcopy.innerHTML = 'Sign in with <b>@osu.edu</b> and subscribe to unlock all modules, quizzes, and notes.';
+        subBtn.setAttribute('href','auth.html');
+        subBtn.textContent = 'Sign in to subscribe';
+        return;
+      }
+
+      // if not osu, let them know they can’t buy.
+      const email = user.email || '';
+      const isOSU = /@osu\.edu$/i.test(email);
+      if (!isOSU) {
+        lockcopy.textContent = 'You’re signed in, but only @osu.edu emails can purchase the course. You can still explore the free previews.';
+        subBtn.removeAttribute('href');
+        subBtn.style.opacity = .6;
+        subBtn.style.cursor = 'not-allowed';
+        subBtn.textContent = 'Subscription restricted';
+        return;
+      }
+
+      // check “memberships/{uid}”
+      try {
+        const ref = doc(db, 'memberships', user.uid);
+        const snap = await getDoc(ref);
+        const active = snap.exists() && snap.data()?.active === true;
+
+        if (active) {
+          lockcopy.textContent = 'You have access. Jump into modules, quizzes, and notes.';
+          subBtn.textContent = 'Go to course';
+          subBtn.setAttribute('href','course/index.html'); // point this to your course entry when ready
+        } else {
+          lockcopy.textContent = 'OSU email verified. Subscribe to unlock all modules, quizzes, and notes.';
+          subBtn.textContent = 'Subscribe';
+          subBtn.setAttribute('href','auth.html'); // temporary: send to account where you’ll add the Stripe link
+        }
+      } catch {
+        // fail soft
+      }
+    });
+  </script>
 </body>
 </html>
