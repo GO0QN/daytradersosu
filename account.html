@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Account • OSU Day Traders</title>
 
-  <!-- Base + auth styles -->
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/auth.css"/>
+  <link rel="icon" href="assets/icons/favicon.ico"/>
 
-  <!-- Force header to brand scarlet on this page (prevents any legacy overrides) -->
   <style>
+    /* force the header back to the site scarlet and kill any rogue overrides */
     :root { --scarlet:#bb0000; }
     .site-header{ background:var(--scarlet) !important; }
   </style>
@@ -39,85 +39,104 @@
     <h1>Account</h1>
     <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
 
-    <div class="grid grid-2 auth-grid">
+    <div class="auth-grid">
       <!-- Create account -->
-      <section class="card">
-        <h3>Create account</h3>
+      <section class="card auth-card">
+        <h2>Create account</h2>
 
-        <button id="signupGoogle" class="google-btn" type="button">
-          <svg viewBox="0 0 48 48" aria-hidden="true" class="gicon"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16.2 18.9 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 16 4 9.2 8.6 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.5-5.3l-6.2-5.1C29.2 35.7 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.8l-6.6 5.1C9.1 39.4 16 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.7-4.7 6-8.3 6-5.2 0-9.6-4.2-9.6-9.5S19.8 15 25 15c2.7 0 5 .9 6.8 2.7l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/></svg>
+        <button id="signupGoogle" class="btn btn--google" type="button" aria-label="Continue with Google">
+          <span class="g-logo" aria-hidden="true">
+            <!-- inline Google 'G' to avoid missing file weirdness -->
+            <svg viewBox="0 0 48 48" width="18" height="18">
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.8 32.7 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.2 6 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 19-7.3 19-20 0-1.2-.1-2.3-.4-3.5z"/>
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.8 16.1 19 14 24 14c3 0 5.7 1.1 7.8 3l5.7-5.7C34.2 6 29.4 4 24 4 15.4 4 8.3 8.9 6.3 14.7z"/>
+              <path fill="#4CAF50" d="M24 44c5.3 0 10.2-2 13.8-5.3l-6.4-5.4c-2 1.4-4.5 2.2-7.4 2.2-5.3 0-9.8-3.6-11.4-8.5l-6.6 5.1C8.2 38.7 15.4 44 24 44z"/>
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.8-5.1 6.5-9.3 6.5-2.9 0-5.4-.8-7.4-2.2l-6.6 5.1C14.1 41.1 18.8 44 24 44c10 0 19-7.3 19-20 0-1.2-.1-2.3-.4-3.5z"/>
+            </svg>
+          </span>
           Continue with Google
         </button>
 
-        <div class="or">or</div>
+        <div class="or-row"><span>or</span></div>
 
-        <form id="signupForm" class="auth-form" novalidate>
+        <form id="emailSignupForm" class="auth-form" autocomplete="on">
           <label>Email
-            <input id="signupEmail" type="email" placeholder="you@email.com" required/>
+            <input id="suEmail" type="email" placeholder="you@email.com" required/>
           </label>
           <label>Password
-            <input id="signupPassword" type="password" placeholder="********" required/>
+            <input id="suPassword" type="password" placeholder="********" required/>
           </label>
 
-          <div class="upload-wrap">
-            <label class="upload-label">Upload profile picture</label>
-            <div class="upload-box">
-              <img id="avatarPreview" class="avatar-preview" src="assets/images/defaultprofile.png" alt="Profile preview"/>
-              <input id="avatarInput" type="file" accept="image/*"/>
+          <fieldset class="uploader">
+            <legend>Upload profile picture</legend>
+            <div class="uploader-row">
+              <img id="avatarPreview" class="avatar" alt="Avatar preview"
+                   src="assets/images/defaultprofile.png"/>
+              <input id="avatarFile" type="file" accept="image/*"/>
             </div>
-            <p class="form-note">Optional. Preview only. Uploads are disabled on the Spark plan.</p>
-          </div>
+            <p class="muted small">
+              Optional. Preview only. Uploads are disabled on the Spark plan.
+            </p>
+          </fieldset>
 
-          <button class="btn btn--scarlet" type="submit">Create account</button>
+          <button class="btn btn--scarlet btn--full" type="submit">Create account</button>
+          <p id="signupMsg" class="form-msg" role="status"></p>
         </form>
       </section>
 
       <!-- Log in -->
-      <section class="card">
-        <h3>Log into existing account</h3>
+      <section class="card auth-card">
+        <h2>Log into existing account</h2>
 
-        <button id="loginGoogle" class="google-btn" type="button">
-          <svg viewBox="0 0 48 48" aria-hidden="true" class="gicon"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16.2 18.9 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34 6.1 29.3 4 24 4 16 4 9.2 8.6 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.5-5.3l-6.2-5.1C29.2 35.7 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.8l-6.6 5.1C9.1 39.4 16 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.7-4.7 6-8.3 6-5.2 0-9.6-4.2-9.6-9.5S19.8 15 25 15c2.7 0 5 .9 6.8 2.7l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.1-.1-2.2-.4-3.5z"/></svg>
+        <button id="loginGoogle" class="btn btn--google" type="button" aria-label="Continue with Google">
+          <span class="g-logo" aria-hidden="true">
+            <!-- same inline G -->
+            <svg viewBox="0 0 48 48" width="18" height="18">
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.8 32.7 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.2 6 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 19-7.3 19-20 0-1.2-.1-2.3-.4-3.5z"/>
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.8 16.1 19 14 24 14c3 0 5.7 1.1 7.8 3l5.7-5.7C34.2 6 29.4 4 24 4 15.4 4 8.3 8.9 6.3 14.7z"/>
+              <path fill="#4CAF50" d="M24 44c5.3 0 10.2-2 13.8-5.3l-6.4-5.4c-2 1.4-4.5 2.2-7.4 2.2-5.3 0-9.8-3.6-11.4-8.5l-6.6 5.1C8.2 38.7 15.4 44 24 44z"/>
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.8-5.1 6.5-9.3 6.5-2.9 0-5.4-.8-7.4-2.2l-6.6 5.1C14.1 41.1 18.8 44 24 44c10 0 19-7.3 19-20 0-1.2-.1-2.3-.4-3.5z"/>
+            </svg>
+          </span>
           Continue with Google
         </button>
 
-        <div class="or">or</div>
+        <div class="or-row"><span>or</span></div>
 
-        <form id="loginForm" class="auth-form" novalidate>
+        <form id="loginForm" class="auth-form" autocomplete="on">
           <label>Email
-            <input id="loginEmail" type="email" placeholder="you@email.com" required/>
+            <input id="liEmail" type="email" placeholder="you@email.com" required/>
           </label>
           <label>Password
-            <input id="loginPassword" type="password" placeholder="********" required/>
+            <input id="liPassword" type="password" placeholder="********" required/>
           </label>
 
-          <div class="form-actions">
-            <button class="btn btn--dark" type="submit">Log in</button>
-            <button id="forgotBtn" class="btn btn--pill" type="button">Forgot password</button>
+          <div class="actions-row">
+            <button class="btn btn--scarlet" type="submit">Log in</button>
+            <button class="btn btn--outline" id="forgotBtn" type="button">Forgot password</button>
           </div>
+          <p id="loginMsg" class="form-msg" role="status"></p>
         </form>
       </section>
     </div>
 
-    <!-- Profile card -->
+    <!-- Profile panel -->
     <section class="card profile-card">
-      <h3>Your profile</h3>
-      <div class="profile">
-        <img id="profileAvatar" class="avatar-profile" src="assets/images/defaultprofile.png" alt="Profile picture"/>
-        <div class="profile-main">
-          <div id="profileStatus" class="status-row">
-            <strong id="signedState">Not signed in</strong>
-            <span id="verifyBadge" class="badge badge--warn" hidden>Verify email</span>
-          </div>
-          <div class="tier-row">
-            <span class="tier-label">Member:</span>
-            <span id="memberTier" class="tier-pill tier--free">free</span>
-          </div>
-          <div class="profile-actions">
-            <a href="resources.html" class="link">Go to Resources</a>
-            <button id="signOutBtn" class="btn btn--pill">Sign out</button>
-          </div>
+      <div class="profile-left">
+        <img id="profileAvatar" class="avatar-lg" src="assets/images/defaultprofile.png" alt="Profile picture"/>
+      </div>
+      <div class="profile-right">
+        <h3 id="profileTitle">Not signed in</h3>
+        <div id="memberBadge" class="badge badge--free">Member: free</div>
+        <div id="verifyBox" class="verify-box hidden">
+          <p class="muted">Please verify your email. Check your inbox or spam.</p>
+          <button id="resendVerify" class="btn btn--outline">Resend verification email</button>
         </div>
+        <p style="margin-top:.75rem">
+          <a href="resources.html" class="link">Go to Resources</a>
+        </p>
+        <button id="signOutBtn" class="btn btn--ghost">Sign out</button>
+        <p id="profileMsg" class="form-msg" role="status"></p>
       </div>
     </section>
   </main>
@@ -126,7 +145,7 @@
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <!-- Firebase init + auth logic -->
+  <!-- Firebase + app logic -->
   <script type="module" src="js/firebase-init.js"></script>
   <script type="module" src="js/auth.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
