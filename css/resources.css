@@ -1,0 +1,94 @@
+/* Resources page polish */
+.res-hero{
+  background: linear-gradient(180deg, #c4122f 0%, #9b0f26 100%);
+  color: #fff;
+  padding: 36px 16px 28px;
+}
+.res-hero__inner{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 24px;
+  align-items: center;
+}
+.res-hero__copy h1{margin:0 0 8px;font-weight:900;font-size:clamp(1.8rem,3.6vw,2.4rem)}
+.res-hero__copy p{margin:0 0 14px;color:#fff;opacity:.95}
+.res-cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;border-radius:999px;padding:.75rem 1.1rem;font-weight:800;text-decoration:none}
+.btn-red{background:#ffffff;color:#c4122f}
+.btn-ghost{border:2px solid rgba(255,255,255,.85);color:#fff}
+
+/* teaser with pulsing rings */
+.res-hero__teaser{justify-self:end;text-align:center}
+.pulse-wrap{position:relative;width:160px;height:160px;margin:0 auto}
+.teaser-play{
+  position:absolute;inset:0;margin:auto;width:68px;height:68px;border-radius:999px;
+  background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.2);cursor:pointer;border:none;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><polygon points="17,12 38,24 17,36" fill="black"/></svg>') center/40% no-repeat;
+}
+.pulse{
+  position:absolute;inset:0;margin:auto;border-radius:999px;border:3px solid rgba(255,255,255,.7);
+  animation:pulse 2.2s infinite cubic-bezier(.22,.61,.36,1);
+}
+.r1{width:160px;height:160px}
+.r2{width:190px;height:190px;animation-delay:.3s}
+.r3{width:220px;height:220px;animation-delay:.6s}
+@keyframes pulse{
+  0%{transform:scale(.6);opacity:.9} 70%{opacity:.15} 100%{transform:scale(1);opacity:0}
+}
+.teaser-caption{margin-top:10px;opacity:.95}
+
+/* Sections */
+.content{max-width:1100px;margin:0 auto;padding:26px 16px 40px}
+.res-section{margin-top:18px}
+.res-section h2{font-size:1.6rem;font-weight:900;margin:0 0 14px}
+
+/* Cards grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{
+  background:#fff;border-radius:18px;padding:16px 16px 18px;
+  box-shadow:0 10px 28px rgba(0,0,0,.08);
+}
+.pill{display:inline-block;background:#c4122f;color:#fff;border-radius:999px;padding:.28rem .7rem;font-weight:800;font-size:.78rem}
+
+/* Preview row */
+.preview-row{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:center}
+.preview-video .video-frame{
+  position:relative;border-radius:16px;overflow:hidden;height:240px;background:#0c0c0c;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+.video-pulse, .video-pulse.delay{
+  position:absolute;inset:-40%;background:radial-gradient(closest-side,rgba(196,18,47,.23),transparent 70%);
+  animation:glow 4.5s infinite alternate ease-in-out
+}
+.video-pulse.delay{animation-delay:1.4s}
+@keyframes glow{from{transform:translate(-14%, -12%)} to{transform:translate(8%,10%)}}
+.video-play{
+  position:absolute;inset:0;margin:auto;width:70px;height:70px;border-radius:999px;background:#fff;
+  -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><polygon points="17,12 38,24 17,36" fill="black"/></svg>') center/40% no-repeat;
+  box-shadow:0 14px 36px rgba(255,255,255,.25);
+}
+.preview-copy .bullets{margin:0;padding-left:18px}
+.muted{color:#666}.small{font-size:.9rem}
+
+/* Locked block */
+.locked{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;align-items:center}
+.lock-left{display:flex;gap:14px;align-items:flex-start}
+.lock-icon{font-size:24px}
+.lock-list{margin:0;padding-left:18px}
+.btn-row{display:flex;gap:10px;margin-top:6px}
+
+/* Lessons look */
+.lesson{border:1px solid #eee;border-radius:12px;margin-top:10px}
+.lesson-head{display:flex;align-items:center;gap:8px;padding:10px 12px}
+.dot{width:8px;height:8px;border-radius:999px;background:#c4122f;display:inline-block}
+.lesson-body{padding:10px 12px;color:#333}
+
+/* Responsive */
+@media (max-width:900px){
+  .res-hero__inner{grid-template-columns:1fr}
+  .res-hero__teaser{justify-self:center}
+  .preview-row{grid-template-columns:1fr}
+  .locked{grid-template-columns:1fr}
+}
