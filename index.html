@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OSU Day Traders</title>
-
-  <link rel="stylesheet" href="css/style.css"/>
   <link rel="icon" href="assets/icons/favicon.ico" />
 
   <style>
@@ -24,23 +22,68 @@
       color: var(--ink);
     }
 
+    header {
+      background: var(--scarlet);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    header img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.97rem;
+      transition: opacity 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      opacity: 0.8;
+    }
+
     /* HERO SECTION */
     .hero {
       position: relative;
-      background: linear-gradient(145deg, #c4122f 0%, #8a0d21 100%);
+      background: linear-gradient(150deg, #c4122f 0%, #8a0d21 100%);
       color: #fff;
       text-align: center;
-      padding: clamp(6rem, 12vw, 8rem) 1rem 5rem;
+      padding: clamp(3.5rem, 8vw, 5.5rem) 1rem 3.5rem;
       overflow: hidden;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      right: -140px;
-      top: -100px;
-      width: 600px;
-      height: 600px;
+      right: -100px;
+      top: -60px;
+      width: 480px;
+      height: 480px;
       background: url("assets/images/translogo.png") center/contain no-repeat;
       opacity: 0.08;
       mix-blend-mode: overlay;
@@ -52,33 +95,33 @@
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 850px;
+      max-width: 800px;
       margin: 0 auto;
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
       font-weight: 900;
-      margin: 0 0 1rem;
+      margin: 0 0 0.8rem;
     }
 
     .hero p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      color: rgba(255,255,255,0.9);
-      line-height: 1.6;
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin: 0 auto 1.8rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.55;
     }
 
-    .hero .btn-group {
+    .btn-group {
       display: flex;
       justify-content: center;
-      gap: 1rem;
+      gap: 0.9rem;
       flex-wrap: wrap;
     }
 
-    .hero .btn {
-      padding: 0.9rem 1.4rem;
+    .btn {
+      padding: 0.85rem 1.3rem;
       border-radius: 999px;
       font-weight: 700;
       font-size: 1rem;
@@ -90,90 +133,85 @@
     .btn-white {
       background: #fff;
       color: var(--scarlet);
-      border: none;
     }
 
     .btn-outline {
       border: 2px solid #fff;
       color: #fff;
-      background: transparent;
     }
 
     .btn-white:hover,
     .btn-outline:hover {
       transform: translateY(-2px);
-      filter: brightness(1.05);
+      filter: brightness(1.08);
     }
 
-    /* SECTION WRAPPER */
+    /* SECTION SPACING */
     .section {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 4rem 1rem;
+      padding: 3rem 1rem 3.5rem;
     }
 
     h2.section-title {
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       font-weight: 900;
       text-align: center;
       margin-bottom: 2rem;
-      color: var(--ink);
     }
 
     /* WHAT WE DO */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+      gap: 1.4rem;
     }
 
     .feature {
       background: var(--panel);
       padding: 1.5rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 18px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+      transition: 0.25s ease;
     }
 
     .feature:hover {
       transform: translateY(-4px);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     }
 
     .feature h3 {
       margin: 0 0 0.4rem;
       font-weight: 800;
-      color: var(--ink);
     }
 
     .feature p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     /* NEXT EVENT */
     .next-wrap {
-      background: #fff;
+      background: linear-gradient(180deg, #fff 0%, #f7f7f7 100%);
       border-top: 1px solid #eee;
-      padding: 4rem 1rem;
+      padding: 3rem 1rem 4rem;
     }
 
     .next-wrap h2 {
       text-align: center;
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       font-weight: 900;
       margin-bottom: 2rem;
-      color: var(--ink);
     }
 
     .event-card {
       background: var(--panel);
-      border-radius: 22px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-      max-width: 700px;
+      border-radius: 20px;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
+      max-width: 680px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1.8rem;
       text-align: center;
     }
 
@@ -183,28 +221,28 @@
       color: #fff;
       font-weight: 800;
       font-size: 0.85rem;
-      padding: 0.4rem 1rem;
+      padding: 0.35rem 1rem;
       border-radius: 999px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
     }
 
     .event-card h3 {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 900;
-      margin: 0.3rem 0 0.6rem;
+      margin: 0.3rem 0 0.5rem;
     }
 
     .event-card p {
-      color: #555;
-      margin: 0.25rem 0;
-      line-height: 1.5;
+      color: #444;
+      margin: 0.2rem 0;
+      line-height: 1.45;
     }
 
     .event-card .btn-group {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      margin-top: 1.5rem;
+      gap: 0.8rem;
+      margin-top: 1.2rem;
       flex-wrap: wrap;
     }
 
@@ -212,21 +250,20 @@
       background: #121212;
       color: #fff;
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 1.3rem 1rem;
       font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
-  <header class="site-header">
+  <header>
     <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
       <span>OSU Day Traders</span>
     </a>
-    <nav class="site-nav">
-      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
-      <ul id="navMenu">
+    <nav>
+      <ul>
         <li><a class="active" href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="events.html">Events</a></li>
@@ -237,7 +274,6 @@
     </nav>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
       <h1>Learn. Trade. Grow.</h1>
@@ -249,7 +285,6 @@
     </div>
   </section>
 
-  <!-- WHAT WE DO -->
   <section class="section">
     <h2 class="section-title">What we do</h2>
     <div class="features">
@@ -271,7 +306,6 @@
     </div>
   </section>
 
-  <!-- NEXT EVENT -->
   <section class="next-wrap">
     <h2>Next upcoming event</h2>
     <div class="event-card">
@@ -291,7 +325,6 @@
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <script src="js/main.js"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
