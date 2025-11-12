@@ -247,3 +247,17 @@ body{
   .resource-hero .candles{ right:3vw; top:42%; opacity:.22 }
   .resource-hero .candles span{ width:12px }
 }
+
+/* NAV hardening so it never reverts to browser defaults */
+.site-header .menu a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  padding:.25rem .5rem;
+}
+.site-header .menu a:hover{ text-decoration:underline; }
+.site-header .menu a.active{
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
