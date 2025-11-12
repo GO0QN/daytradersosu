@@ -4,74 +4,138 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact • OSU Day Traders</title>
-  <link rel="icon" href="assets/icons/favicon.ico"/>
+  <link rel="stylesheet" href="css/style.css"/>
 
-  <!-- Local page styles (kept minimal, on-brand) -->
+  <!-- Page-local polish only for Contact -->
   <style>
     :root{
-      --scarlet:#c4122f; --ink:#111; --muted:#575757;
-      --surface:#f6f6f6; --panel:#fff;
+      --scarlet:#c4122f; /* primary scarlet (matches navbar) */
+      --ink:#121212;
+      --muted:#5b5b5b;
+      --panel:#ffffff;
+      --surface:#f6f6f6;
+      --ring:#e6e6e6;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--surface)}
 
-    /* Top bar (same visual language as other pages) */
-    header{background:var(--scarlet);padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:.6rem;color:#fff;text-decoration:none;font-weight:900}
-    .brand img{width:34px;height:34px;border-radius:50%}
-    nav ul{margin:0;padding:0;list-style:none;display:flex;gap:1.15rem}
-    nav a{color:#fff;text-decoration:none;font-weight:800;opacity:.95}
-    nav a.active,nav a:hover{opacity:1}
+    body{ background:var(--surface); }
 
-    /* Page shell */
-    .wrap{max-width:980px;margin:0 auto;padding:2.2rem 1rem 3.2rem}
-    h1{margin:0 0 .45rem;font-size:clamp(1.9rem,3.2vw,2.2rem);font-weight:900;letter-spacing:.2px}
-    .lede{margin:0 0 1.25rem;color:#444}
+    /* Section shell + spacing under fixed/red bar */
+    .contact-wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:clamp(18px,3vw,28px) 16px 40px;
+    }
+
+    /* Title block that didn't sit right before */
+    .contact-hero{
+      margin: clamp(18px,4vw,34px) auto 18px;
+    }
+    .contact-hero h1{
+      margin:0 0 .4rem 0;
+      font-weight:900;
+      letter-spacing:-.01em;
+      color:#0f0f0f;
+      font-size: clamp(1.6rem, 3.3vw, 2.2rem);
+    }
+    .contact-hero p{
+      margin:.25rem 0 0;
+      color:#444;
+      font-size:clamp(.98rem,1.2vw,1.05rem);
+      line-height:1.55;
+      max-width:62ch;
+    }
 
     /* Card */
-    .card{
-      background:var(--panel);border-radius:22px;padding:1.25rem 1.25rem 1.4rem;
-      box-shadow:0 18px 40px rgba(0,0,0,.12);max-width:860px;margin:0 auto;
+    .contact-card{
+      background:var(--panel);
+      border:1px solid #eee;
+      border-radius:20px;
+      box-shadow:
+        0 20px 40px rgba(0,0,0,.06),
+        0 2px 0 rgba(0,0,0,.02) inset;
+      padding:clamp(16px,2.6vw,22px);
+      margin:18px 0 40px;
     }
 
-    /* Form */
-    form{display:grid;gap:1rem}
-    .row{display:grid;gap:.4rem}
-    label{font-weight:850;font-size:.95rem}
-    input,textarea{
-      width:100%;border:1px solid #e9e9e9;background:#fff;border-radius:16px;
-      padding:1rem 1.1rem;font-size:1rem;outline:none;transition:border-color .15s, box-shadow .15s;
+    .field{margin:16px 0;}
+    .label{
+      display:block;
+      font-weight:800;
+      margin-bottom:8px;
+      color:#1b1b1b;
     }
-    input:focus,textarea:focus{border-color:#dadada;box-shadow:0 0 0 4px rgba(196,18,47,.12)}
-    textarea{min-height:160px;resize:vertical}
 
-    .actions{display:flex;gap:.9rem;align-items:center;flex-wrap:wrap}
+    .input, .textarea{
+      width:100%;
+      border:1px solid var(--ring);
+      background:#fff;
+      border-radius:14px;
+      padding:14px 16px;
+      font-size:1rem;
+      line-height:1.35;
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    .textarea{min-height:160px; resize:vertical;}
+
+    .input:focus, .textarea:focus{
+      border-color:#e7a3ad;
+      box-shadow:0 0 0 6px rgba(196,18,47,.08);
+    }
+
+    /* Send row */
+    .send-row{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-top:20px;
+      flex-wrap:wrap;
+    }
     .btn{
-      border:none;border-radius:999px;padding:.95rem 1.2rem;font-weight:900;font-size:1rem;cursor:pointer;
-      transition:transform .15s, filter .15s, box-shadow .15s;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      cursor:pointer;
+      font-weight:900;
+      border-radius:999px;
+      padding:14px 22px;
+      font-size:1rem;
     }
-    .btn-primary{background:var(--scarlet);color:#fff;box-shadow:0 12px 24px rgba(196,18,47,.28)}
-    .btn-primary:hover{transform:translateY(-2px);filter:brightness(.97)}
-    .hint{color:#666;font-size:.92rem}
+    .btn-primary{
+      color:#fff;
+      background:var(--scarlet);
+      box-shadow:0 10px 26px rgba(196,18,47,.28), 0 2px 0 rgba(0,0,0,.06) inset;
+    }
+    .btn-primary:hover{ filter:brightness(.96); }
 
-    /* Inline states */
-    .alert{display:none;margin-top:.6rem;padding:.85rem 1rem;border-radius:14px;font-weight:800}
-    .alert.ok{background:#eaf7ee;color:#135a2c}
-    .alert.err{background:#fdeaea;color:#7a1010}
+    .hint{ color:#666; font-size:.95rem; }
 
-    /* Footer */
-    footer{background:#111;color:#fff;text-align:center;padding:1.1rem 1rem;font-size:.92rem;margin-top:2.2rem}
+    /* Success/Fail toast */
+    .toast{
+      display:none;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:12px;
+      font-weight:700;
+    }
+    .toast.ok{ display:block; background:#e7f7ec; color:#0b6b2b; }
+    .toast.err{ display:block; background:#fde8ea; color:#7d0f1c; }
+
+    /* Keep footer off the card */
+    .page-bottom-spacer{ height:10px; }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
+  <!-- Header (kept identical to other pages) -->
+  <header class="site-header">
     <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
       <span>OSU Day Traders</span>
     </a>
-    <nav aria-label="Main">
-      <ul>
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+      <ul id="navMenu">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="events.html">Events</a></li>
@@ -82,81 +146,78 @@
     </nav>
   </header>
 
-  <!-- Content -->
-  <main class="wrap">
-    <h1>Contact</h1>
-    <p class="lede">Questions about joining, speaking, partnering, or sponsoring OSU Day Traders? Drop a note below.</p>
+  <main class="contact-wrap">
+    <div class="contact-hero">
+      <h1>Contact</h1>
+      <p>Questions about joining, speaking, partnering, or sponsoring OSU Day Traders? Drop a note below.</p>
+    </div>
 
-    <section class="card" aria-labelledby="contactFormTitle">
-      <h2 id="contactFormTitle" style="position:absolute;left:-9999px">Contact form</h2>
-
+    <section class="contact-card" aria-labelledby="contactFormTitle">
+      <h2 id="contactFormTitle" class="visually-hidden">Send a message</h2>
       <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST">
-        <div class="row">
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+        <!-- Formspree recommends a subject field if you want custom subject lines -->
+        <input type="hidden" name="_subject" value="New message from daytradersosu.com"/>
+
+        <div class="field">
+          <label class="label" for="name">Name</label>
+          <input class="input" id="name" name="name" type="text" placeholder="Your name" required>
         </div>
 
-        <div class="row">
-          <label for="email">Email</label>
-          <input id="email" name="_replyto" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" placeholder="you@email.com" required>
         </div>
 
-        <div class="row">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea>
+        <div class="field">
+          <label class="label" for="message">Message</label>
+          <textarea class="textarea" id="message" name="message" placeholder="Tell us how we can help" required></textarea>
         </div>
 
-        <!-- spam honeypot -->
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-        <div class="actions">
-          <button class="btn btn-primary" type="submit" id="sendBtn">Send</button>
-          <span class="hint" id="statusHint">We’ll reply to your email.</span>
+        <div class="send-row">
+          <button class="btn btn-primary" type="submit">Send</button>
+          <span class="hint">We’ll reply to your email.</span>
         </div>
 
-        <div id="formOk"  class="alert ok">Thanks — your message was sent.</div>
-        <div id="formErr" class="alert err">Couldn’t send right now. Try again in a bit.</div>
+        <div id="formToast" class="toast" role="status" aria-live="polite"></div>
       </form>
     </section>
+
+    <div class="page-bottom-spacer"></div>
   </main>
 
-  <!-- Footer -->
-  <footer>
+  <footer class="site-footer">
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <!-- Lightweight JS for inline success/fail UX -->
+  <script src="js/main.js"></script>
   <script>
+    // footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const form = document.getElementById('contactForm');
-    const sendBtn = document.getElementById('sendBtn');
-    const ok  = document.getElementById('formOk');
-    const err = document.getElementById('formErr');
-    const hint= document.getElementById('statusHint');
+    // Progressive enhancement: AJAX submit to Formspree for inline success/fail
+    const form  = document.getElementById('contactForm');
+    const toast = document.getElementById('formToast');
 
-    form.addEventListener('submit', async (e)=>{
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      ok.style.display='none'; err.style.display='none';
-      sendBtn.disabled = true; sendBtn.textContent = 'Sending…';
-
+      const data = new FormData(form);
       try{
         const res = await fetch(form.action, {
           method: 'POST',
           headers: { 'Accept': 'application/json' },
-          body: new FormData(form)
+          body: data
         });
         if(res.ok){
+          toast.className = 'toast ok';
+          toast.textContent = 'Thanks — your message was sent.';
           form.reset();
-          ok.style.display='block';
-          hint.textContent='We’ll reply soon.';
-        }else{
-          err.style.display='block';
+        } else {
+          toast.className = 'toast err';
+          toast.textContent = 'Something went wrong. Try again in a minute.';
         }
-      }catch{
-        err.style.display='block';
-      }finally{
-        sendBtn.disabled = false; sendBtn.textContent = 'Send';
+      }catch(err){
+        toast.className = 'toast err';
+        toast.textContent = 'Network error. Please try again.';
       }
     });
   </script>
