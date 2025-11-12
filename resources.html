@@ -1,62 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Resources • OSU Day Traders</title>
-<link href="css/style.css" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resources • OSU Day Traders</title>
+
+  <!-- your existing site CSS -->
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- page-specific polish -->
+  <link rel="stylesheet" href="css/resources.css"/>
 </head>
 <body>
-<header class="site-header">
-  <a class="brand" href="index.html">
-    <img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
-    <span>OSU Day Traders</span>
-  </a>
-  <nav class="site-nav">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="events.html">Events</a></li>
-      <li><a class="active" href="resources.html">Resources</a></li>
-      <li><a href="auth.html">Account</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="applications.html">Applications</a></li>
-    </ul>
-  </nav>
-</header>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo">
+      <span>OSU Day Traders</span>
+    </a>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a class="active" href="resources.html">Resources</a></li>
+        <li><a href="auth.html">Account</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main class="content">
-  <h1>Resources</h1>
+  <!-- HERO -->
+  <section class="res-hero">
+    <div class="res-hero__inner">
+      <div class="res-hero__copy">
+        <h1>Resources</h1>
+        <p>Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an @osu.edu email.</p>
+        <div class="res-cta-row">
+          <a class="btn btn-red" href="auth.html">Sign in</a>
+          <a class="btn btn-ghost" href="#preview">Preview the course</a>
+        </div>
+      </div>
 
-  <section>
-    <h2>Free Materials</h2>
-    <div class="card"><h3>Trading Playbooks</h3><p>Core strategies and risk frameworks.</p></div>
+      <!-- animated teaser tile -->
+      <div class="res-hero__teaser">
+        <div class="pulse-wrap">
+          <button class="teaser-play" aria-label="Play teaser"></button>
+          <span class="pulse ring r1"></span>
+          <span class="pulse ring r2"></span>
+          <span class="pulse ring r3"></span>
+        </div>
+        <p class="teaser-caption">Course walkthrough</p>
+      </div>
+    </div>
   </section>
 
-  <section style="margin-top:2rem;">
-    <h2>OSU-Only Course: Day Trading Fundamentals</h2>
-    <p id="osu-warning" class="form-note"></p>
+  <main class="content">
 
-    <div id="locked-content" class="card" style="text-align:center;background:#f9f9f9;">
-      <p>🔒 This content is locked.</p>
-      <p>Only <b>@osu.edu</b> accounts can subscribe to unlock.</p>
-      <button id="subscribe-btn" class="btn btn--light" style="margin-top:1rem;">Subscribe</button>
-    </div>
+    <!-- FREE STUFF -->
+    <section class="res-section">
+      <h2>Free materials</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="pill">Playbook</span>
+          <h3>Opening Drive</h3>
+          <p>How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
+          <a class="btn btn-ghost" href="#">Download PDF</a>
+        </article>
 
-    <div id="unlocked-content" style="display:none;margin-top:1rem;">
-      <h3>Day 1: Market Foundations</h3>
-      <p>How markets move, order types, platform basics, and your first trading plan.</p>
-      <!-- Put your videos/quizzes here -->
-    </div>
-  </section>
-</main>
+        <article class="card">
+          <span class="pill">Template</span>
+          <h3>Journal Starter</h3>
+          <p>Tags, KPIs, and weekly review prompts that don’t rot in Google Drive.</p>
+          <a class="btn btn-ghost" href="#">Use Template</a>
+        </article>
 
-<footer class="site-footer">
-  <p>© <span id="year"></span> OSU Day Traders</p>
-</footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+        <article class="card">
+          <span class="pill">Checklist</span>
+          <h3>Pre-Market Routine</h3>
+          <p>10-minute flow that won’t nuke your focus before the bell.</p>
+          <a class="btn btn-ghost" href="#">View</a>
+        </article>
+      </div>
+    </section>
 
-<script type="module" src="js/firebase-init.js"></script>
-<script type="module" src="js/paywall.js"></script>
+    <!-- PREVIEW -->
+    <section id="preview" class="res-section">
+      <h2>Course preview</h2>
+      <div class="preview-row">
+        <div class="preview-video">
+          <!-- fake video frame with moving glow so it feels alive -->
+          <div class="video-frame">
+            <div class="video-pulse"></div>
+            <div class="video-pulse delay"></div>
+            <div class="video-play"></div>
+          </div>
+          <p class="muted small">Preview clip: “Day 1 · Market Foundations”</p>
+        </div>
+        <div class="preview-copy">
+          <ul class="bullets">
+            <li>Market structure, sessions, and the only three setups we actually trade</li>
+            <li>Risk math that keeps you in the game</li>
+            <li>Journal tags and review cadence that builds an edge</li>
+          </ul>
+          <a class="btn btn-red" href="auth.html">Sign in to continue</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCKED COURSE -->
+    <section class="res-section">
+      <h2>OSU-only course: Day Trading Fundamentals</h2>
+      <p id="osu-warning" class="form-note"></p>
+
+      <div id="locked-content" class="locked card">
+        <div class="lock-left">
+          <div class="lock-icon">🔒</div>
+          <div>
+            <h3>Members area</h3>
+            <p>Sign in with @osu.edu and subscribe to unlock all modules, quizzes, and notes.</p>
+            <div class="btn-row">
+              <a id="inline-login" class="btn btn-ghost" href="auth.html">Sign in</a>
+              <button id="subscribe-btn" class="btn btn-red">Subscribe</button>
+            </div>
+          </div>
+        </div>
+        <ul class="lock-list">
+          <li>Day 1: Market Foundations</li>
+          <li>Day 2: Setups & Invalidations</li>
+          <li>Day 3: Risk & Sizing</li>
+          <li>Day 4: Live Lab & Review</li>
+        </ul>
+      </div>
+
+      <div id="unlocked-content" class="card" style="display:none">
+        <h3>Day 1: Market Foundations</h3>
+        <p class="muted small">You’re in. Modules, videos, quizzes and notes appear here once membership is active.</p>
+
+        <!-- Skeleton of first lesson -->
+        <div class="lesson">
+          <div class="lesson-head">
+            <span class="dot"></span>
+            <h4>Lesson 1 · Sessions & Structure</h4>
+          </div>
+          <div class="lesson-body">
+            <p>Video + slides go here. Add your embeds when you’re ready.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <span class="dot"></span>
+            <h4>Lesson 2 · Order Types & Triggers</h4>
+          </div>
+          <div class="lesson-body">
+            <p>Video + slides go here.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <span class="dot"></span>
+            <h4>Quiz · Day 1 Check</h4>
+          </div>
+          <div class="lesson-body">
+            <p>Interactive quiz placeholder.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> OSU Day Traders</p>
+  </footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/paywall.js"></script>
 </body>
 </html>
