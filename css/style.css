@@ -19,14 +19,14 @@ body{
 /* ===== Header / Nav ===== */
 .site-header{
   display:flex;align-items:center;justify-content:space-between;
-  gap:1rem;padding:0.75rem 1rem;background:var(--scarlet);color:var(--white);
+  gap:1.25rem;padding:.9rem 1.background:var(--scarlet);color:var(--white);
   position:sticky;top:0;z-index:20;
   border:0;box-shadow:none; /* avoid stray 1px lines on dark backgrounds */
 }
-.brand{display:flex;align-items:center;gap:.6rem;color:var(--white);text-decoration:none;font-weight:800}
+.brand{display:flex;align-items:center;gap:..55rem;color:var(--white);text-decoration:none;font-weight:800}
 .brand img{height:48px;width:auto;border-radius:50%}
-.site-nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
-.site-nav a{color:var(--white);text-decoration:none;font-weight:700;opacity:.95}
+.site-nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0}
+.site-nav a{color:var(--white);text-decoration:none;font-weight:700;op;font-size:.95remacity:.95}
 .site-nav a.active,.site-nav a:hover{opacity:1;text-decoration:underline}
 .nav-toggle{display:none}
 
