@@ -1,101 +1,54 @@
-import { auth, provider, db } from "./firebase-init.js";
-import {
-  signInWithPopup, onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import {
-  doc, getDoc, setDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+// /js/auth.js
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-const $ = (id) => document.getElementById(id);
+const { auth } = window.__firebase;
 
-// DOM
-const googleBtn  = $("google-btn");
-const signupBtn  = $("signup-btn");
-const loginBtn   = $("login-btn");
-const statusEl   = $("status");
-const profile    = $("profile");
-const profileEmpty = $("profile-empty");
-const avatar     = $("avatar");
-const nameEl     = $("name");
-const emailTxt   = $("emailTxt");
-const pill       = $("membershipPill");
-const signoutBtn = $("signout-btn");
-const emailIn    = $("email");
-const passIn     = $("password");
+const googleBtn = document.getElementById('googleBtn');
+const createBtn = document.getElementById('createBtn');
+const loginBtn  = document.getElementById('loginBtn');
+const signOutBtn = document.getElementById('signOutBtn');
+const emailEl = document.getElementById('email');
+const passEl  = document.getElementById('password');
+const msg = document.getElementById('authMsg');
+const nameEl = document.getElementById('displayName');
+const avatar = document.getElementById('avatar');
 
-// Make sure the handlers attach even if CSS or other scripts fail
-window.addEventListener("DOMContentLoaded", () => {
-  googleBtn?.addEventListener("click", googleLogin);
-  signupBtn?.addEventListener("click", emailSignup);
-  loginBtn?.addEventListener("click", emailLogin);
-  signoutBtn?.addEventListener("click", () => signOut(auth));
+function setMsg(t, isErr=true){ if(!msg) return; msg.textContent = t || ""; msg.style.color = isErr ? "#a11" : "#0a7f2e"; }
+
+googleBtn?.addEventListener('click', async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  } catch (e){ setMsg(e.message); }
 });
 
-provider.setCustomParameters({ prompt: "select_account" });
+createBtn?.addEventListener('click', async () => {
+  const email = emailEl.value.trim(); const pwd = passEl.value.trim();
+  if (!email || !pwd) return setMsg("Email and password required.");
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pwd);
+    if (!cred.user.displayName) await updateProfile(cred.user, { displayName: email.split('@')[0] });
+    setMsg("Account created.", false);
+  } catch (e){ setMsg(e.message); }
+});
 
-async function googleLogin(){
-  try{
-    statusEl.textContent = "Opening Google…";
-    const res = await signInWithPopup(auth, provider);
-    await ensureUserDoc(res.user);
-    statusEl.textContent = "";
-  }catch(err){
-    console.error(err); statusEl.textContent = "Sign-in failed.";
-  }
-}
+loginBtn?.addEventListener('click', async () => {
+  const email = emailEl.value.trim(); const pwd = passEl.value.trim();
+  if (!email || !pwd) return setMsg("Email and password required.");
+  try {
+    await signInWithEmailAndPassword(auth, email, pwd);
+    setMsg("Signed in.", false);
+  } catch(e){ setMsg(e.message); }
+});
 
-async function emailSignup(){
-  try{
-    statusEl.textContent = "Creating account…";
-    const { user } = await createUserWithEmailAndPassword(auth, emailIn.value, passIn.value);
-    if (!user.displayName) await updateProfile(user, { displayName: user.email.split("@")[0] });
-    await ensureUserDoc(user);
-    statusEl.textContent = "Account created.";
-  }catch(err){
-    statusEl.textContent = err.message.replace("Firebase: ","");
-  }
-}
-async function emailLogin(){
-  try{
-    statusEl.textContent = "Signing in…";
-    const { user } = await signInWithEmailAndPassword(auth, emailIn.value, passIn.value);
-    await ensureUserDoc(user);
-    statusEl.textContent = "";
-  }catch(err){
-    statusEl.textContent = err.message.replace("Firebase: ","");
-  }
-}
+signOutBtn?.addEventListener('click', () => signOut(auth));
 
-async function ensureUserDoc(user){
-  await setDoc(doc(db, "users", user.uid), {
-    uid: user.uid,
-    email: user.email || "",
-    name: user.displayName || "",
-    photoURL: user.photoURL || "",
-    emailVerified: user.emailVerified || false,
-    lastLogin: serverTimestamp()
-  }, { merge: true });
-}
-
-function showProfile(user, membership="free"){
-  profile.hidden = false;
-  profileEmpty.style.display = "none";
-  avatar.src = user.photoURL || "assets/images/blank";
-  nameEl.textContent = user.displayName || "Unnamed";
-  emailTxt.textContent = user.email || "";
-  pill.textContent = `Member: ${membership}`;
-  pill.style.background = membership === "active" ? "#12a150" : "#c4122f";
-}
-
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
   if (!user){
-    profile.hidden = true; profileEmpty.style.display = "block"; return;
+    nameEl.textContent = "Not signed in";
+    avatar.style.backgroundImage = "";
+    return;
   }
-  let membership = "free";
-  try{
-    const snap = await getDoc(doc(db, "users", user.uid));
-    if (snap.exists()) membership = snap.data().membershipStatus || "free";
-  }catch(e){}
-  showProfile(user, membership);
+  nameEl.textContent = user.displayName || user.email;
+  if (user.photoURL) avatar.style.backgroundImage = `url('${user.photoURL}')`;
 });
