@@ -1,31 +1,38 @@
 // js/firebase-init.js
-// Loads Firebase (App/Auth/Firestore) via CDN and exposes instances on window.
-// Fill in your own config below.
+// Initializes Firebase for OSU Day Traders.
+// Handles Auth + Firestore only (no Storage, since Spark plan).
 
+// Import Firebase via CDN modules (lightweight + browser compatible)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import * as _auth       from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 import * as _firestore  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
+// Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  appId: "YOUR_APP_ID"
-  // no storage; we’re not using it
+  apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
+  authDomain: "osu-daytraders.firebaseapp.com",
+  projectId: "osu-daytraders",
+  storageBucket: "osu-daytraders.firebasestorage.app",
+  messagingSenderId: "63619855631",
+  appId: "1:63619855631:web:3416fee03d357715f0fa7a",
+  measurementId: "G-RXTL84LM0T"
 };
 
+// Initialize Firebase
 const app  = initializeApp(firebaseConfig);
 const auth = _auth.getAuth(app);
 const db   = _firestore.getFirestore(app);
 
-// Persistence (local)
-_auth.setPersistence(auth, _auth.browserLocalPersistence);
+// Keep users signed in locally
+_auth.setPersistence(auth, _auth.browserLocalPersistence)
+  .catch((err) => console.error("Persistence error:", err));
 
-// Expose so auth.js can use them without re-importing
+// Expose globally for auth.js
 window.app = app;
 window.auth = auth;
 window.db = db;
-
-// Also expose the module namespaces in case auth.js wants functions
 window.firebaseAuthExports = _auth;
 window.firebaseFirestoreExports = _firestore;
+
+// Optional: log confirmation in console
+console.log("%cFirebase initialized successfully for OSU Day Traders","color:#bb0000;font-weight:bold");
