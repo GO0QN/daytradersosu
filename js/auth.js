@@ -1,163 +1,188 @@
-// js/auth.js
-// Sign up / login / Google / reset / email verification / tiny profile UI
+// Auth UI logic: email signup with verification, login, Google sign-in,
+// default avatar preview (no upload on Spark), member badge, sign out.
 
-import {
-  auth, db, firebaseAuthExports: A, firebaseFirestoreExports: F
-} from "./firebase-init.js";
+const A = window.firebaseAuthExports;
+const F = window.firebaseFirestoreExports;
+const auth = window.auth;
+const db   = window.db;
 
-const $ = (s)=>document.querySelector(s);
+const dom = {
+  suEmail:      document.getElementById("suEmail"),
+  suPassword:   document.getElementById("suPassword"),
+  emailSignup:  document.getElementById("emailSignupForm"),
+  signupMsg:    document.getElementById("signupMsg"),
+  avatarFile:   document.getElementById("avatarFile"),
+  avatarPrev:   document.getElementById("avatarPreview"),
 
-// Elements
-const signupForm = $("#signupForm");
-const loginForm  = $("#loginForm");
-const signupGoogleBtn = $("#signupGoogle");
-const loginGoogleBtn  = $("#loginGoogle");
-const forgotBtn  = $("#forgotBtn");
-const signOutBtn = $("#signOutBtn");
+  loginEmail:   document.getElementById("liEmail"),
+  loginPass:    document.getElementById("liPassword"),
+  loginForm:    document.getElementById("loginForm"),
+  loginMsg:     document.getElementById("loginMsg"),
+  forgotBtn:    document.getElementById("forgotBtn"),
 
-const avatarInput   = $("#avatarInput");
-const avatarPreview = $("#avatarPreview");
+  signupGoogle: document.getElementById("signupGoogle"),
+  loginGoogle:  document.getElementById("loginGoogle"),
 
-const profileAvatar = $("#profileAvatar");
-const memberTier    = $("#memberTier");
-const signedState   = $("#signedState");
-const verifyBadge   = $("#verifyBadge");
+  profileAvatar:document.getElementById("profileAvatar"),
+  profileTitle: document.getElementById("profileTitle"),
+  memberBadge:  document.getElementById("memberBadge"),
+  verifyBox:    document.getElementById("verifyBox"),
+  resendVerify: document.getElementById("resendVerify"),
+  profileMsg:   document.getElementById("profileMsg"),
+  signOutBtn:   document.getElementById("signOutBtn")
+};
 
-// Default avatar always present
+// Default avatar preview always starts with site asset
 const DEFAULT_AVATAR = "assets/images/defaultprofile.png";
-avatarPreview.src   = DEFAULT_AVATAR;
-profileAvatar.src   = DEFAULT_AVATAR;
+if (dom.avatarPrev) dom.avatarPrev.src = DEFAULT_AVATAR;
+if (dom.profileAvatar) dom.profileAvatar.src = DEFAULT_AVATAR;
 
-// Preview file (no upload on Spark)
-avatarInput?.addEventListener("change", (e)=>{
-  const f = e.target.files?.[0];
-  if (!f) { avatarPreview.src = DEFAULT_AVATAR; return; }
-  const url = URL.createObjectURL(f);
-  avatarPreview.src = url;
-});
-
-// Helpers
-function toast(msg){
-  console.log("[auth]", msg);
-  // You can replace with a real toast if you care about vibes
-}
-function actionUrl() {
-  // Where users land after clicking the verification link
-  return "https://daytradersosu.com/account.html?verified=1";
+// Optional local preview (no uploads on Spark)
+if (dom.avatarFile) {
+  dom.avatarFile.addEventListener("change", e => {
+    const file = e.target.files?.[0];
+    if (!file) { dom.avatarPrev.src = DEFAULT_AVATAR; return; }
+    const reader = new FileReader();
+    reader.onload = () => { dom.avatarPrev.src = reader.result; };
+    reader.readAsDataURL(file);
+  });
 }
 
-// Sign up (email+password)
-signupForm?.addEventListener("submit", async (e)=>{
-  e.preventDefault();
-  const email = $("#signupEmail").value.trim();
-  const pass  = $("#signupPassword").value;
-  if (!email || !pass) return;
+// Email sign-up with verification
+if (dom.emailSignup) {
+  dom.emailSignup.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    dom.signupMsg.textContent = "Creating account…";
+    try {
+      const cred = await A.createUserWithEmailAndPassword(auth, dom.suEmail.value.trim(), dom.suPassword.value);
+      // seed profile doc
+      await F.setDoc(F.doc(db, "users", cred.user.uid), {
+        email: cred.user.email,
+        memberTier: "free",
+        createdAt: F.serverTimestamp()
+      }, { merge:true });
 
-  try{
-    const cred = await A.createUserWithEmailAndPassword(auth, email, pass);
+      // send verification email
+      const actionCodeSettings = {
+        url: `${location.origin}/account.html?verified=1`,
+        handleCodeInApp: false
+      };
+      await A.sendEmailVerification(cred.user, actionCodeSettings);
 
-    // Create user doc (minimal) with default avatar + free tier
-    const userRef = F.doc(F.collection(db,"users"), cred.user.uid);
-    await F.setDoc(userRef, {
-      email, tier:"free", createdAt: F.serverTimestamp(),
-      photoURL: DEFAULT_AVATAR
-    }, { merge:true });
-
-    // Email verification
-    await A.sendEmailVerification(cred.user, { url: actionUrl(), handleCodeInApp:false });
-
-    toast("Account created. Verification email sent.");
-  }catch(err){
-    toast(err.message || "Sign up failed");
-  }
-});
-
-// Login (email+password)
-loginForm?.addEventListener("submit", async (e)=>{
-  e.preventDefault();
-  const email = $("#loginEmail").value.trim();
-  const pass  = $("#loginPassword").value;
-  if (!email || !pass) return;
-
-  try{
-    await A.signInWithEmailAndPassword(auth, email, pass);
-    toast("Logged in");
-  }catch(err){
-    toast(err.message || "Login failed");
-  }
-});
-
-// Google sign in/up
-async function signInWithGoogle(){
-  try{
-    const provider = new A.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt:"select_account" });
-    const cred = await A.signInWithPopup(auth, provider);
-
-    // Ensure profile doc exists
-    const userRef = F.doc(F.collection(db,"users"), cred.user.uid);
-    await F.setDoc(userRef, {
-      email: cred.user.email || "",
-      tier: "free",
-      photoURL: cred.user.photoURL || DEFAULT_AVATAR,
-      createdAt: F.serverTimestamp()
-    }, { merge:true });
-
-    toast("Signed in with Google");
-  }catch(err){
-    toast(err.message || "Google sign-in failed");
-  }
+      dom.signupMsg.textContent = "Check your email to verify your account.";
+      updateUI(cred.user);
+    } catch (err) {
+      dom.signupMsg.textContent = pretty(err);
+    }
+  });
 }
-signupGoogleBtn?.addEventListener("click", signInWithGoogle);
-loginGoogleBtn?.addEventListener("click", signInWithGoogle);
+
+// Login with email
+if (dom.loginForm) {
+  dom.loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    dom.loginMsg.textContent = "Signing in…";
+    try {
+      const cred = await A.signInWithEmailAndPassword(auth, dom.loginEmail.value.trim(), dom.loginPass.value);
+      dom.loginMsg.textContent = "";
+      updateUI(cred.user);
+    } catch (err) {
+      dom.loginMsg.textContent = pretty(err);
+    }
+  });
+}
 
 // Forgot password
-forgotBtn?.addEventListener("click", async ()=>{
-  const email = $("#loginEmail").value.trim();
-  if (!email){ toast("Enter your email first."); return; }
-  try{
-    await A.sendPasswordResetEmail(auth, email, { url: actionUrl() });
-    toast("Reset email sent.");
-  }catch(err){
-    toast(err.message || "Reset failed");
+if (dom.forgotBtn) {
+  dom.forgotBtn.addEventListener("click", async () => {
+    const email = dom.loginEmail.value.trim();
+    if (!email) { dom.loginMsg.textContent = "Enter your email first."; return; }
+    try {
+      await A.sendPasswordResetEmail(auth, email, { url: `${location.origin}/account.html?reset=1` });
+      dom.loginMsg.textContent = "Password reset sent.";
+    } catch (err) {
+      dom.loginMsg.textContent = pretty(err);
+    }
+  });
+}
+
+// Google sign in/up
+async function googleFlow() {
+  const provider = new A.GoogleAuthProvider();
+  const r = await A.signInWithPopup(auth, provider);
+  // Seed user doc if new
+  const docRef = F.doc(db, "users", r.user.uid);
+  const snap = await F.getDoc(docRef);
+  if (!snap.exists()) {
+    await F.setDoc(docRef, {
+      email: r.user.email,
+      memberTier: "free",
+      createdAt: F.serverTimestamp()
+    });
   }
-});
+  updateUI(r.user);
+}
+if (dom.signupGoogle) dom.signupGoogle.addEventListener("click", googleFlow);
+if (dom.loginGoogle)  dom.loginGoogle.addEventListener("click", googleFlow);
+
+// Resend verification
+if (dom.resendVerify) {
+  dom.resendVerify.addEventListener("click", async () => {
+    const u = A.currentUser(auth);
+    if (!u) return;
+    try {
+      await A.sendEmailVerification(u, { url: `${location.origin}/account.html?verified=1` });
+      dom.profileMsg.textContent = "Verification email sent.";
+    } catch (err) {
+      dom.profileMsg.textContent = pretty(err);
+    }
+  });
+}
 
 // Sign out
-signOutBtn?.addEventListener("click", ()=> A.signOut(auth));
+if (dom.signOutBtn) {
+  dom.signOutBtn.addEventListener("click", () => A.signOut(auth));
+}
 
-// Auth state changes -> update UI
-A.onAuthStateChanged(auth, async (user)=>{
-  if (!user){
-    signedState.textContent = "Not signed in";
-    profileAvatar.src = DEFAULT_AVATAR;
-    memberTier.classList.remove("tier--paid");
-    memberTier.classList.add("tier--free");
-    memberTier.textContent = "free";
-    verifyBadge.hidden = true;
+// Track auth state
+A.onAuthStateChanged(auth, (user) => updateUI(user));
+
+function updateUI(user){
+  if (!dom.profileTitle) return;
+  if (!user) {
+    dom.profileTitle.textContent = "Not signed in";
+    dom.memberBadge.textContent = "Member: free";
+    dom.memberBadge.classList.remove("badge--paid");
+    dom.memberBadge.classList.add("badge--free");
+    dom.verifyBox.classList.add("hidden");
+    dom.profileAvatar.src = DEFAULT_AVATAR;
     return;
   }
 
-  signedState.textContent = user.email || "Signed in";
-  profileAvatar.src = user.photoURL || DEFAULT_AVATAR;
+  dom.profileTitle.textContent = user.email || "Signed in";
+  dom.profileAvatar.src = user.photoURL || DEFAULT_AVATAR;
 
-  // Email verification badge
-  await user.reload().catch(()=>{});
-  verifyBadge.hidden = !!user.emailVerified;
+  if (user.emailVerified) {
+    dom.verifyBox.classList.add("hidden");
+  } else {
+    dom.verifyBox.classList.remove("hidden");
+  }
 
-  // Read membership tier (defaults to free)
-  try{
-    const userRef = F.doc(F.collection(db,"users"), user.uid);
-    const snap = await F.getDoc(userRef);
-    const tier = (snap.exists() && snap.data().tier) ? snap.data().tier : "free";
-    memberTier.textContent = tier;
-
+  // Read membership from Firestore
+  F.getDoc(F.doc(db, "users", user.uid)).then(snap => {
+    const tier = snap.exists() ? snap.data().memberTier || "free" : "free";
+    dom.memberBadge.textContent = `Member: ${tier}`;
     if (tier === "paid"){
-      memberTier.classList.remove("tier--free");
-      memberTier.classList.add("tier--paid");
-    }else{
-      memberTier.classList.remove("tier--paid");
-      memberTier.classList.add("tier--free");
+      dom.memberBadge.classList.remove("badge--free");
+      dom.memberBadge.classList.add("badge--paid");
+    } else {
+      dom.memberBadge.classList.remove("badge--paid");
+      dom.memberBadge.classList.add("badge--free");
     }
-  }catch(_){}
-});
+  }).catch(()=>{});
+}
+
+function pretty(err){
+  const m = String(err && err.message || err || "").replace("Firebase: ", "");
+  return m || "Something broke. Try again.";
+}
