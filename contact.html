@@ -1,101 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact • OSU Day Traders</title>
-  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/style.css" />
 
   <style>
-    :root{
-      --scarlet:#c4122f; --ink:#111; --muted:#545454;
-      --surface:#f6f6f6; --panel:#ffffff;
-    }
-    body{background:var(--surface);}
-
-    /* Page wrap */
-    main{max-width:980px;margin:0 auto;padding:28px 16px 64px;}
-
-    /* Header */
-    .contact-head{text-align:center;margin:8px 0 24px;}
-    .contact-head h1{
-      margin:0; color:var(--ink); font-weight:900;
-      font-size:clamp(1.8rem,2.8vw,2.25rem);
-      letter-spacing:.2px;
-    }
-    .contact-head p{margin:.5rem auto 0;max-width:760px;color:var(--muted);line-height:1.55}
-
-    /* Card */
-    .contact-card{
-      background:var(--panel);
-      border-radius:18px;
-      box-shadow:0 14px 44px rgba(0,0,0,.10);
-      padding:22px 22px 26px;
+    :root {
+      --scarlet: #c4122f;
+      --ink: #111;
+      --muted: #555;
+      --surface: #f7f7f7;
+      --panel: #fff;
     }
 
-    /* Form grid: labels in a narrow column, fields fill */
-    .form-grid{
-      display:grid;
-      grid-template-columns: 150px 1fr;
-      column-gap:18px;
-      row-gap:14px;
-      align-items:center;
-    }
-    @media (max-width:720px){
-      .form-grid{grid-template-columns:1fr; row-gap:10px}
-      .form-grid .label{margin-top:12px}
+    body {
+      background: var(--surface);
     }
 
-    .label{
-      font-weight:800; color:var(--ink);
-      font-size:.95rem;
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 16px 80px;
     }
 
-    input, textarea{
-      width:100%;
-      border:1px solid #e8e8e8;
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:1rem;
-      background:#fff;
-      outline:none;
-      transition:border-color .15s, box-shadow .15s, background .15s;
+    .contact-head {
+      text-align: center;
+      margin-bottom: 24px;
     }
-    input:focus, textarea:focus{
-      border-color:#e0a1a8;
-      box-shadow:0 0 0 3px rgba(196,18,47,.12);
-      background:#fff;
-    }
-    textarea{min-height:140px; resize:vertical;}
 
-    /* Footer row inside form */
-    .form-actions{
-      grid-column:2;
-      display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:2px;
+    .contact-head h1 {
+      margin: 0;
+      color: var(--ink);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 2.6vw, 2.2rem);
     }
-    @media (max-width:720px){ .form-actions{grid-column:1} }
 
-    .btn{
-      background:var(--scarlet); color:#fff; border:0; cursor:pointer;
-      font-weight:900; font-size:.95rem;
-      padding:10px 18px; border-radius:999px;
-      box-shadow:0 10px 22px rgba(196,18,47,.28);
-      transition:transform .12s ease, filter .12s ease;
+    .contact-head p {
+      margin: 10px auto 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.5;
+      max-width: 600px;
     }
-    .btn:hover{filter:brightness(.96); transform:translateY(-1px);}
-    .hint{color:var(--muted); font-size:.92rem}
 
-    /* Success/error toast */
-    .toast{display:none;margin-top:6px;padding:10px 12px;border-radius:10px;font-weight:700;font-size:.92rem}
-    .toast.ok{display:block;background:#e9f7ee;color:#0b672b}
-    .toast.err{display:block;background:#fde9eb;color:#82111f}
+    .contact-card {
+      background: var(--panel);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 28px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #e0a1a8;
+      box-shadow: 0 0 0 3px rgba(196, 18, 47, 0.12);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .form-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .btn {
+      background: var(--scarlet);
+      color: #fff;
+      border: none;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 10px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(196, 18, 47, 0.25);
+      transition: transform 0.15s, filter 0.15s;
+    }
+
+    .btn:hover {
+      filter: brightness(0.96);
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .toast {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .toast.ok {
+      display: block;
+      background: #e9f7ee;
+      color: #0b672b;
+    }
+
+    .toast.err {
+      display: block;
+      background: #fde9eb;
+      color: #82111f;
+    }
+
+    footer {
+      text-align: center;
+      background: #111;
+      color: #fff;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
   </style>
 </head>
+
 <body>
-  <!-- Site header (kept consistent with other pages) -->
   <header class="site-header">
     <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
       <span>OSU Day Traders</span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
@@ -117,19 +177,25 @@
     </div>
 
     <section class="contact-card">
-      <form id="contactForm" class="form-grid" action="https://formspree.io/f/manayagg" method="POST">
-        <input type="hidden" name="_subject" value="New message from daytradersosu.com"/>
+      <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST">
+        <input type="hidden" name="_subject" value="New message from daytradersosu.com" />
 
-        <div class="label"><label for="name">Name</label></div>
-        <div><input id="name" name="name" type="text" placeholder="Your name" required></div>
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required />
+        </div>
 
-        <div class="label"><label for="email">Email</label></div>
-        <div><input id="email" name="email" type="email" placeholder="you@email.com" required></div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@email.com" required />
+        </div>
 
-        <div class="label"><label for="message">Message</label></div>
-        <div><textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea></div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea>
+        </div>
 
-        <div class="form-actions">
+        <div class="form-footer">
           <button class="btn" type="submit">Send</button>
           <span class="hint">We’ll reply to your email.</span>
         </div>
@@ -139,37 +205,36 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+  <footer>
+    &copy; <span id="year"></span> OSU Day Traders • Student Organization
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    const form  = document.getElementById('contactForm');
-    const toast = document.getElementById('formToast');
+    const form = document.getElementById("contactForm");
+    const toast = document.getElementById("formToast");
 
-    form.addEventListener('submit', async e => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = new FormData(form);
       try {
         const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: data
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: data,
         });
         if (res.ok) {
-          toast.className = 'toast ok';
-          toast.textContent = 'Thanks — your message was sent.';
+          toast.className = "toast ok";
+          toast.textContent = "Thanks — your message was sent.";
           form.reset();
-          // keep the toast visible below the form
         } else {
-          toast.className = 'toast err';
-          toast.textContent = 'Something went wrong. Try again.';
+          toast.className = "toast err";
+          toast.textContent = "Something went wrong. Try again soon.";
         }
       } catch {
-        toast.className = 'toast err';
-        toast.textContent = 'Network issue. Try again.';
+        toast.className = "toast err";
+        toast.textContent = "Network issue. Try again.";
       }
     });
   </script>
