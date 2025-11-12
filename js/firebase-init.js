@@ -1,15 +1,11 @@
 // js/firebase-init.js
-// OSU Day Traders — Firebase bootstrap (Auth + Firestore, no Storage).
-// - Loads CDN modules
-// - Initializes app/auth/db
-// - Sets browserLocalPersistence
-// - Exposes globals on window AND named ES exports
+// Firebase init (Auth + Firestore only). Spark-plan safe, no Storage API used.
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-import * as authSDK      from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-import * as fsSDK        from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+import * as _auth       from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import * as _firestore  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
-// ---- Config (your values) ----
+// Your config (from you)
 const firebaseConfig = {
   apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
   authDomain: "osu-daytraders.firebaseapp.com",
@@ -20,28 +16,19 @@ const firebaseConfig = {
   measurementId: "G-RXTL84LM0T"
 };
 
-// ---- Init ----
+// Init
 const app  = initializeApp(firebaseConfig);
-const auth = authSDK.getAuth(app);
-const db   = fsSDK.getFirestore(app);
+const auth = _auth.getAuth(app);
+const db   = _firestore.getFirestore(app);
 
-// Keep users signed in locally
-authSDK.setPersistence(auth, authSDK.browserLocalPersistence)
-  .catch(err => console.error("[Firebase] Persistence error:", err));
+// Persist locally
+_auth.setPersistence(auth, _auth.browserLocalPersistence).catch(()=>{});
 
-// Optional helpers (handy, doesn’t cost you anything)
-export const usersCol = fsSDK.collection(db, "users");
-export const userDoc  = (uid) => fsSDK.doc(db, "users", uid);
-
-// ---- Dual exposure: window + ES exports ----
-window.app  = app;
+// Expose
+window.app = app;
 window.auth = auth;
-window.db   = db;
-window.firebaseAuthExports = authSDK;
-window.firebaseFirestoreExports = fsSDK;
+window.db = db;
+window.firebaseAuthExports = _auth;
+window.firebaseFirestoreExports = _firestore;
 
-export { app, auth, db, authSDK, fsSDK };
-
-// Sanity ping
-console.log("%c[Firebase] Initialized (Auth + Firestore, Spark plan OK)",
-            "color:#bb0000;font-weight:900");
+console.log("%cFirebase initialized","color:#bb0000;font-weight:900");
