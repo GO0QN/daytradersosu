@@ -59,3 +59,28 @@
         <div class="block">
           <h3>Your profile</h3>
           <div id="profile" class="profile" hidden>
+            <img id="avatar" class="avatar" alt="">
+            <div class="info">
+              <div id="name" class="name"></div>
+              <div id="emailTxt" class="email"></div>
+              <div id="membershipPill" class="pill">Member: free</div>
+            </div>
+            <div class="btn-row top8">
+              <a class="btn btn-ghost" href="resources.html">Go to Resources</a>
+              <button id="signout-btn" class="btn btn-outline" type="button">Sign out</button>
+            </div>
+          </div>
+          <p id="profile-empty" class="muted">Sign in to see your profile.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="year"></span> OSU Day Traders</p></footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+
+  <!-- Firebase + logic -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
