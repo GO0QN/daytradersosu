@@ -5,53 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Account • OSU Day Traders</title>
 
-  <!-- Site styles -->
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/auth.css"/>
+  <link rel="icon" href="assets/icons/favicon.ico"/>
 
-  <!-- Account-page-only fix: match the site scarlet -->
   <style>
-    .site-header{ background-color:#c4122f !important; }
-    body{ background:#f7f7f8; }
-    .wrap{ max-width:1100px; margin:0 auto; padding:1.6rem 1rem 3rem; }
-    .grid-2{ display:grid; gap:1rem; grid-template-columns:1fr 1fr; align-items:start; }
-    @media (max-width:900px){ .grid-2{ grid-template-columns:1fr; } }
-
-    .card{
-      background:#fff; border:1px solid #eee; border-radius:20px;
-      padding:clamp(1rem,2vw,1.25rem); box-shadow:0 16px 40px rgba(0,0,0,.08);
-    }
-    .card h3{ margin:.15rem 0 .6rem; font-size:1.15rem; }
-    .muted{ color:#666; font-size:.95rem; }
-
-    .auth-form{ display:grid; gap:.8rem; }
-    .auth-form label{ font-weight:700; font-size:.9rem; color:#222; display:grid; gap:.3rem; }
-    .auth-form input{ width:100%; padding:.75rem; border:1px solid #ddd; border-radius:10px; }
-
-    .form-actions{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.25rem; }
-    .btn{ display:inline-block; text-decoration:none; font-weight:900; padding:.72rem 1rem; border-radius:999px; border:1px solid #111; background:#111; color:#fff; cursor:pointer; }
-    .btn--secondary{ background:#fff; color:#111; border:1px solid #ddd; }
-    .btn--scarlet{ background:#bb0000; border-color:#bb0000; color:#fff; }
-
-    .google-signin{
-      display:flex; align-items:center; gap:.5rem; justify-content:center;
-      border:1px solid #ddd; border-radius:999px; background:#fff;
-      padding:.65rem 1rem; font-weight:800; cursor:pointer;
-    }
-    .google-signin img{ width:18px; height:18px; }
-
-    .profile{ display:grid; gap:.6rem; justify-items:center; text-align:center; }
-    .avatar{
-      width:84px; height:84px; border-radius:999px; background:#f3f3f3;
-      border:2px solid #eee; box-shadow:0 6px 16px rgba(0,0,0,.06);
-      background-size:cover; background-position:center;
-    }
-
-    .upload-preview{ display:flex; align-items:center; gap:.7rem; margin:.4rem 0; }
-    .upload-preview img{
-      width:64px; height:64px; border-radius:50%; object-fit:cover; border:2px solid #eee;
-      box-shadow:0 4px 10px rgba(0,0,0,.1);
-    }
+    /* force the correct scarlet header in case anything overrides */
+    .site-header{ background: var(--scarlet) !important; }
   </style>
 </head>
 <body>
@@ -61,6 +21,7 @@
       <span>OSU Day Traders</span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
       <ul id="navMenu">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -76,73 +37,85 @@
   <main class="wrap section">
     <h1>Account</h1>
     <p class="muted">Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.</p>
-    
-    <div class="grid-2">
+
+    <div class="grid grid-2">
       <!-- Create account -->
       <section class="card">
         <h3>Create account</h3>
-        <button class="google-signin" id="signUpGoogle">
-          <img src="assets/icons/google.svg" alt=""/>
-          Continue with Google
+        <button id="signUpGoogle" class="google-signin">
+          <img src="assets/icons/google.svg" alt=""/> Continue with Google
         </button>
-        <p class="muted" style="margin:.3rem 0;">or</p>
+        <p class="or">or</p>
 
-        <form class="auth-form" id="createAccountForm" enctype="multipart/form-data">
-          <label>Email
-            <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required/>
-          </label>
-          <label>Password
-            <input id="password" type="password" placeholder="********" autocomplete="new-password" required/>
-          </label>
+        <form id="createAccountForm" class="auth-form">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@email.com" required/>
 
-          <label>Upload profile picture
-            <div class="upload-preview">
-              <img id="previewImg" src="images/defaultprofile.png" alt="Preview"/>
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="********" minlength="6" required/>
+
+          <div class="upload">
+            <label>Upload profile picture</label>
+            <div class="upload-row">
+              <img id="previewImg" class="avatar-preview" src="images/defaultprofile.png" alt="Preview"/>
               <input id="avatarInput" type="file" accept="image/*"/>
             </div>
-          </label>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn--scarlet" id="createAccountBtn">Create account</button>
+            <p class="form-note">Optional. Preview only. Uploads are disabled until Storage is enabled.</p>
           </div>
+
+          <button id="createAccountBtn" class="btn btn--primary" type="submit">Create account</button>
+          <p id="signupMsg" class="form-note"></p>
         </form>
       </section>
 
       <!-- Log in -->
       <section class="card">
         <h3>Log into existing account</h3>
-
-        <!-- Added Google sign-in here too -->
-        <button class="google-signin" id="loginGoogle">
-          <img src="assets/icons/google.svg" alt=""/>
-          Continue with Google
+        <button id="loginGoogle" class="google-signin">
+          <img src="assets/icons/google.svg" alt=""/> Continue with Google
         </button>
-        <p class="muted" style="margin:.3rem 0;">or</p>
+        <p class="or">or</p>
 
-        <form class="auth-form" id="loginForm">
-          <label>Email
-            <input id="loginEmail" type="email" placeholder="you@email.com" autocomplete="email" required/>
-          </label>
-          <label>Password
-            <input id="loginPassword" type="password" placeholder="********" autocomplete="current-password" required/>
-          </label>
+        <form id="loginForm" class="auth-form">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" placeholder="you@email.com" required/>
+
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" placeholder="********" required/>
+
           <div class="form-actions">
-            <button type="submit" class="btn" id="loginBtn">Log in</button>
-            <button type="button" class="btn btn--secondary" id="resetBtn">Forgot password</button>
+            <button id="loginBtn" class="btn btn--dark" type="submit">Log in</button>
+            <button id="resetBtn" class="btn btn--outline" type="button">Forgot password</button>
           </div>
+          <p id="loginMsg" class="form-note"></p>
         </form>
       </section>
     </div>
 
-    <!-- Profile -->
-    <section class="card" style="margin-top:1rem;">
+    <!-- Profile card -->
+    <section class="card profile-card">
       <h3>Your profile</h3>
       <div class="profile">
-        <div class="avatar" id="profileAvatar" style="background-image:url('images/defaultprofile.png');"></div>
-        <p><strong id="profileName">Not signed in</strong></p>
-        <p class="muted" id="profileTier">Member: free</p>
-        <a href="resources.html" class="link">Go to Resources</a>
-        <button class="btn btn--secondary" id="signOutBtn" type="button">Sign out</button>
+        <div id="profileAvatar" class="avatar" style="background-image:url('images/defaultprofile.png')"></div>
+        <div class="profile-body">
+          <div class="profile-row">
+            <strong id="profileName">Not signed in</strong>
+            <span id="profileTier"><span class="member-badge">Member: free</span></span>
+          </div>
+
+          <div class="profile-edit">
+            <label for="displayName">Change display name</label>
+            <input id="displayName" type="text" placeholder="Your name"/>
+            <button id="saveNameBtn" class="btn btn--light" type="button">Save name</button>
+          </div>
+
+          <a class="link" href="resources.html">Go to Resources</a>
+          <div class="profile-actions">
+            <button id="resendVerifyBtn" class="btn btn--outline" type="button">Resend verification email</button>
+            <button id="signOutBtn" class="btn btn--light" type="button">Sign out</button>
+          </div>
+          <p id="profileMsg" class="form-note"></p>
+        </div>
       </div>
     </section>
   </main>
@@ -151,32 +124,9 @@
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <!-- Your scripts -->
-  <script src="js/main.js"></script>
-  <script src="js/firebase-init.js"></script>
+  <!-- Firebase init (loads SDK + config) then auth wiring -->
+  <script type="module" src="js/firebase-init.js"></script>
   <script src="js/auth.js"></script>
-
-  <!-- Tiny helper for avatar preview; backend should replace with real upload -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const avatarInput = document.getElementById('avatarInput');
-    const previewImg = document.getElementById('previewImg');
-    avatarInput?.addEventListener('change', (e)=>{
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => { previewImg.src = ev.target.result; };
-      reader.readAsDataURL(file);
-    });
-
-    // Data-action hooks if your auth.js prefers delegation
-    document.getElementById('signUpGoogle')?.setAttribute('data-action','signup-google');
-    document.getElementById('loginGoogle')?.setAttribute('data-action','login-google');
-    document.getElementById('createAccountBtn')?.setAttribute('data-action','signup-email');
-    document.getElementById('loginBtn')?.setAttribute('data-action','login-email');
-    document.getElementById('resetBtn')?.setAttribute('data-action','password-reset');
-    document.getElementById('signOutBtn')?.setAttribute('data-action','signout');
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
