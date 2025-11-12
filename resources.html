@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -9,50 +8,75 @@
 </head>
 <body>
 <header class="site-header">
-<a class="brand" href="index.html">
-<img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
-<span>OSU Day Traders</span>
-</a>
-<nav aria-label="Main navigation" class="site-nav">
-<button aria-controls="navMenu" aria-expanded="false" class="nav-toggle">☰</button>
-<ul id="navMenu">
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="events.html">Events</a></li>
-<li><a class="active" href="resources.html">Resources</a></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="applications.html">Applications</a></li></ul>
-</nav>
+  <a class="brand" href="index.html">
+    <img alt="OSU Day Traders Logo" src="assets/images/osu-daytraders-logo.png"/>
+    <span>OSU Day Traders</span>
+  </a>
+  <nav aria-label="Main navigation" class="site-nav">
+    <button aria-controls="navMenu" aria-expanded="false" class="nav-toggle">☰</button>
+    <ul id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a class="active" href="resources.html">Resources</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="applications.html">Applications</a></li>
+      <li><button id="logout-btn" class="btn" style="background:none;border:none;color:white;font-weight:700;cursor:pointer;">Logout</button></li>
+    </ul>
+  </nav>
 </header>
+
 <main class="content">
-<h1>Resources</h1>
-<section id="playbooks">
-<h2>Trading Playbooks</h2>
-<ul class="cards cards--2">
-<li class="card"><h3>Opening Range Breakout</h3><p>Context, criteria, entry/exit, risk, review checklist.</p></li>
-<li class="card"><h3>VWAP Reclaim</h3><p>Using VWAP as dynamic support/resistance with confluence.</p></li>
-</ul>
-</section>
-<section>
-<h2>Tools</h2>
-<ul class="checklist">
-<li>Charting: TradingView / Thinkorswim</li>
-<li>Paper Trading: Webull / Tastyworks</li>
-<li>Journal: Google Sheets / Notion templates</li>
-</ul>
-</section>
-<section>
-<h2>Beginner Guides</h2>
-<ol>
-<li>Set up a paper account and learn order types.</li>
-<li>Create a simple risk plan (max daily loss, max position size).</li>
-<li>Pick one setup; gather 20 screenshots before risking real money.</li>
-</ol>
-</section>
+  <h1>Resources</h1>
+
+  <section id="free-resources">
+    <h2>Open Materials</h2>
+    <ul class="cards cards--2">
+      <li class="card"><h3>Trading Playbooks</h3><p>Access our foundational strategies, including Opening Range Breakout and VWAP Reclaim.</p></li>
+      <li class="card"><h3>Tools List</h3><p>Charting: TradingView / Thinkorswim<br>Paper Trading: Webull / Tastyworks<br>Journal: Notion templates</p></li>
+    </ul>
+  </section>
+
+  <!-- PAID SECTION -->
+  <section id="premium" class="premium-section" style="margin-top:2rem;">
+    <h2>Exclusive OSU Course: Day Trading Fundamentals</h2>
+    <p>This section is available only to verified <strong>@osu.edu</strong> members with an active subscription.</p>
+
+    <div id="locked-content">
+      <div class="locked-overlay" style="text-align:center;padding:2rem;border:2px dashed #bbb;border-radius:12px;background:#f9f9f9;">
+        <p style="font-size:1.1rem;">🔒 This content is locked.</p>
+        <p style="color:#555;">OSU students can subscribe below to unlock the full interactive course.</p>
+        <button id="subscribe-btn" class="btn btn--light" style="margin-top:1rem;">Subscribe with Stripe</button>
+      </div>
+    </div>
+
+    <!-- Once unlocked, replace above with the course -->
+    <div id="unlocked-content" style="display:none;">
+      <h3>Day 1: Market Foundations</h3>
+      <p>Learn how markets move, core terminology, and build your first trading plan.</p>
+
+      <video width="100%" controls style="border-radius:12px;">
+        <source src="assets/videos/day1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <h4>Interactive Quiz</h4>
+      <div id="quiz"></div>
+
+      <h4>Notes & Downloads</h4>
+      <ul>
+        <li><a href="#">Printable trading journal</a></li>
+        <li><a href="#">Checklist template</a></li>
+      </ul>
+    </div>
+  </section>
 </main>
+
 <footer class="site-footer">
-<p>© 2025 OSU Day Traders</p>
+  <p>© 2025 OSU Day Traders</p>
 </footer>
+
 <script src="js/main.js"></script>
+<script type="module" src="js/paywall.js"></script>
 </body>
 </html>
