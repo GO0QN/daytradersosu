@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resources • OSU Day Traders</title>
 
-  <!-- Global site styles (keep this first) -->
+  <!-- Global first -->
   <link rel="stylesheet" href="css/style.css">
-  <!-- Page-specific styles -->
+  <!-- Page-specific -->
   <link rel="stylesheet" href="css/resources.css">
 
-  <!-- Firebase/logic you already had -->
+  <!-- Your JS as before -->
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
-  <!-- Header (unchanged: use the same markup you use on other pages) -->
+  <!-- Header: same structure as other pages -->
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="index.html">
@@ -33,7 +33,7 @@
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- HERO (this is what went missing on your site) -->
   <section class="hero hero--resources">
     <div class="container hero__inner">
       <div class="hero__copy">
@@ -42,10 +42,9 @@
 
         <div class="hero__cta">
           <a class="btn btn--solid" href="accounts.html">Sign in</a>
-          <!-- Removed “Preview the course” per your request -->
         </div>
 
-        <!-- Video trigger (kept — the thing you liked) -->
+        <!-- video trigger preserved -->
         <a class="play-pulse" href="#course-walkthrough" aria-label="Course walkthrough video">
           <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
             <circle cx="32" cy="32" r="31" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -54,10 +53,8 @@
         </a>
       </div>
 
-      <!-- Subtle candlestick animation on the right -->
-      <div class="hero__viz">
-        <div class="candles" aria-hidden="true">
-          <!-- five bars, different heights; CSS animates them -->
+      <div class="hero__viz" aria-hidden="true">
+        <div class="candles">
           <span style="--h:42%"></span>
           <span style="--h:28%"></span>
           <span style="--h:55%"></span>
@@ -66,8 +63,6 @@
         </div>
       </div>
     </div>
-
-    <!-- soft overlay to prevent the “white line” seam below -->
     <div class="hero__fade"></div>
   </section>
 
@@ -98,7 +93,7 @@
     </div>
   </section>
 
-  <!-- Members-only section (locked) -->
+  <!-- Members area (locked) -->
   <section class="section">
     <div class="container">
       <div class="members-locked">
@@ -110,9 +105,9 @@
         </div>
         <ul class="members-locked__list">
           <li>Day 1: Market Foundations</li>
-          <li>Day 2: Setups & Invalidations</li>
-          <li>Day 3: Risk & Sizing</li>
-          <li>Day 4: Live Lab & Review</li>
+          <li>Day 2: Setups &amp; Invalidations</li>
+          <li>Day 3: Risk &amp; Sizing</li>
+          <li>Day 4: Live Lab &amp; Review</li>
         </ul>
       </div>
     </div>
