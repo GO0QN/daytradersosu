@@ -1,207 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About • OSU Day Traders</title>
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Account • OSU Day Traders</title>
+  <!-- Site base styles -->
   <link rel="stylesheet" href="css/style.css"/>
-  <link rel="icon" href="assets/icons/favicon.ico"/>
-
-  <style>
-    :root{
-      --scarlet:#c4122f; --ink:#121212; --muted:#646464; --panel:#fff; --surface:#f6f6f6;
-    }
-    body{background:var(--surface)}
-    .page{max-width:1100px;margin:0 auto;padding:1.6rem 1rem 3rem}
-
-    .lede h1{margin:.2rem 0 .6rem 0;font-weight:1000;color:var(--ink);font-size:clamp(1.9rem,2.9vw,2.2rem)}
-    .lede p{margin:.25rem 0 1.15rem 0;color:#3f3f3f;max-width:860px}
-    .lede h2{margin:1.4rem 0 .7rem 0;color:var(--ink);font-size:1.25rem;font-weight:1000}
-
-    .grid{display:grid;gap:1rem}
-    .grid-3{grid-template-columns:repeat(3,1fr)}
-    @media (max-width:900px){ .grid-3{grid-template-columns:1fr} }
-
-    .card{
-      background:var(--panel); border:1px solid #eee; border-radius:20px;
-      padding:clamp(1rem,2vw,1.25rem);
-      box-shadow:0 16px 40px rgba(0,0,0,.08);
-      transition:transform .14s ease, box-shadow .14s ease;
-    }
-    .card:hover{ transform:translateY(-2px); box-shadow:0 24px 56px rgba(0,0,0,.12) }
-
-    .eyebrow{display:inline-block;background:var(--scarlet);color:#fff;font-weight:900;font-size:.74rem;padding:.28rem .55rem;border-radius:999px}
-
-    .role{display:grid;grid-template-columns:72px 1fr;gap:.9rem;align-items:start}
-    .avatar{width:72px;height:72px;border-radius:999px;object-fit:cover;border:2px solid #f0f0f0;box-shadow:0 6px 16px rgba(0,0,0,.06);background:#fafafa}
-    .avatar--initials{display:grid;place-items:center;font-weight:900;color:#fff;background:var(--scarlet)}
-
-    .role h3{margin:.1rem 0 .25rem 0;color:var(--ink);font-size:1.05rem}
-    .role p{margin:0;color:#474747;line-height:1.45}
-
-    /* Featured leadership (President/VP) bigger cards */
-    .featured{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.5rem 0 1rem}
-    @media (max-width:900px){.featured{grid-template-columns:1fr}}
-    .featured .role{grid-template-columns:88px 1fr}
-    .featured .avatar{width:88px;height:88px}
-    .featured h3{font-size:1.15rem}
-
-    /* Advisor block full width */
-    .advisor{display:grid;grid-template-columns:110px 1fr;gap:1rem;align-items:center}
-    .advisor .avatar{width:96px;height:96px}
-    .advisor h3{margin:.15rem 0 .2rem 0;font-size:1.18rem}
-    .advisor .meta{color:#666;font-size:.95rem}
-    .advisor .desc{margin:.35rem 0 0 0;color:#3f3f3f}
-    @media (max-width:720px){ .advisor{grid-template-columns:84px 1fr} .advisor .avatar{width:84px;height:84px} }
-  </style>
+  <!-- Page styles -->
+  <link rel="stylesheet" href="css/auth.css"/>
 </head>
 <body>
+  <!-- Header (matches your site) -->
   <header class="site-header">
-    <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
-      <span>OSU Day Traders</span>
-    </a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
-      <ul id="navMenu">
-        <li><a href="index.html">Home</a></li>
-        <li><a class="active" href="about.html">About</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="resources.html">Resources</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="applications.html">Applications</a></li>
-      </ul>
-    </nav>
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders" class="brand-logo"/>
+        <span class="brand-name">OSU Day Traders</span>
+      </a>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a class="active" href="auth.html">Account</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="applications.html">Applications</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main class="page">
-    <section class="lede">
-      <h1>About OSU Day Traders</h1>
-      <p>We’re a student-led community focused on building consistent, disciplined trading processes. Members get hands-on practice, structured playbooks, and accountability partners.</p>
+  <!-- Content -->
+  <main class="auth-wrap">
+    <section class="card">
+      <div class="card-head">
+        <h1>Account</h1>
+        <p class="muted">
+          Anyone can create an account. Only <strong>@osu.edu</strong> emails can purchase the paid course.
+        </p>
+      </div>
 
-      <h2>What We Do</h2>
-      <ul style="margin:.25rem 0 0 0;padding:0 0 0 1.1rem;display:grid;gap:.3rem">
-        <li>Daily watchlists, levels, and reviews</li>
-        <li>Risk management and journaling</li>
-        <li>Guest speakers and workshops</li>
-        <li>Collaborative research</li>
-      </ul>
-    </section>
+      <div class="grid-2">
+        <!-- Left: sign in -->
+        <div class="panel">
+          <h3>Create account / Sign in</h3>
 
-    <!-- Advisor -->
-    <section class="card" style="margin-top:1.1rem">
-      <div class="advisor">
-        <img class="avatar" src="assets/images/public-relations.jpg" alt="Faculty Advisor"/>
-        <div>
-          <span class="eyebrow">Faculty Advisor</span>
-          <h3>Dr. [Advisor Name]</h3>
-          <div class="meta">Department of [Discipline], The Ohio State University</div>
-          <p class="desc">Guides the club’s academic alignment and ethics, supports programming, and helps coordinate university resources. Provides feedback on speaker topics and process standards.</p>
+          <button id="google-btn" class="btn btn-google">
+            <span class="gicon"></span> Continue with Google
+          </button>
+
+          <div class="separator"><span>or</span></div>
+
+          <form class="form" onsubmit="return false">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required/>
+
+            <label for="password">Password</label>
+            <input id="password" type="password" minlength="6" autocomplete="current-password" required/>
+
+            <div class="row">
+              <button id="signup-btn" type="button" class="btn btn-primary">Create account</button>
+              <button id="login-btn"  type="button" class="btn btn-outline">Log in</button>
+            </div>
+          </form>
+
+          <p id="status" class="status" role="status"></p>
+        </div>
+
+        <!-- Right: profile -->
+        <div class="panel">
+          <h3>Your profile</h3>
+          <div id="profile" class="profile" hidden>
+            <img id="avatar" class="avatar" alt=""/>
+            <div class="info">
+              <div id="name" class="name"></div>
+              <div id="emailTxt" class="email"></div>
+              <div id="membershipPill" class="pill pill-free">Member: free</div>
+            </div>
+            <div class="row">
+              <a class="btn btn-ghost" href="resources.html">Go to Resources</a>
+              <button id="signout-btn" type="button" class="btn">Sign out</button>
+            </div>
+          </div>
+          <p id="profile-empty" class="muted">Sign in to see your profile.</p>
         </div>
       </div>
     </section>
-
-    <!-- Featured leadership -->
-    <h2 style="margin-top:1.3rem">Leadership</h2>
-    <section class="featured">
-      <article class="card">
-        <div class="role">
-          <img class="avatar" src="assets/images/president.jpg" alt="President — Steven Wang"/>
-          <div>
-            <span class="eyebrow">President</span>
-            <h3>Steven Wang</h3>
-            <p>Leads strategy, partnerships, and weekly programming.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <div class="role">
-          <img class="avatar" src="assets/images/vice-president.jpg" alt="Vice President — Maxim Towers"/>
-          <div>
-            <span class="eyebrow">Vice President</span>
-            <h3>Maxim Towers</h3>
-            <p>Coordinates events and supports the president in decisions.</p>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- Rest of the team -->
-    <section class="grid grid-3">
-      <article class="card">
-        <div class="role">
-          <img class="avatar" src="assets/images/secretary.jpg" alt="Secretary — Vivian Wang"/>
-          <div>
-            <span class="eyebrow">Secretary</span>
-            <h3>Vivian Wang</h3>
-            <p>Handles communications, notes, schedules, and records.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="role">
-          <img class="avatar" src="assets/images/treasurer.jpg" alt="Treasurer — Anastas Raykov"/>
-          <div>
-            <span class="eyebrow">Treasurer</span>
-            <h3>Anastas Raykov</h3>
-            <p>Manages budgeting, reimbursements, and fundraising.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="role">
-          <span class="avatar avatar--initials" style="width:72px;height:72px;border-radius:999px" title="Jenny Zhu">JZ</span>
-          <div>
-            <span class="eyebrow">Creative Director</span>
-            <h3>Jenny Zhu</h3>
-            <p>Oversees design and media for the club.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="role">
-          <span class="avatar avatar--initials" style="width:72px;height:72px;border-radius:999px" title="Brian Liao">BL</span>
-          <div>
-            <span class="eyebrow">Public Relations</span>
-            <h3>Brian Liao</h3>
-            <p>Leads social channels and external communications.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="role">
-          <span class="avatar avatar--initials" style="width:72px;height:72px;border-radius:999px" title="Faraz Ayub">FA</span>
-          <div>
-            <span class="eyebrow">Trading Committee Lead</span>
-            <h3>Faraz Ayub</h3>
-            <p>Teaches trading concepts, standards, and review methods.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="role">
-          <img class="avatar" src="assets/images/trading-committee.jpg" alt="Board of Traders"/>
-          <div>
-            <span class="eyebrow">Board of Traders</span>
-            <h3>Committee</h3>
-            <p>Sets process standards, audits journals, and mentors members.</p>
-          </div>
-        </div>
-      </article>
-    </section>
   </main>
 
+  <!-- Footer (matches your site) -->
   <footer class="site-footer">
-    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
+    <p>© <span id="year"></span> OSU Day Traders</p>
   </footer>
-
-  <script src="js/main.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <!-- Firebase & logic -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
