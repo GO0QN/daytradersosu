@@ -6,128 +6,112 @@
   <title>Contact • OSU Day Traders</title>
   <link rel="stylesheet" href="css/style.css"/>
 
-  <!-- Page-local polish only for Contact -->
+  <!-- Page-local tweaks: compact, brand-consistent -->
   <style>
     :root{
-      --scarlet:#c4122f; /* primary scarlet (matches navbar) */
+      --scarlet:#c4122f;
       --ink:#121212;
-      --muted:#5b5b5b;
+      --muted:#6b6b6b;
       --panel:#ffffff;
       --surface:#f6f6f6;
-      --ring:#e6e6e6;
+      --ring:#e7e7e7;
     }
-
     body{ background:var(--surface); }
 
-    /* Section shell + spacing under fixed/red bar */
-    .contact-wrap{
-      max-width:1100px;
+    /* Tighter wrapper than other pages so the form doesn’t sprawl */
+    .wrap{
+      max-width:860px;             /* was 1100 — compact */
       margin:0 auto;
-      padding:clamp(18px,3vw,28px) 16px 40px;
+      padding:18px 14px 36px;      /* smaller paddings */
     }
 
-    /* Title block that didn't sit right before */
-    .contact-hero{
-      margin: clamp(18px,4vw,34px) auto 18px;
+    .lede{
+      margin:14px 0 12px;
     }
-    .contact-hero h1{
-      margin:0 0 .4rem 0;
+    .lede h1{
+      margin:0 0 6px 0;
       font-weight:900;
       letter-spacing:-.01em;
-      color:#0f0f0f;
-      font-size: clamp(1.6rem, 3.3vw, 2.2rem);
+      color:#111;
+      font-size:clamp(1.4rem,2.6vw,1.8rem); /* smaller title */
+      line-height:1.15;
     }
-    .contact-hero p{
-      margin:.25rem 0 0;
-      color:#444;
-      font-size:clamp(.98rem,1.2vw,1.05rem);
-      line-height:1.55;
-      max-width:62ch;
+    .lede p{
+      margin:0;
+      color:#454545;
+      font-size:.98rem;
+      line-height:1.45;
+      max-width:60ch;
     }
 
-    /* Card */
-    .contact-card{
+    .card{
       background:var(--panel);
       border:1px solid #eee;
-      border-radius:20px;
-      box-shadow:
-        0 20px 40px rgba(0,0,0,.06),
-        0 2px 0 rgba(0,0,0,.02) inset;
-      padding:clamp(16px,2.6vw,22px);
-      margin:18px 0 40px;
+      border-radius:16px;                  /* smaller radius */
+      box-shadow:0 10px 28px rgba(0,0,0,.07);
+      padding:16px;                        /* tighter padding */
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:1.05rem;
+      font-weight:900;
+      color:#1a1a1a;
     }
 
-    .field{margin:16px 0;}
+    .grid{
+      display:grid;
+      gap:12px;                            /* tighter gap */
+    }
+
     .label{
       display:block;
+      font-size:.92rem;
       font-weight:800;
-      margin-bottom:8px;
-      color:#1b1b1b;
+      color:#222;
+      margin:2px 0 6px;
     }
 
-    .input, .textarea{
+    .input,.textarea{
       width:100%;
       border:1px solid var(--ring);
       background:#fff;
-      border-radius:14px;
-      padding:14px 16px;
-      font-size:1rem;
-      line-height:1.35;
+      border-radius:12px;
+      padding:11px 12px;                   /* compact control height */
+      font-size:.98rem;
+      line-height:1.3;
       outline:none;
-      transition:border-color .15s ease, box-shadow .15s ease;
+      transition:border-color .15s ease, box-shadow .15s ease, transform .02s;
     }
-    .textarea{min-height:160px; resize:vertical;}
-
-    .input:focus, .textarea:focus{
-      border-color:#e7a3ad;
-      box-shadow:0 0 0 6px rgba(196,18,47,.08);
+    .input:focus,.textarea:focus{
+      border-color:#edc7cd;
+      box-shadow:0 0 0 5px rgba(196,18,47,.08);
     }
+    .textarea{ min-height:130px; resize:vertical; }
 
-    /* Send row */
-    .send-row{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-top:20px;
-      flex-wrap:wrap;
+    .row{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      margin-top:6px;
     }
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border:none;
-      cursor:pointer;
-      font-weight:900;
-      border-radius:999px;
-      padding:14px 22px;
-      font-size:1rem;
-    }
-    .btn-primary{
-      color:#fff;
+      display:inline-flex; align-items:center; justify-content:center;
+      border:none; cursor:pointer;
+      font-weight:900; color:#fff;
       background:var(--scarlet);
-      box-shadow:0 10px 26px rgba(196,18,47,.28), 0 2px 0 rgba(0,0,0,.06) inset;
+      padding:10px 16px;                   /* compact button */
+      border-radius:999px;
+      box-shadow:0 6px 16px rgba(196,18,47,.25);
     }
-    .btn-primary:hover{ filter:brightness(.96); }
+    .btn:hover{ filter:brightness(.97); }
+    .hint{ color:var(--muted); font-size:.9rem; }
 
-    .hint{ color:#666; font-size:.95rem; }
-
-    /* Success/Fail toast */
-    .toast{
-      display:none;
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:12px;
-      font-weight:700;
-    }
-    .toast.ok{ display:block; background:#e7f7ec; color:#0b6b2b; }
-    .toast.err{ display:block; background:#fde8ea; color:#7d0f1c; }
-
-    /* Keep footer off the card */
-    .page-bottom-spacer{ height:10px; }
+    /* Success/error toast */
+    .toast{ display:none; margin-top:8px; padding:10px 12px; border-radius:10px; font-weight:700; font-size:.95rem; }
+    .toast.ok{ display:block; background:#e9f7ee; color:#0a6a2a; }
+    .toast.err{ display:block; background:#fde9eb; color:#7b0f1a; }
   </style>
 </head>
 <body>
-  <!-- Header (kept identical to other pages) -->
+  <!-- Header (unchanged) -->
   <header class="site-header">
     <a class="brand" href="index.html">
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
@@ -146,43 +130,40 @@
     </nav>
   </header>
 
-  <main class="contact-wrap">
-    <div class="contact-hero">
+  <main class="wrap">
+    <div class="lede">
       <h1>Contact</h1>
       <p>Questions about joining, speaking, partnering, or sponsoring OSU Day Traders? Drop a note below.</p>
     </div>
 
-    <section class="contact-card" aria-labelledby="contactFormTitle">
-      <h2 id="contactFormTitle" class="visually-hidden">Send a message</h2>
-      <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST">
-        <!-- Formspree recommends a subject field if you want custom subject lines -->
+    <section class="card" aria-labelledby="sendMsg">
+      <h2 id="sendMsg">Send a message</h2>
+      <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST" class="grid">
         <input type="hidden" name="_subject" value="New message from daytradersosu.com"/>
 
-        <div class="field">
+        <div>
           <label class="label" for="name">Name</label>
           <input class="input" id="name" name="name" type="text" placeholder="Your name" required>
         </div>
 
-        <div class="field">
+        <div>
           <label class="label" for="email">Email</label>
           <input class="input" id="email" name="email" type="email" placeholder="you@email.com" required>
         </div>
 
-        <div class="field">
+        <div>
           <label class="label" for="message">Message</label>
           <textarea class="textarea" id="message" name="message" placeholder="Tell us how we can help" required></textarea>
         </div>
 
-        <div class="send-row">
-          <button class="btn btn-primary" type="submit">Send</button>
+        <div class="row">
+          <button class="btn" type="submit">Send</button>
           <span class="hint">We’ll reply to your email.</span>
         </div>
 
         <div id="formToast" class="toast" role="status" aria-live="polite"></div>
       </form>
     </section>
-
-    <div class="page-bottom-spacer"></div>
   </main>
 
   <footer class="site-footer">
@@ -191,31 +172,26 @@
 
   <script src="js/main.js"></script>
   <script>
-    // footer year
+    // year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Progressive enhancement: AJAX submit to Formspree for inline success/fail
+    // AJAX send (Formspree)
     const form  = document.getElementById('contactForm');
     const toast = document.getElementById('formToast');
-
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       const data = new FormData(form);
       try{
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: data
-        });
+        const res = await fetch(form.action, { method:'POST', headers:{'Accept':'application/json'}, body:data });
         if(res.ok){
           toast.className = 'toast ok';
           toast.textContent = 'Thanks — your message was sent.';
           form.reset();
-        } else {
+        }else{
           toast.className = 'toast err';
-          toast.textContent = 'Something went wrong. Try again in a minute.';
+          toast.textContent = 'Something broke. Try again in a minute.';
         }
-      }catch(err){
+      }catch(_){
         toast.className = 'toast err';
         toast.textContent = 'Network error. Please try again.';
       }
