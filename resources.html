@@ -2,135 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resources • OSU Day Traders</title>
-  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Global site styles (keep this first) -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="css/resources.css">
+
+  <!-- Firebase/logic you already had -->
+  <script type="module" src="js/main.js"></script>
 </head>
 <body>
+  <!-- Header (unchanged: use the same markup you use on other pages) -->
   <header class="site-header">
-    <div class="container nav-wrap">
+    <div class="container nav">
       <a class="brand" href="index.html">
         <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders" />
-        <span>OSU Day Traders</span>
+        OSU Day Traders
       </a>
-      <nav class="site-nav">
+      <nav class="menu">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="events.html">Events</a>
         <a class="active" href="resources.html">Resources</a>
-        <a href="account.html">Account</a>
+        <a href="accounts.html">Account</a>
         <a href="contact.html">Contact</a>
         <a href="applications.html">Applications</a>
       </nav>
     </div>
   </header>
 
-  <main class="page">
-    <!-- Hero -->
-    <section class="hero red-gradient">
-      <div class="container hero-grid">
-        <div>
-          <h1 class="h1">Resources</h1>
-          <p class="lead">
-            Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an
-            <strong>@osu.edu</strong> email.
-          </p>
-          <div class="row gap-sm mt-md">
-            <a class="btn btn-primary" href="account.html">Sign in</a>
-          </div>
+  <!-- Hero -->
+  <section class="hero hero--resources">
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <h1 class="h1">Resources</h1>
+        <p>Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an <strong>@osu.edu</strong> email.</p>
+
+        <div class="hero__cta">
+          <a class="btn btn--solid" href="accounts.html">Sign in</a>
+          <!-- Removed “Preview the course” per your request -->
         </div>
 
-        <!-- Right: video card with subtle bars behind -->
-        <div class="video-wrap">
-          <!-- transparent bars behind video -->
-          <div class="market-bars subtle" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
-          </div>
+        <!-- Video trigger (kept — the thing you liked) -->
+        <a class="play-pulse" href="#course-walkthrough" aria-label="Course walkthrough video">
+          <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="none" stroke="currentColor" stroke-width="2"/>
+            <polygon points="26,20 48,32 26,44" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
 
-          <div class="video-card">
-            <video id="courseVideo" class="video"
-                   playsinline muted loop preload="metadata"
-                   poster="assets/images/resources-hero-poster.jpg">
-              <!-- Put your MP4 here -->
-              <source src="assets/video/course-walkthrough.mp4" type="video/mp4" />
-            </video>
-            <button id="playBtn" class="play-btn" aria-label="Play video">
-              <div class="pulse"></div>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"></path>
-              </svg>
-            </button>
-          </div>
+      <!-- Subtle candlestick animation on the right -->
+      <div class="hero__viz">
+        <div class="candles" aria-hidden="true">
+          <!-- five bars, different heights; CSS animates them -->
+          <span style="--h:42%"></span>
+          <span style="--h:28%"></span>
+          <span style="--h:55%"></span>
+          <span style="--h:34%"></span>
+          <span style="--h:68%"></span>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Free materials -->
-    <section id="previews" class="container mt-xl">
-      <h2 class="h3 mb-md">Free materials</h2>
+    <!-- soft overlay to prevent the “white line” seam below -->
+    <div class="hero__fade"></div>
+  </section>
 
-      <div class="cards-3 gap-lg">
-        <article class="card p-lg">
-          <span class="pill pill-red">Playbook</span>
-          <h3 class="h5 mt-sm">Opening Drive</h3>
-          <p class="muted">How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
-          <a class="btn btn-inline mt-sm" href="assets/free/opening-drive.pdf" target="_blank">Download</a>
+  <!-- Free materials -->
+  <section class="section">
+    <div class="container">
+      <h2 class="h2">Free materials</h2>
+
+      <div class="card-grid">
+        <article class="card">
+          <span class="pill pill--red">Playbook</span>
+          <h3 class="h3">Opening Drive</h3>
+          <p>How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
         </article>
 
-        <article class="card p-lg">
-          <span class="pill pill-purple">Template</span>
-          <h3 class="h5 mt-sm">Journal Starter</h3>
-          <p class="muted">Tags, KPIs, and weekly review prompts that don’t rot in Google Drive.</p>
-          <a class="btn btn-inline mt-sm" href="assets/free/journal-starter.pdf" target="_blank">Download</a>
+        <article class="card">
+          <span class="pill pill--purple">Template</span>
+          <h3 class="h3">Journal Starter</h3>
+          <p>Tags, KPIs, and weekly review prompts that don’t rot in your Drive.</p>
         </article>
 
-        <article class="card p-lg">
-          <span class="pill pill-blue">Checklist</span>
-          <h3 class="h5 mt-sm">Pre-Market Routine</h3>
-          <p class="muted">10-minute flow that won’t nuke your focus before the bell.</p>
-          <a class="btn btn-inline mt-sm" href="assets/free/premarket-routine.pdf" target="_blank">Download</a>
+        <article class="card">
+          <span class="pill pill--green">Checklist</span>
+          <h3 class="h3">Pre-Market Routine</h3>
+          <p>10-minute flow that keeps your focus before the bell.</p>
         </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Members area -->
-    <section class="container mt-xl">
-      <h2 class="h3 mb-md">OSU-only course: Day Trading Fundamentals</h2>
-
-      <div class="card p-xl row gap-lg items-center">
-        <div class="lock-icon" aria-hidden="true"></div>
-        <div class="grow">
-          <h3 class="h4 mb-sm">Members area</h3>
-          <p class="muted">Sign in with <strong>@osu.edu</strong> and subscribe to unlock all modules, quizzes, and notes.</p>
-          <ul class="bullets mt-sm">
-            <li>Day 1: Market Foundations</li>
-            <li>Day 2: Setups & Invalidations</li>
-            <li>Day 3: Risk & Sizing</li>
-            <li>Day 4: Live Lab & Review</li>
-          </ul>
+  <!-- Members-only section (locked) -->
+  <section class="section">
+    <div class="container">
+      <div class="members-locked">
+        <div class="members-locked__left">
+          <div class="lock-emoji" aria-hidden="true">🔒</div>
+          <h2 class="h2">OSU-only course: Day Trading Fundamentals</h2>
+          <p>Sign in with <strong>@osu.edu</strong> and subscribe to unlock all modules, quizzes, and notes.</p>
+          <a class="btn btn--outline" href="accounts.html">Subscribe</a>
         </div>
-        <div>
-          <a class="btn btn-primary" href="account.html">Subscribe</a>
-        </div>
+        <ul class="members-locked__list">
+          <li>Day 1: Market Foundations</li>
+          <li>Day 2: Setups & Invalidations</li>
+          <li>Day 3: Risk & Sizing</li>
+          <li>Day 4: Live Lab & Review</li>
+        </ul>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <footer class="site-footer">
-    <div class="container">&copy; 2025 OSU Day Traders</div>
+    <div class="container">© 2025 OSU Day Traders</div>
   </footer>
-
-  <script type="module" src="js/auth.js"></script>
-  <script>
-    // simple play/pause toggle
-    const v = document.getElementById('courseVideo');
-    const btn = document.getElementById('playBtn');
-    if (v && btn) {
-      btn.addEventListener('click', () => {
-        if (v.paused) { v.play(); btn.classList.add('playing'); }
-        else { v.pause(); btn.classList.remove('playing'); }
-      });
-    }
-  </script>
 </body>
 </html>
