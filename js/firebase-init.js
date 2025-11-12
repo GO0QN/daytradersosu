@@ -1,9 +1,10 @@
-// /js/firebase-init.js
+// Central Firebase init using YOUR config
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-export const firebaseConfig = {
+// Your config (the one you pasted)
+const firebaseConfig = {
   apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
   authDomain: "osu-daytraders.firebaseapp.com",
   projectId: "osu-daytraders",
@@ -15,5 +16,5 @@ export const firebaseConfig = {
 
 export const app  = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
 export const db   = getFirestore(app);
-export const googleProvider = new GoogleAuthProvider();
