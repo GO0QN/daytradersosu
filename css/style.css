@@ -19,7 +19,7 @@ body{
 /* ===== Header / Nav ===== */
 .site-header{
   display:flex;align-items:center;justify-content:space-between;
-  gap:1.25rem;padding:.9rem 25rem;background:var(--scarlet);color:var(--white);
+  gap:1.25rem;padding:.9rem 1.25rem;background:var(--scarlet);color:var(--white);
   position:sticky;top:0;z-index:20;
   border:0;box-shadow:none; /* avoid stray 1px lines on dark backgrounds */
 }
