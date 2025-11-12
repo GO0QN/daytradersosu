@@ -5,39 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Account • OSU Day Traders</title>
 
+  <!-- Site styles -->
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/auth.css"/>
 
+  <!-- Account-page-only fix: match the site scarlet -->
   <style>
-    body{background:#f7f7f8;}
-    .wrap{max-width:1100px;margin:0 auto;padding:1.6rem 1rem 3rem}
-    .grid-2{display:grid;gap:1rem;grid-template-columns:1fr 1fr}
-    @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+    .site-header{ background-color:#c4122f !important; }
+    body{ background:#f7f7f8; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:1.6rem 1rem 3rem; }
+    .grid-2{ display:grid; gap:1rem; grid-template-columns:1fr 1fr; align-items:start; }
+    @media (max-width:900px){ .grid-2{ grid-template-columns:1fr; } }
 
     .card{
-      background:#fff;border:1px solid #eee;border-radius:20px;
-      padding:clamp(1rem,2vw,1.25rem);
-      box-shadow:0 16px 40px rgba(0,0,0,.08);
+      background:#fff; border:1px solid #eee; border-radius:20px;
+      padding:clamp(1rem,2vw,1.25rem); box-shadow:0 16px 40px rgba(0,0,0,.08);
     }
-    .card h3{margin:.15rem 0 .6rem;font-size:1.15rem}
-    .muted{color:#666;font-size:.95rem}
-    .auth-form{display:grid;gap:.8rem}
-    .auth-form label{font-weight:700;font-size:.9rem;color:#222;display:grid;gap:.3rem}
-    .auth-form input{width:100%;padding:.75rem;border:1px solid #ddd;border-radius:10px}
-    .form-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem}
-    .btn{display:inline-block;text-decoration:none;font-weight:900;padding:.72rem 1rem;border-radius:999px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
-    .btn--secondary{background:#fff;color:#111;border:1px solid #ddd}
-    .google-signin{display:flex;align-items:center;gap:.5rem;justify-content:center;border:1px solid #ddd;border-radius:999px;background:#fff;padding:.65rem 1rem;font-weight:800;cursor:pointer}
-    .google-signin img{width:18px;height:18px}
-    .profile{display:grid;gap:.6rem;justify-items:center;text-align:center}
+    .card h3{ margin:.15rem 0 .6rem; font-size:1.15rem; }
+    .muted{ color:#666; font-size:.95rem; }
+
+    .auth-form{ display:grid; gap:.8rem; }
+    .auth-form label{ font-weight:700; font-size:.9rem; color:#222; display:grid; gap:.3rem; }
+    .auth-form input{ width:100%; padding:.75rem; border:1px solid #ddd; border-radius:10px; }
+
+    .form-actions{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.25rem; }
+    .btn{ display:inline-block; text-decoration:none; font-weight:900; padding:.72rem 1rem; border-radius:999px; border:1px solid #111; background:#111; color:#fff; cursor:pointer; }
+    .btn--secondary{ background:#fff; color:#111; border:1px solid #ddd; }
+    .btn--scarlet{ background:#bb0000; border-color:#bb0000; color:#fff; }
+
+    .google-signin{
+      display:flex; align-items:center; gap:.5rem; justify-content:center;
+      border:1px solid #ddd; border-radius:999px; background:#fff;
+      padding:.65rem 1rem; font-weight:800; cursor:pointer;
+    }
+    .google-signin img{ width:18px; height:18px; }
+
+    .profile{ display:grid; gap:.6rem; justify-items:center; text-align:center; }
     .avatar{
-      width:84px;height:84px;border-radius:999px;background:#f3f3f3;
-      border:2px solid #eee;box-shadow:0 6px 16px rgba(0,0,0,.06);
-      background-size:cover;background-position:center;
+      width:84px; height:84px; border-radius:999px; background:#f3f3f3;
+      border:2px solid #eee; box-shadow:0 6px 16px rgba(0,0,0,.06);
+      background-size:cover; background-position:center;
     }
-    .upload-preview{display:flex;align-items:center;gap:.7rem;margin:.4rem 0}
+
+    .upload-preview{ display:flex; align-items:center; gap:.7rem; margin:.4rem 0; }
     .upload-preview img{
-      width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #eee;
+      width:64px; height:64px; border-radius:50%; object-fit:cover; border:2px solid #eee;
       box-shadow:0 4px 10px rgba(0,0,0,.1);
     }
   </style>
@@ -48,8 +60,8 @@
       <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo"/>
       <span>OSU Day Traders</span>
     </a>
-    <nav class="site-nav">
-      <ul>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul id="navMenu">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="events.html">Events</a></li>
@@ -69,26 +81,29 @@
       <!-- Create account -->
       <section class="card">
         <h3>Create account</h3>
-        <button class="google-signin">
+        <button class="google-signin" id="signUpGoogle">
           <img src="assets/icons/google.svg" alt=""/>
           Continue with Google
         </button>
         <p class="muted" style="margin:.3rem 0;">or</p>
+
         <form class="auth-form" id="createAccountForm" enctype="multipart/form-data">
           <label>Email
-            <input id="email" type="email" placeholder="you@email.com" required/>
+            <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required/>
           </label>
           <label>Password
-            <input id="password" type="password" placeholder="********" required/>
+            <input id="password" type="password" placeholder="********" autocomplete="new-password" required/>
           </label>
+
           <label>Upload profile picture
             <div class="upload-preview">
-              <img id="previewImg" src="assets/images/default-avatar.png" alt="Preview"/>
+              <img id="previewImg" src="images/defaultprofile.png" alt="Preview"/>
               <input id="avatarInput" type="file" accept="image/*"/>
             </div>
           </label>
+
           <div class="form-actions">
-            <button type="submit" class="btn btn--primary">Create account</button>
+            <button type="submit" class="btn btn--scarlet" id="createAccountBtn">Create account</button>
           </div>
         </form>
       </section>
@@ -96,16 +111,24 @@
       <!-- Log in -->
       <section class="card">
         <h3>Log into existing account</h3>
+
+        <!-- Added Google sign-in here too -->
+        <button class="google-signin" id="loginGoogle">
+          <img src="assets/icons/google.svg" alt=""/>
+          Continue with Google
+        </button>
+        <p class="muted" style="margin:.3rem 0;">or</p>
+
         <form class="auth-form" id="loginForm">
           <label>Email
-            <input id="loginEmail" type="email" placeholder="you@email.com" required/>
+            <input id="loginEmail" type="email" placeholder="you@email.com" autocomplete="email" required/>
           </label>
           <label>Password
-            <input id="loginPassword" type="password" placeholder="********" required/>
+            <input id="loginPassword" type="password" placeholder="********" autocomplete="current-password" required/>
           </label>
           <div class="form-actions">
-            <button type="submit" class="btn">Log in</button>
-            <button type="button" class="btn btn--secondary">Forgot password</button>
+            <button type="submit" class="btn" id="loginBtn">Log in</button>
+            <button type="button" class="btn btn--secondary" id="resetBtn">Forgot password</button>
           </div>
         </form>
       </section>
@@ -115,30 +138,45 @@
     <section class="card" style="margin-top:1rem;">
       <h3>Your profile</h3>
       <div class="profile">
-        <div class="avatar" id="profileAvatar" style="background-image:url('assets/images/default-avatar.png');"></div>
+        <div class="avatar" id="profileAvatar" style="background-image:url('images/defaultprofile.png');"></div>
         <p><strong id="profileName">Not signed in</strong></p>
-        <p class="muted">Member: free</p>
+        <p class="muted" id="profileTier">Member: free</p>
         <a href="resources.html" class="link">Go to Resources</a>
-        <button class="btn btn--secondary" id="signOutBtn">Sign out</button>
+        <button class="btn btn--secondary" id="signOutBtn" type="button">Sign out</button>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 OSU Day Traders</p>
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
+  <!-- Your scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/firebase-init.js"></script>
+  <script src="js/auth.js"></script>
+
+  <!-- Tiny helper for avatar preview; backend should replace with real upload -->
   <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     const avatarInput = document.getElementById('avatarInput');
     const previewImg = document.getElementById('previewImg');
-    avatarInput.addEventListener('change', e=>{
-      const file = e.target.files[0];
-      if(file){
-        const reader = new FileReader();
-        reader.onload = ev => previewImg.src = ev.target.result;
-        reader.readAsDataURL(file);
-      }
+    avatarInput?.addEventListener('change', (e)=>{
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => { previewImg.src = ev.target.result; };
+      reader.readAsDataURL(file);
     });
+
+    // Data-action hooks if your auth.js prefers delegation
+    document.getElementById('signUpGoogle')?.setAttribute('data-action','signup-google');
+    document.getElementById('loginGoogle')?.setAttribute('data-action','login-google');
+    document.getElementById('createAccountBtn')?.setAttribute('data-action','signup-email');
+    document.getElementById('loginBtn')?.setAttribute('data-action','login-email');
+    document.getElementById('resetBtn')?.setAttribute('data-action','password-reset');
+    document.getElementById('signOutBtn')?.setAttribute('data-action','signout');
   </script>
 </body>
 </html>
