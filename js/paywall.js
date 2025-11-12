@@ -1,36 +1,35 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { firebaseConfig } from "./auth.js";
+import { auth } from "./js/firebase-init.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const subBtn = document.getElementById("subscribe-btn");
+const locked = document.getElementById("locked-content");
+const unlocked = document.getElementById("unlocked-content");
 
-// Check login status + OSU verification
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "auth.html";
     return;
   }
+  const isOSU = (user.email || "").toLowerCase().endsWith("@osu.edu");
 
-  const docRef = doc(db, "users", user.uid);
-  const userDoc = await getDoc(docRef);
-
-  // Only OSU students can access premium content
-  if (!user.email.endsWith("@osu.edu")) {
-    alert("You are logged in, but only OSU students can purchase or access the paid course.");
-    document.querySelectorAll(".premium-section").forEach(el => {
-      el.style.pointerEvents = "none";
-      el.style.opacity = "0.5";
-    });
+  // If not OSU: keep content locked and disable subscribe
+  if (!isOSU) {
+    if (subBtn) subBtn.disabled = true;
+    const note = document.createElement("p");
+    note.style.color = "#b00020";
+    note.style.fontWeight = "700";
+    note.textContent = "Only @osu.edu accounts can purchase and access the paid course.";
+    if (locked) locked.appendChild(note);
   }
+
+  // TODO later: after Stripe + webhook sets membershipStatus=active, show unlocked.
+  // For now we leave it locked for everyone until checkout is wired up.
 });
 
-// Optional logout button support
-const logoutBtn = document.getElementById("logout-btn");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
+// Optional logout support if a button exists
+const logout = document.getElementById("logout-btn");
+if (logout) {
+  logout.addEventListener("click", async () => {
     await signOut(auth);
     window.location.href = "auth.html";
   });
