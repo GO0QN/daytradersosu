@@ -1,13 +1,15 @@
 // js/firebase-init.js
-// Initializes Firebase for OSU Day Traders.
-// Handles Auth + Firestore only (no Storage, since Spark plan).
+// OSU Day Traders — Firebase bootstrap (Auth + Firestore, no Storage).
+// - Loads CDN modules
+// - Initializes app/auth/db
+// - Sets browserLocalPersistence
+// - Exposes globals on window AND named ES exports
 
-// Import Firebase via CDN modules (lightweight + browser compatible)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-import * as _auth       from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-import * as _firestore  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+import * as authSDK      from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import * as fsSDK        from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
-// Your Firebase configuration
+// ---- Config (your values) ----
 const firebaseConfig = {
   apiKey: "AIzaSyCe4NxqivGSKDI3aHvJrU88bPOxzSYLh_Y",
   authDomain: "osu-daytraders.firebaseapp.com",
@@ -18,21 +20,28 @@ const firebaseConfig = {
   measurementId: "G-RXTL84LM0T"
 };
 
-// Initialize Firebase
+// ---- Init ----
 const app  = initializeApp(firebaseConfig);
-const auth = _auth.getAuth(app);
-const db   = _firestore.getFirestore(app);
+const auth = authSDK.getAuth(app);
+const db   = fsSDK.getFirestore(app);
 
 // Keep users signed in locally
-_auth.setPersistence(auth, _auth.browserLocalPersistence)
-  .catch((err) => console.error("Persistence error:", err));
+authSDK.setPersistence(auth, authSDK.browserLocalPersistence)
+  .catch(err => console.error("[Firebase] Persistence error:", err));
 
-// Expose globally for auth.js
-window.app = app;
+// Optional helpers (handy, doesn’t cost you anything)
+export const usersCol = fsSDK.collection(db, "users");
+export const userDoc  = (uid) => fsSDK.doc(db, "users", uid);
+
+// ---- Dual exposure: window + ES exports ----
+window.app  = app;
 window.auth = auth;
-window.db = db;
-window.firebaseAuthExports = _auth;
-window.firebaseFirestoreExports = _firestore;
+window.db   = db;
+window.firebaseAuthExports = authSDK;
+window.firebaseFirestoreExports = fsSDK;
 
-// Optional: log confirmation in console
-console.log("%cFirebase initialized successfully for OSU Day Traders","color:#bb0000;font-weight:bold");
+export { app, auth, db, authSDK, fsSDK };
+
+// Sanity ping
+console.log("%c[Firebase] Initialized (Auth + Firestore, Spark plan OK)",
+            "color:#bb0000;font-weight:900");
