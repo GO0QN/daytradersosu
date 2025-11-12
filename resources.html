@@ -1,120 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resources • OSU Day Traders</title>
-
-  <!-- Global first -->
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Page-specific -->
-  <link rel="stylesheet" href="css/resources.css">
-
-  <!-- Your JS as before -->
-  <script type="module" src="js/main.js"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/resources.css"/>
 </head>
 <body>
-  <!-- Header: same structure as other pages -->
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="index.html">
-        <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders" />
-        OSU Day Traders
-      </a>
-      <nav class="menu">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a class="active" href="resources.html">Resources</a>
-        <a href="accounts.html">Account</a>
-        <a href="contact.html">Contact</a>
-        <a href="applications.html">Applications</a>
-      </nav>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/images/osu-daytraders-logo.png" alt=""/>
+      <span>OSU Day Traders</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="events.html">Events</a>
+      <a class="active" href="resources.html">Resources</a>
+      <a href="account.html">Account</a>
+      <a href="contact.html">Contact</a>
+      <a href="applications.html">Applications</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero hero--resources">
+  <video class="hero__video" autoplay muted loop playsinline poster="assets/images/resources-cover.jpg">
+    <source src="assets/video/resources-hero.mp4" type="video/mp4"/>
+  </video>
+
+  <div class="wrap hero__content">
+    <h1>Resources</h1>
+    <p>Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an <strong>@osu.edu</strong> email.</p>
+    <a class="hero__signin" href="account.html">Sign in</a>
+  </div>
+
+  <!-- transparent, slow “stock bars” animation -->
+  <div class="stock-bars" aria-hidden="true">
+    <span style="--h:26%"></span>
+    <span style="--h:44%"></span>
+    <span style="--h:63%"></span>
+    <span style="--h:38%"></span>
+    <span style="--h:72%"></span>
+  </div>
+
+  <!-- subtle play button pulse, not obnoxious -->
+  <button class="playpulse" aria-label="Course walkthrough video"></button>
+</section>
+
+<main class="wrap">
+  <h2>Free materials</h2>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="pill pill--rose">Playbook</div>
+      <h3>Opening Drive</h3>
+      <p>How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
+    </article>
+
+    <article class="card">
+      <div class="pill pill--lav">Template</div>
+      <h3>Journal Starter</h3>
+      <p>Tags, KPIs, and weekly review prompts that don’t rot in your Drive.</p>
+    </article>
+
+    <article class="card">
+      <div class="pill pill--mint">Checklist</div>
+      <h3>Pre-Market Routine</h3>
+      <p>10-minute flow that protects your focus before the bell.</p>
+    </article>
+  </div>
+
+  <section class="members card">
+    <div class="members__left">
+      <div class="lock" aria-hidden="true"></div>
+      <h2>OSU-only course: Day Trading Fundamentals</h2>
+      <p>Sign in with <strong>@osu.edu</strong> and subscribe to unlock all modules, quizzes, and notes.</p>
+      <a href="account.html" class="btn btn-ghost">Subscribe</a>
     </div>
-  </header>
-
-  <!-- HERO (this is what went missing on your site) -->
-  <section class="hero hero--resources">
-    <div class="container hero__inner">
-      <div class="hero__copy">
-        <h1 class="h1">Resources</h1>
-        <p>Free playbooks and previews below. Unlock the full OSU-only course when you’re signed in with an <strong>@osu.edu</strong> email.</p>
-
-        <div class="hero__cta">
-          <a class="btn btn--solid" href="accounts.html">Sign in</a>
-        </div>
-
-        <!-- video trigger preserved -->
-        <a class="play-pulse" href="#course-walkthrough" aria-label="Course walkthrough video">
-          <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
-            <circle cx="32" cy="32" r="31" fill="none" stroke="currentColor" stroke-width="2"/>
-            <polygon points="26,20 48,32 26,44" fill="currentColor"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="hero__viz" aria-hidden="true">
-        <div class="candles">
-          <span style="--h:42%"></span>
-          <span style="--h:28%"></span>
-          <span style="--h:55%"></span>
-          <span style="--h:34%"></span>
-          <span style="--h:68%"></span>
-        </div>
-      </div>
-    </div>
-    <div class="hero__fade"></div>
+    <ul class="members__list">
+      <li>Day 1: Market Foundations</li>
+      <li>Day 2: Setups & Invalidations</li>
+      <li>Day 3: Risk & Sizing</li>
+      <li>Day 4: Live Lab & Review</li>
+    </ul>
   </section>
+</main>
 
-  <!-- Free materials -->
-  <section class="section">
-    <div class="container">
-      <h2 class="h2">Free materials</h2>
+<footer class="site-footer">
+  <div class="wrap">© 2025 OSU Day Traders</div>
+</footer>
 
-      <div class="card-grid">
-        <article class="card">
-          <span class="pill pill--red">Playbook</span>
-          <h3 class="h3">Opening Drive</h3>
-          <p>How to map levels, define risk, and avoid revenge trades in the first 30 minutes.</p>
-        </article>
-
-        <article class="card">
-          <span class="pill pill--purple">Template</span>
-          <h3 class="h3">Journal Starter</h3>
-          <p>Tags, KPIs, and weekly review prompts that don’t rot in your Drive.</p>
-        </article>
-
-        <article class="card">
-          <span class="pill pill--green">Checklist</span>
-          <h3 class="h3">Pre-Market Routine</h3>
-          <p>10-minute flow that keeps your focus before the bell.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Members area (locked) -->
-  <section class="section">
-    <div class="container">
-      <div class="members-locked">
-        <div class="members-locked__left">
-          <div class="lock-emoji" aria-hidden="true">🔒</div>
-          <h2 class="h2">OSU-only course: Day Trading Fundamentals</h2>
-          <p>Sign in with <strong>@osu.edu</strong> and subscribe to unlock all modules, quizzes, and notes.</p>
-          <a class="btn btn--outline" href="accounts.html">Subscribe</a>
-        </div>
-        <ul class="members-locked__list">
-          <li>Day 1: Market Foundations</li>
-          <li>Day 2: Setups &amp; Invalidations</li>
-          <li>Day 3: Risk &amp; Sizing</li>
-          <li>Day 4: Live Lab &amp; Review</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="container">© 2025 OSU Day Traders</div>
-  </footer>
+<script type="module" src="js/firebase-init.js"></script>
+<script type="module" src="js/paywall.js"></script>
 </body>
 </html>
