@@ -1,32 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact • OSU Day Traders</title>
+  <link rel="icon" href="assets/icons/favicon.ico"/>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="assets/icons/favicon.ico" />
+  <!-- Page-local styles to match site theme -->
+  <style>
+    :root{
+      --scarlet:#c4122f; --ink:#121212; --muted:#5b5b5b; --surface:#f6f6f6; --panel:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--surface)}
 
-  <meta property="og:title" content="OSU Day Traders – Contact" />
-  <meta property="og:description" content="Get in touch with OSU Day Traders for membership, events, or sponsorships." />
-  <meta property="og:image" content="assets/images/osu-daytraders-logo.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+    /* Header */
+    header{background:var(--scarlet);padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:.55rem;color:#fff;text-decoration:none;font-weight:800}
+    .brand img{width:34px;height:34px;border-radius:50%}
+    nav ul{display:flex;gap:1.25rem;margin:0;padding:0;list-style:none}
+    nav a{color:#fff;text-decoration:none;font-weight:700;font-size:.95rem;opacity:.92}
+    nav a:hover,.active{opacity:1}
 
+    /* Page shell */
+    .wrap{max-width:980px;margin:0 auto;padding:2.2rem 1rem 3.2rem}
+    h1{margin:0 0 .6rem;font-size:clamp(1.75rem,3.2vw,2.1rem);font-weight:900}
+    .lede{color:#444;margin:0 0 1.1rem}
+
+    /* Card */
+    .card{
+      background:var(--panel);border-radius:20px;padding:1.2rem;
+      box-shadow:0 18px 40px rgba(0,0,0,.12);
+    }
+
+    /* Form */
+    form{display:grid;gap:.9rem;margin-top:.2rem}
+    label{font-weight:800;font-size:.95rem}
+    input,textarea{
+      width:100%;border:1px solid #e8e8e8;background:#fff;border-radius:14px;
+      padding:.85rem 1rem;font-size:1rem;outline:none;transition:border-color .15s, box-shadow .15s;
+    }
+    input:focus,textarea:focus{border-color:#d7d7d7;box-shadow:0 0 0 4px rgba(196,18,47,.12)}
+    textarea{min-height:150px;resize:vertical}
+
+    .actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-top:.2rem}
+    .btn{
+      display:inline-block;border:none;border-radius:999px;padding:.9rem 1.15rem;
+      font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s, filter .15s;
+    }
+    .btn-primary{background:var(--scarlet);color:#fff;box-shadow:0 10px 22px rgba(196,18,47,.28)}
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(.97)}
+    .hint{color:#666;font-size:.9rem}
+
+    /* Alerts */
+    .alert{display:none;margin-top:.9rem;padding:.85rem 1rem;border-radius:14px;font-weight:700}
+    .alert.ok{background:#eaf7ee;color:#145c2e}
+    .alert.err{background:#fdeaea;color:#7a0f0f}
+
+    /* Footer */
+    footer{background:#121212;color:#fff;text-align:center;padding:1.1rem 1rem;font-size:.92rem;margin-top:2.2rem}
+  </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header class="site-header">
+  <header>
     <a class="brand" href="index.html">
-      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo" />
+      <img src="assets/images/osu-daytraders-logo.png" alt="OSU Day Traders Logo">
       <span>OSU Day Traders</span>
     </a>
-
-    <nav class="site-nav" aria-label="Main navigation">
-      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu">☰</button>
-      <ul id="navMenu">
+    <nav>
+      <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="events.html">Events</a></li>
@@ -37,81 +79,82 @@
     </nav>
   </header>
 
-  <!-- Content -->
-  <main class="content narrow">
+  <main class="wrap">
     <h1>Contact</h1>
-    <p>If you have questions about joining, speaking, partnering, or sponsoring OSU Day Traders, reach out below.</p>
+    <p class="lede">If you have questions about joining, speaking, partnering, or sponsoring OSU Day Traders, reach out below.</p>
 
-    <!-- ✅ Working Contact Form (Formspree) -->
-    <form id="contact-form"
-          action="https://formspree.io/f/manayagg"
-          method="POST"
-          class="contact-form"
-          autocomplete="on">
+    <section class="card" aria-labelledby="contactFormTitle">
+      <h2 id="contactFormTitle" style="position:absolute;left:-9999px">Contact form</h2>
 
-      <label>
-        Name
-        <input type="text" name="name" required />
-      </label>
+      <form id="contactForm" action="https://formspree.io/f/manayagg" method="POST">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required/>
+        </div>
 
-      <label>
-        Email
-        <input type="email" name="email" required />
-      </label>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="_replyto" type="email" inputmode="email" autocomplete="email" placeholder="you@osu.edu" required/>
+        </div>
 
-      <label>
-        Message
-        <textarea name="message" rows="6" required></textarea>
-      </label>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us how we can help" required></textarea>
+        </div>
 
-      <!-- Invisible honeypot for spam bots -->
-      <input type="text" name="_gotcha" style="display:none">
+        <!-- honey pot to reduce spam -->
+        <input type="text" name="_gotcha" style="display:none" aria-hidden="true"/>
 
-      <!-- Subject line of the email YOU receive -->
-      <input type="hidden" name="_subject" value="New OSU Day Traders Contact Message" />
+        <div class="actions">
+          <button class="btn btn-primary" type="submit" id="sendBtn">Send</button>
+          <span class="hint" id="statusHint">We’ll reply to your email.</span>
+        </div>
 
-      <button class="btn btn--dark" type="submit">Send</button>
-      <p class="form-note" id="form-status"></p>
-    </form>
+        <div id="formOk"  class="alert ok">Thanks — your message was sent.</div>
+        <div id="formErr" class="alert err">Something went wrong. Try again in a moment.</div>
+      </form>
+    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
+  <footer>
     <p>&copy; <span id="year"></span> OSU Day Traders • Student Organization</p>
   </footer>
 
-  <script src="js/main.js"></script>
-
-  <!-- Simple inline JS for UX -->
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    const form = document.getElementById("contact-form");
-    const status = document.getElementById("form-status");
+    // Ajax submit to Formspree for inline success message
+    const form = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const ok  = document.getElementById('formOk');
+    const err = document.getElementById('formErr');
+    const hint= document.getElementById('statusHint');
 
-    // Optional: AJAX-based submission for better UX
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      status.textContent = "Sending…";
+      ok.style.display = 'none'; err.style.display = 'none';
+      sendBtn.disabled = true; sendBtn.textContent = 'Sending…';
 
-      try {
+      try{
         const res = await fetch(form.action, {
-          method: "POST",
-          headers: { "Accept": "application/json" },
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
           body: new FormData(form)
         });
-
-        if (res.ok) {
+        if(res.ok){
           form.reset();
-          status.innerHTML = "<strong>Thanks!</strong> Your message was sent successfully.";
-        } else {
-          status.textContent = "Error sending message. Try again later.";
+          ok.style.display = 'block';
+          hint.textContent = 'We’ll reply soon.';
+        }else{
+          err.style.display = 'block';
         }
-      } catch {
-        status.textContent = "Network error. Check your connection.";
+      }catch{
+        err.style.display = 'block';
+      }finally{
+        sendBtn.disabled = false; sendBtn.textContent = 'Send';
       }
     });
   </script>
-
 </body>
 </html>
