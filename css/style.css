@@ -23,7 +23,7 @@ body{
   position:sticky;top:0;z-index:20;
   border:0;box-shadow:none; /* avoid stray 1px lines on dark backgrounds */
 }
-.brand{display:flex;align-items:center;gap:.1.25rem;color:var(--white);text-decoration:none;font-weight:800}
+.brand{display:flex;align-items:center;gap:1.25rem;color:var(--white);text-decoration:none;font-weight:800}
 .brand img{height:48px;width:auto;border-radius:50%}
 .site-nav ul{display:flex;gap:2rem;list-style:none;margin:0;padding:0}
 .site-nav a{color:var(--white);text-decoration:none;font-weight:700;op;font-size:.95remacity:.95}
