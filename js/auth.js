@@ -1,188 +1,291 @@
-// Auth UI logic: email signup with verification, login, Google sign-in,
-// default avatar preview (no upload on Spark), member badge, sign out.
+// js/auth.js
+// Handles signup, login, Google auth, email verification & basic profile UI
 
-const A = window.firebaseAuthExports;
-const F = window.firebaseFirestoreExports;
-const auth = window.auth;
-const db   = window.db;
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+import {
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+
+import { auth, db, googleProvider } from "./firebase-init.js";
+
+/* ========== DOM HOOKS ========== */
 
 const dom = {
-  suEmail:      document.getElementById("suEmail"),
-  suPassword:   document.getElementById("suPassword"),
-  emailSignup:  document.getElementById("emailSignupForm"),
-  signupMsg:    document.getElementById("signupMsg"),
-  avatarFile:   document.getElementById("avatarFile"),
-  avatarPrev:   document.getElementById("avatarPreview"),
+  // sections
+  authGrid: document.querySelector(".auth-grid"),
+  profileCard: document.querySelector(".profile-card"),
 
-  loginEmail:   document.getElementById("liEmail"),
-  loginPass:    document.getElementById("liPassword"),
-  loginForm:    document.getElementById("loginForm"),
-  loginMsg:     document.getElementById("loginMsg"),
-  forgotBtn:    document.getElementById("forgotBtn"),
+  // forms
+  emailSignupForm: document.getElementById("emailSignupForm"),
+  loginForm: document.getElementById("loginForm"),
 
+  // inputs
+  suEmail: document.getElementById("suEmail"),
+  suPassword: document.getElementById("suPassword"),
+  liEmail: document.getElementById("liEmail"),
+  liPassword: document.getElementById("liPassword"),
+
+  // buttons
   signupGoogle: document.getElementById("signupGoogle"),
-  loginGoogle:  document.getElementById("loginGoogle"),
-
-  profileAvatar:document.getElementById("profileAvatar"),
-  profileTitle: document.getElementById("profileTitle"),
-  memberBadge:  document.getElementById("memberBadge"),
-  verifyBox:    document.getElementById("verifyBox"),
+  loginGoogle: document.getElementById("loginGoogle"),
+  forgotBtn: document.getElementById("forgotBtn"),
   resendVerify: document.getElementById("resendVerify"),
-  profileMsg:   document.getElementById("profileMsg"),
-  signOutBtn:   document.getElementById("signOutBtn")
+  signOutBtn: document.getElementById("signOutBtn"),
+
+  // profile / status
+  signupMsg: document.getElementById("signupMsg"),
+  loginMsg: document.getElementById("loginMsg"),
+  profileMsg: document.getElementById("profileMsg"),
+  verifyBox: document.getElementById("verifyBox"),
+  profileTitle: document.getElementById("profileTitle"),
+  profileAvatar: document.getElementById("profileAvatar"),
+  memberBadge: document.getElementById("memberBadge")
 };
 
-// Default avatar preview always starts with site asset
-const DEFAULT_AVATAR = "assets/images/defaultprofile.png";
-if (dom.avatarPrev) dom.avatarPrev.src = DEFAULT_AVATAR;
-if (dom.profileAvatar) dom.profileAvatar.src = DEFAULT_AVATAR;
+/* ========== HELPERS ========== */
 
-// Optional local preview (no uploads on Spark)
-if (dom.avatarFile) {
-  dom.avatarFile.addEventListener("change", e => {
-    const file = e.target.files?.[0];
-    if (!file) { dom.avatarPrev.src = DEFAULT_AVATAR; return; }
-    const reader = new FileReader();
-    reader.onload = () => { dom.avatarPrev.src = reader.result; };
-    reader.readAsDataURL(file);
-  });
+function prettyError(err) {
+  if (!err || !err.code) return err?.message || "Something went wrong.";
+  const code = err.code.replace("auth/", "");
+
+  switch (code) {
+    case "email-already-in-use":
+      return "That email is already in use.";
+    case "invalid-email":
+      return "Enter a valid email address.";
+    case "weak-password":
+      return "Password should be at least 6 characters.";
+    case "user-not-found":
+    case "wrong-password":
+      return "Incorrect email or password.";
+    case "too-many-requests":
+      return "Too many attempts. Try again later.";
+    default:
+      return err.message || code;
+  }
 }
 
-// Email sign-up with verification
-if (dom.emailSignup) {
-  dom.emailSignup.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    dom.signupMsg.textContent = "Creating account…";
-    try {
-      const cred = await A.createUserWithEmailAndPassword(auth, dom.suEmail.value.trim(), dom.suPassword.value);
-      // seed profile doc
-      await F.setDoc(F.doc(db, "users", cred.user.uid), {
-        email: cred.user.email,
-        memberTier: "free",
-        createdAt: F.serverTimestamp()
-      }, { merge:true });
+async function ensureUserDoc(user) {
+  if (!user) return;
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
 
-      // send verification email
+  if (!snap.exists()) {
+    await setDoc(
+      ref,
+      {
+        email: user.email || "",
+        memberTier: "free",
+        createdAt: serverTimestamp()
+      },
+      { merge: true }
+    );
+  }
+}
+
+/* ========== UI STATE ========== */
+
+function showAuth() {
+  if (dom.authGrid) dom.authGrid.classList.remove("hidden");
+  if (dom.profileCard) dom.profileCard.classList.add("hidden");
+}
+
+function showProfile() {
+  if (dom.authGrid) dom.authGrid.classList.add("hidden");
+  if (dom.profileCard) dom.profileCard.classList.remove("hidden");
+}
+
+function updateUI(user) {
+  if (!user) {
+    showAuth();
+    if (dom.profileTitle) dom.profileTitle.textContent = "Not signed in";
+    if (dom.memberBadge) dom.memberBadge.textContent = "Member: free";
+    if (dom.verifyBox) dom.verifyBox.classList.add("hidden");
+    return;
+  }
+
+  showProfile();
+
+  if (dom.profileTitle) {
+    dom.profileTitle.textContent = user.email || "Signed in";
+  }
+
+  if (dom.memberBadge) {
+    dom.memberBadge.textContent = "Member: free";
+  }
+
+  if (dom.verifyBox) {
+    if (user.emailVerified) {
+      dom.verifyBox.classList.add("hidden");
+    } else {
+      dom.verifyBox.classList.remove("hidden");
+    }
+  }
+}
+
+/* ========== SIGNUP (EMAIL) ========== */
+
+if (dom.emailSignupForm) {
+  dom.emailSignupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (dom.signupMsg) dom.signupMsg.textContent = "Creating account…";
+
+    try {
+      const email = dom.suEmail.value.trim();
+      const password = dom.suPassword.value;
+
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+      await ensureUserDoc(cred.user);
+
       const actionCodeSettings = {
         url: `${location.origin}/account.html?verified=1`,
         handleCodeInApp: false
       };
-      await A.sendEmailVerification(cred.user, actionCodeSettings);
 
-      dom.signupMsg.textContent = "Check your email to verify your account.";
+      await sendEmailVerification(cred.user, actionCodeSettings);
+
+      if (dom.signupMsg) {
+        dom.signupMsg.textContent =
+          "Verification email sent. Check your inbox or spam.";
+      }
+
       updateUI(cred.user);
     } catch (err) {
-      dom.signupMsg.textContent = pretty(err);
+      console.error(err);
+      if (dom.signupMsg) dom.signupMsg.textContent = prettyError(err);
     }
   });
 }
 
-// Login with email
+/* ========== LOGIN (EMAIL) ========== */
+
 if (dom.loginForm) {
   dom.loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    dom.loginMsg.textContent = "Signing in…";
+    if (dom.loginMsg) dom.loginMsg.textContent = "Logging in…";
+
     try {
-      const cred = await A.signInWithEmailAndPassword(auth, dom.loginEmail.value.trim(), dom.loginPass.value);
-      dom.loginMsg.textContent = "";
+      const email = dom.liEmail.value.trim();
+      const password = dom.liPassword.value;
+
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      await ensureUserDoc(cred.user);
+
+      if (dom.loginMsg) dom.loginMsg.textContent = "";
       updateUI(cred.user);
     } catch (err) {
-      dom.loginMsg.textContent = pretty(err);
+      console.error(err);
+      if (dom.loginMsg) dom.loginMsg.textContent = prettyError(err);
     }
   });
 }
 
-// Forgot password
+/* ========== GOOGLE AUTH (BOTH BUTTONS) ========== */
+
+async function googleFlow() {
+  try {
+    const res = await signInWithPopup(auth, googleProvider);
+    await ensureUserDoc(res.user);
+    updateUI(res.user);
+  } catch (err) {
+    console.error(err);
+    if (dom.loginMsg) dom.loginMsg.textContent = prettyError(err);
+  }
+}
+
+if (dom.signupGoogle) {
+  dom.signupGoogle.addEventListener("click", (e) => {
+    e.preventDefault();
+    googleFlow();
+  });
+}
+
+if (dom.loginGoogle) {
+  dom.loginGoogle.addEventListener("click", (e) => {
+    e.preventDefault();
+    googleFlow();
+  });
+}
+
+/* ========== FORGOT PASSWORD ========== */
+
 if (dom.forgotBtn) {
   dom.forgotBtn.addEventListener("click", async () => {
-    const email = dom.loginEmail.value.trim();
-    if (!email) { dom.loginMsg.textContent = "Enter your email first."; return; }
+    if (!dom.liEmail) return;
+    const email = dom.liEmail.value.trim();
+    if (!email) {
+      if (dom.loginMsg) dom.loginMsg.textContent = "Enter your email first.";
+      return;
+    }
+
     try {
-      await A.sendPasswordResetEmail(auth, email, { url: `${location.origin}/account.html?reset=1` });
-      dom.loginMsg.textContent = "Password reset sent.";
+      await sendPasswordResetEmail(auth, email);
+      if (dom.loginMsg) {
+        dom.loginMsg.textContent = "Password reset email sent.";
+      }
     } catch (err) {
-      dom.loginMsg.textContent = pretty(err);
+      console.error(err);
+      if (dom.loginMsg) dom.loginMsg.textContent = prettyError(err);
     }
   });
 }
 
-// Google sign in/up
-async function googleFlow() {
-  const provider = new A.GoogleAuthProvider();
-  const r = await A.signInWithPopup(auth, provider);
-  // Seed user doc if new
-  const docRef = F.doc(db, "users", r.user.uid);
-  const snap = await F.getDoc(docRef);
-  if (!snap.exists()) {
-    await F.setDoc(docRef, {
-      email: r.user.email,
-      memberTier: "free",
-      createdAt: F.serverTimestamp()
-    });
-  }
-  updateUI(r.user);
-}
-if (dom.signupGoogle) dom.signupGoogle.addEventListener("click", googleFlow);
-if (dom.loginGoogle)  dom.loginGoogle.addEventListener("click", googleFlow);
+/* ========== RESEND VERIFICATION ========== */
 
-// Resend verification
 if (dom.resendVerify) {
   dom.resendVerify.addEventListener("click", async () => {
-    const u = A.currentUser(auth);
-    if (!u) return;
+    const user = auth.currentUser;
+    if (!user) {
+      if (dom.profileMsg) dom.profileMsg.textContent = "You must be signed in.";
+      return;
+    }
+
     try {
-      await A.sendEmailVerification(u, { url: `${location.origin}/account.html?verified=1` });
-      dom.profileMsg.textContent = "Verification email sent.";
+      await sendEmailVerification(user, {
+        url: `${location.origin}/account.html?verified=1`,
+        handleCodeInApp: false
+      });
+
+      if (dom.profileMsg) {
+        dom.profileMsg.textContent = "Verification email sent.";
+      }
     } catch (err) {
-      dom.profileMsg.textContent = pretty(err);
+      console.error(err);
+      if (dom.profileMsg) dom.profileMsg.textContent = prettyError(err);
     }
   });
 }
 
-// Sign out
+/* ========== SIGN OUT ========== */
+
 if (dom.signOutBtn) {
-  dom.signOutBtn.addEventListener("click", () => A.signOut(auth));
-}
-
-// Track auth state
-A.onAuthStateChanged(auth, (user) => updateUI(user));
-
-function updateUI(user){
-  if (!dom.profileTitle) return;
-  if (!user) {
-    dom.profileTitle.textContent = "Not signed in";
-    dom.memberBadge.textContent = "Member: free";
-    dom.memberBadge.classList.remove("badge--paid");
-    dom.memberBadge.classList.add("badge--free");
-    dom.verifyBox.classList.add("hidden");
-    dom.profileAvatar.src = DEFAULT_AVATAR;
-    return;
-  }
-
-  dom.profileTitle.textContent = user.email || "Signed in";
-  dom.profileAvatar.src = user.photoURL || DEFAULT_AVATAR;
-
-  if (user.emailVerified) {
-    dom.verifyBox.classList.add("hidden");
-  } else {
-    dom.verifyBox.classList.remove("hidden");
-  }
-
-  // Read membership from Firestore
-  F.getDoc(F.doc(db, "users", user.uid)).then(snap => {
-    const tier = snap.exists() ? snap.data().memberTier || "free" : "free";
-    dom.memberBadge.textContent = `Member: ${tier}`;
-    if (tier === "paid"){
-      dom.memberBadge.classList.remove("badge--free");
-      dom.memberBadge.classList.add("badge--paid");
-    } else {
-      dom.memberBadge.classList.remove("badge--paid");
-      dom.memberBadge.classList.add("badge--free");
+  dom.signOutBtn.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
     }
-  }).catch(()=>{});
+  });
 }
 
-function pretty(err){
-  const m = String(err && err.message || err || "").replace("Firebase: ", "");
-  return m || "Something broke. Try again.";
-}
+/* ========== AUTH STATE LISTENER ========== */
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    await ensureUserDoc(user);
+  }
+  updateUI(user);
+});
